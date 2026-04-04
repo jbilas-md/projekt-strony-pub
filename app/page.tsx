@@ -65,7 +65,7 @@ export default function Home() {
               <p className="text-slate-900 font-extrabold text-2xl tracking-tight">+48 662 858 626</p>
               <p className="text-slate-900 font-extrabold text-2xl tracking-tight">+48 795 370 970</p>
               <p className="text-slate-600 font-semibold text-sm mt-4 break-all">
-                E-mail: jaroslaw.bilas@gmail.pl
+                E-mail: jaroslaw.bilas@gmail.com
               </p>
             </div>
           </div>
