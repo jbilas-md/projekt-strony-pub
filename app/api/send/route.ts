@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+//const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     try {
         const { name, email, phone, message } = await req.json();
-
+        if (!process.env.RESEND_API_KEY) {
+            console.error("Brak klucza RESEND_API_KEY w środowisku!");
+            return NextResponse.json({ error: 'Błąd konfiguracji serwera' }, { status: 500 });
+        }
         const data = await resend.emails.send({
             // Używaj zweryfikowanego adresu w Twojej domenie jako nadawcy
             from: 'Novamedic Formularz <system@novamedic.pl>',
