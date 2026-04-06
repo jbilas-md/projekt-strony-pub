@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect } from 'react';
+import ContactForm from '@/components/ContactForm';
 
 export default function Home() {
 
@@ -64,9 +65,6 @@ export default function Home() {
             <div className="space-y-2">
               <p className="text-slate-900 font-extrabold text-2xl tracking-tight">+48 662 858 626</p>
               <p className="text-slate-900 font-extrabold text-2xl tracking-tight">+48 795 370 970</p>
-              <p className="text-slate-600 font-semibold text-sm mt-4 break-all">
-                E-mail: jaroslaw.bilas@gmail.com
-              </p>
             </div>
           </div>
         </div>
@@ -86,7 +84,10 @@ export default function Home() {
           </p>
         </div>
       </div>
-
+<div className="bg-slate-50 p-8 rounded-[3rem] border border-slate-100">
+  <h3 className="font-bold text-xs uppercase tracking-[0.2em] text-blue-600 mb-4">Napisz do nas</h3>
+  <ContactForm compact={true} />
+</div>
       <footer className="mt-8 mb-12 text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">
         © {new Date().getFullYear()} Novamedic |  Biłas Medical Sp. z o.o.
       </footer>
