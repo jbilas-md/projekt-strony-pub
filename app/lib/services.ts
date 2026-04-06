@@ -1,13 +1,5 @@
-export interface Package {
-  name: string;
-  price: string;
-  features: string[];
-}
-
-export interface FAQItem {
-  q: string;
-  a: string;
-}
+import { FAQItem } from '@/app/lib/faqs';
+import { Package } from '@/app/lib/packages';
 
 export interface BlogPost {
   title: string;
@@ -26,38 +18,25 @@ export interface Service {
   blog: BlogPost[];
 }
 
-export const servicesData: Record<string, Service> = {
+export const servicesData: Record<string, any> = {
   'wazektomia': {
-    title: "Wazektomia bez skalpela",
-    h1: "Wazektomia Szczecin - Bezpieczna Metoda WBS",
-    intro: "Wazektomia to nowoczesna i bezpieczna metoda trwałej antykoncepcji męskiej, wykonywana w Novamedic przez doświadczony zaspół.",
+    title: "Wazektomia",
+    h1: "Wazektomia Szczecin",
+    intro: "Wazektomia to nowoczesna i bezpieczna metoda trwałej antykoncepcji męskiej, wykonywana w Novamedic przez doświadczony zespół chirurgiczno-pielęgnierski w centrum Szczecina.",
     image: "/images/wazektomia-hero.jpg",
-    details: "Zabieg metodą bez skalpela (WBS) polega na rozwarstwieniu tkanek, co eliminuje konieczność zakładania szwów i drastycznie skraca rekonwalescencję.",
-    benefits: ["Skuteczność powyżej 99,9%", "Zabieg trwa 30-60 minut", "Brak szwów", "Szybki powrót do aktywności"],
-    packages: [
-      { name: "Pakiet Standard", price: "2500 zł", features: ["Konsultacja wstępna", "Zabieg WBS", "Zestaw pozabiegowy"] },
-      { name: "Pakiet Premium", price: "3200 zł", features: ["Wszystko co w Standard", "Badanie nasienia po 12 tyg."] }
-    ],
-    faq: [
-      { q: "Czy zabieg boli?", a: "Zabieg wykonywany jest w znieczuleniu miejscowym, pacjent czuje jedynie lekkie rozpieranie." }
-    ],
+    details: "Zabieg polega na zaopatrzeniu obu nasieniowodów metodą kanadyjską przez jeden niewielki otwór w skórze, co w znacznym stopniu skraca rekonwalescencję. Szew wchłanialny jest całkowicie niewidoczny i nie wymaga dodatkowych wizyt.",
+    benefits: ["Skuteczność powyżej 99,9%", "Zabieg trwa 30-40 minut", "Szew wchłanialny", "Szybki powrót do aktywności"],
     blog: [
       { title: "Mity na temat wazektomii", link: "/blog/mity-wazektomia" }
     ]
   },
   'podologia': {
-    title: "Podologia i Leczenie Stóp",
-    h1: "Specjalistyczna Pielęgnacja i Terapia Stóp",
+    title: "Podologia",
+    h1: "Specjalistyczna Pielęgnacja Stóp",
     intro: "Problemy stóp wpływają na komfort całego życia. W naszym gabinecie łączymy wiedzę medyczną z profesjonalną opieką.",
     image: "/images/podologia-hero.jpg",
     details: "Każda wizyta rozpoczyna się od szczegółowej diagnostyki. Stosujemy wyłącznie sterylne narzędzia.",
     benefits: ["Leczenie wrastających paznokci", "Usuwanie bolesnych modzeli", "Terapia brodawek"],
-    packages: [
-      { name: "Zabieg podstawowy", price: "200 zł", features: ["Konsultacja", "Opracowanie podeszwy"] }
-    ],
-    faq: [
-      { q: "Czy wymagane jest skierowanie?", a: "Nie, do podologa w naszej klinice nie jest wymagane skierowanie." }
-    ],
     blog: [
       { title: "Jak dbać o stopy?", link: "/blog/dbanie-o-stopy" }
     ]
