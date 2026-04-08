@@ -81,13 +81,13 @@ export default function Home() {
           </a>
           <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">
             Kalendarz wizyt jest aktualny
-          </p>
+        </p>
+          <div className="bg-slate-50 p-8 rounded-[3rem] border border-slate-100">
+          <h3 className="font-bold text-xs uppercase tracking-[0.2em] text-blue-600 mb-4">Napisz do nas</h3>
+          <ContactForm compact={true} /></div>
         </div>
       </div>
-<div className="bg-slate-50 p-8 rounded-[3rem] border border-slate-100">
-  <h3 className="font-bold text-xs uppercase tracking-[0.2em] text-blue-600 mb-4">Napisz do nas</h3>
-  <ContactForm compact={true} />
-</div>
+
       <footer className="mt-8 mb-12 text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">
         © {new Date().getFullYear()} Novamedic |  Biłas Medical Sp. z o.o.
       </footer>

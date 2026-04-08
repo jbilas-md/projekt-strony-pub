@@ -104,14 +104,6 @@ export default function Header() {
             )}
           </div>
 
-
-          {/* Zadzwoń (ikona słuchawki) - ukryta na bardzo małych, widoczna na reszcie */}
-          <a href="tel:+48123456789" className="hidden sm:flex items-center justify-center w-10 h-10 bg-nova-blue text-white rounded-full hover:bg-nova-dark transition-all">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 005.505 5.505l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-            </svg>
-          </a>
-
           {/* Przycisk Akcji - widoczny na desktop */}
           <a
             href="https://www.znanylekarz.pl/jaroslaw-bilas/chirurg-lekarze-wykonujacy-zabiegi-medycyny-estetycznej/szczecin"
@@ -121,6 +113,21 @@ export default function Header() {
           >
             Umów wizytę
           </a>
+          
+{/* Pulsujący przycisk słuchawki */}
+<div className="relative flex items-center justify-center">
+  {/* Warstwa pulsująca pod spodem */}
+  <span className="absolute inline-flex h-16 w-16 animate-ping rounded-full bg-nova-blue opacity-30"></span>
+  
+  <a 
+    href="tel:+48662858626" 
+    className="relative z-10 flex items-center justify-center w-16 h-16 bg-nova-blue text-white rounded-full hover:bg-nova-dark transition-all shadow-xl hover:scale-110 active:scale-95"
+  >
+    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 005.505 5.505l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+    </svg>
+  </a>
+</div>
 
           {/* HAMBURGER (Tylko Mobile) */}
           <button
