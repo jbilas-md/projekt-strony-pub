@@ -1,5 +1,5 @@
 'use client';
-import { reviewsData, Review } from '@/app/lib/reviews';
+import { reviewsData, Review } from '@/app/(site)/lib/reviews';
 import { useState, useEffect } from 'react';
 
 export default function ReviewsSection() {

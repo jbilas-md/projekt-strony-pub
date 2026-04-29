@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { FAQItem } from '@/app/lib/faqs';
+import { FAQItem } from '@/app/(site)/lib/faqs';
 
 export default function FAQAccordion({ items }: { items: FAQItem[] }) {
     const [openIndexes, setOpenIndexes] = useState<number[]>([]);
