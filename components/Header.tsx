@@ -36,6 +36,7 @@ export default function Header() {
               src="/images/Logo.png"
               alt="Novamedic Logo"
               fill
+              sizes="(max-width: 768px) 160px, 224px"
               className="object-contain object-left"
               priority
             />
@@ -44,8 +45,8 @@ export default function Header() {
 
         {/* NAWIGACJA DESKTOP */}
         <nav className="hidden xl:flex items-center space-x-7">
-          <Link href="/o-nas" className="text-nova-dark hover:text-nova-blue font-bold text-sm uppercase tracking-wide transition-colors">O nas</Link>
-
+          <a href="/o-nas" className="text-nova-dark hover:text-nova-blue font-bold text-sm uppercase tracking-wide transition-colors">O nas</a>
+          {/*<Link href="/o-nas" prefetch={false} className="text-nova-dark hover:text-nova-blue font-bold text-sm uppercase tracking-wide transition-colors">O nas</Link>*/}
           <div className="relative group py-8">
             <button className="text-nova-dark hover:text-nova-blue font-bold text-sm uppercase tracking-wide flex items-center gap-1 transition-colors">
               Oferta <span className="text-[10px]">▼</span>
@@ -173,7 +174,7 @@ export default function Header() {
           <div className="mt-auto pt-10 flex flex-col gap-4">
             <a href="tel:+48123456789" className="w-full bg-nova-blue text-white text-center py-4 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 005.505 5.505l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
-              Zadzwoń do kliniki
+              Zadzwoń do nas
             </a>
             <a href="https://www.znanylekarz.pl/..." target="_blank" rel="noopener" className="w-full bg-nova-accent text-white text-center py-4 rounded-xl font-bold shadow-lg">
               Umów wizytę online

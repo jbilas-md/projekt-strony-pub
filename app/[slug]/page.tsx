@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import Footer from '@/components/Footer';
 import FAQAccordion from '@/components/FAQAccordion';
 
 // Importujemy dane z nowych, osobnych plików
@@ -130,7 +129,6 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

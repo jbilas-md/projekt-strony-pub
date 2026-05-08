@@ -37,7 +37,8 @@ export const defaultSEO: Metadata = {
         images: ["/images/og-image.jpg"],
     },
     icons: {
-        icon: "/favicon.ico", // Standardowa ikonka
+        icon: "/public/favicon.ico", // Standardowa ikonka
+        shortcut: "/public/favicon.ico",
         apple: "/apple-touch-icon.png", // Dodaj ten plik (180x180) do /public
     },
 };

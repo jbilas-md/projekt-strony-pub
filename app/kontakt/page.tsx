@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 
 export const metadata = {
@@ -125,7 +124,6 @@ export default function KontaktPage() {
                     </div>
                 </section>
             </main>
-            <Footer />
         </div>
     );
 }

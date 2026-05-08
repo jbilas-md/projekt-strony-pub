@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata = {
     title: 'O nas | Poznaj zespół Novamedic Szczecin',
-    description: 'Poznaj założycieli kliniki Novamedic w Szczecinie - dr Jarosława Biłasa i Annę Biłas. Wieloletnie doświadczenie w chirurgii, podologii i leczeniu ran.',
+    description: 'Poznaj założycieli kliniki Novamedic w Szczecinie - Jarosława Biłasa i Annę Biłas. Wieloletnie doświadczenie w chirurgii, podologii i leczeniu ran.',
 };
 
 export default function AboutUsPage() {
@@ -27,7 +27,7 @@ export default function AboutUsPage() {
                             alt="Anna i Jarosław Biłas - Założyciele Novamedic Szczecin"
                             fill
                             className="object-cover object-top"
-                            priority
+                            /*priority*/
                         />
                     </div>
                 </div>
