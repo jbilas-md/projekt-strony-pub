@@ -4,8 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Footer() {
-  // Stan isScrolled i inne mogą zostać, jeśli planujesz rozbudowę, 
-  // choć w samym footerze zazwyczaj nie są używane tak jak w Navbarku.
 
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Novamedic+Szczecin+Wawrzyniaka+6C/1";
 
@@ -45,7 +43,7 @@ export default function Footer() {
           <div>
             <h3 className="text-nova-light font-bold mb-6 text-sm uppercase tracking-widest text-nova-blue">Nawigacja</h3>
             <ul className="space-y-3 text-sm text-gray-400 font-medium">
-              <li><Link href="/o-nas" className="hover:text-white transition-colors">O klinice</Link></li>
+              <li><Link href="/o-nas" className="hover:text-white transition-colors">O nas</Link></li>
               <li><Link href="/cennik" className="hover:text-white transition-colors">Cennik usług</Link></li>
               <li><Link href="/faq" className="hover:text-white transition-colors">Częste pytania</Link></li>
               <li><Link href="/blog" className="hover:text-white transition-colors">Baza wiedzy</Link></li>

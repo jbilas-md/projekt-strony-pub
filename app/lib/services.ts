@@ -1,5 +1,5 @@
-import { FAQItem } from '@/app/(site)/lib/faqs';
-import { Package } from '@/app/(site)/lib/packages';
+import { FAQItem } from '@/app/lib/faqs';
+import { Package } from '@/app/lib/packages';
 
 export interface BlogPost {
   title: string;

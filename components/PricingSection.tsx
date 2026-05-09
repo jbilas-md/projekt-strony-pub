@@ -1,4 +1,4 @@
-import { Package } from "@/app/(site)/lib/data";
+import { Package } from "@/app/lib/data";
 
 export default function PricingSection({ items }: { items: Package[] }) {
     return (

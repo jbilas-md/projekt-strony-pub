@@ -30,7 +30,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
 
         {/* LOGO - start scale-150 */}
-        <div className="flex-shrink-0 z-[120]">
+        <div className="flex-shrink-0 z-[120] pr-10">
           <Link href="/" className={`relative block transition-all duration-500 origin-left ${isScrolled ? 'w-48 h-16 scale-110' : 'w-56 h-20 scale-150'}`}>
             <Image
               src="/images/Logo.png"
@@ -44,9 +44,9 @@ export default function Header() {
         </div>
 
         {/* NAWIGACJA DESKTOP */}
-        <nav className="hidden xl:flex items-center space-x-7">
-          <a href="/o-nas" className="text-nova-dark hover:text-nova-blue font-bold text-sm uppercase tracking-wide transition-colors">O nas</a>
-          {/*<Link href="/o-nas" prefetch={false} className="text-nova-dark hover:text-nova-blue font-bold text-sm uppercase tracking-wide transition-colors">O nas</Link>*/}
+        <nav className="hidden xl:flex items-center space-x-7 relative z-[130] ml-12">
+          <Link href="/o-nas" className="text-nova-dark hover:text-nova-blue font-bold text-sm uppercase tracking-wide transition-colors">O nas</Link>
+        
           <div className="relative group py-8">
             <button className="text-nova-dark hover:text-nova-blue font-bold text-sm uppercase tracking-wide flex items-center gap-1 transition-colors">
               Oferta <span className="text-[10px]">▼</span>

@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+{/*import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   typescript: {
@@ -7,7 +7,17 @@ const nextConfig: NextConfig = {
     // Użyj tego tylko, jeśli lokalnie `npm run build` przechodzi.
     ignoreBuildErrors: true,
   },
-  /* config options here */
+};
+
+export default nextConfig;*/}
+
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  serverExternalPackages: ["lightningcss"],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;
