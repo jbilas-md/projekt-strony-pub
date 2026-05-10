@@ -1,11 +1,11 @@
 import "@/app/globals.css";
-import { Inter } from "next/font/google";
+//import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { defaultSEO } from "./lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+//const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata: Metadata = defaultSEO;
@@ -24,10 +24,10 @@ export default function RootLayout({
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="manifest" href="/site.webmanifest" />
             </head>
-            <body className={inter.className}>
+            <body>
                 <Header />
                 {children}
-                <Footer/>
+                <Footer />
             </body>
         </html>
     );
