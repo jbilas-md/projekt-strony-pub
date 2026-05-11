@@ -10,7 +10,6 @@ body {
 
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-/* DODAJ TĘ LINIE */
 
 @theme {
   /* --- KOLORY NOVAMEDIC --- */

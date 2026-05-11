@@ -25,12 +25,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     if (!post) notFound();
 
     return (
-        <article className="pt-32 pb-20 max-w-4xl mx-auto px-4">
-            {/* 1. POWRÓT 
-            <Link href="/blog" className="text-nova-blue font-bold text-sm uppercase mb-8 inline-block hover:underline">
-                ← Powrót
-            </Link>*/}
+        <article className="pt-32 pb-20 max-w-4xl mx-auto px-4 bg-white">
+            {/* 1. POWRÓT */}
             <FloatingBackButton />
+
             {/* 2. OBRAZEK GŁÓWNY */}
             <div className="relative w-full h-[400px] rounded-3xl overflow-hidden mb-10 shadow-xl">
                 <Image

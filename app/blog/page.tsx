@@ -9,7 +9,7 @@ export const metadata = blogSEO;
 export default function BlogPage() {
     return (
         <main>
-            <div className="bg-white pt-40 pb-10 text-center">
+            {/*<div className="bg-white pt-40 pb-10 text-center">
                 <h1 className="text-4xl md:text-5xl font-black text-nova-dark uppercase tracking-tight">
                     Baza Wiedzy <span className="text-nova-blue">Novamedic</span>
                 </h1>
