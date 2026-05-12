@@ -1,78 +1,49 @@
-// app/(site)/blog/[slug]/page.tsx
-import { BLOG_POSTS } from "@/app/lib/blog-data";
-import { constructMetadata } from "@/app/lib/seo";
-import { notFound } from "next/navigation";
-import Image from "next/image"; // Import komponentu obrazu
-import Link from "next/link";
-import FloatingBackButton from "@/components/blog/FloatingBackButton";
+import { getPosts } from "@/app/lib/sanity.queries";
+import BlogCard from "@/components/BlogCard";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-    const post = BLOG_POSTS.find(p => p.slug === slug);
-    if (!post) return {};
-    return constructMetadata({
-        title: post.title,
-        description: post.excerpt,
-        slug: `blog/${slug}`,
-        image: post.image
-    });
-}
+// To wymusza odświeżanie danych przy każdym przeładowaniu (wyłącza cache statyczny)
+export const revalidate = 0;
 
-export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-    const post = BLOG_POSTS.find(p => p.slug === slug);
+export default async function BlogPage() {
+    // Pobieramy posty
+    const posts = await getPosts();
 
-    if (!post) notFound();
+    // Debugowanie: sprawdź w terminalu VS Code (nie w przeglądarce!), czy dane przychodzą
+    console.log("Pobrane posty z Sanity:", posts?.length);
 
     return (
-        <article className="pt-32 pb-20 max-w-4xl mx-auto px-4 bg-white">
-            {/* 1. POWRÓT */}
-            <FloatingBackButton />
-
-            {/* 2. OBRAZEK GŁÓWNY */}
-            <div className="relative w-full h-[400px] rounded-3xl overflow-hidden mb-10 shadow-xl">
-                <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                    priority
-                />
-            </div>
-
-            {/* 3. NAGŁÓWEK */}
-            <div className="mb-10">
-                <span className="bg-nova-blue/10 text-nova-blue px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
-                    {post.category}
-                </span>
-                <h1 className="text-4xl md:text-5xl font-black my-6 leading-tight text-nova-dark">
-                    {post.title}
-                </h1>
-                <div className="flex items-center gap-4 text-gray-400 font-medium">
-                    <span>{post.date}</span>
-                    <span>•</span>
-                    <span>Jarosław Biłas</span>
+        <main className="pt-32 pb-20 min-h-screen bg-nova-bg/20">
+            <div className="max-w-7xl mx-auto px-4">
+                {/* NAGŁÓWEK SEKCJI */}
+                <div className="mb-12">
+                    <span className="text-nova-blue font-bold uppercase tracking-widest text-sm">
+                        Centrum Wiedzy
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-black text-nova-dark mt-2">
+                        Blog Novamedic
+                    </h1>
+                    <p className="text-gray-600 mt-4 max-w-2xl">
+                        Najnowsze informacje ze świata chirurgii, ortopedii i medycyny estetycznej. 
+                        Dowiedz się więcej o nowoczesnych metodach leczenia.
+                    </p>
                 </div>
-            </div>
 
-            {/* 4. TREŚĆ ARTYKUŁU (Z FORMATOWANIEM PROSE) */}
-            <div
-                className="prose prose-lg max-w-none 
-                    prose-headings:text-nova-dark
-                    prose-headings:font-black
-                    prose-headings:text-slate-900
-                    prose-headings:mb-4
-                    prose-headings:mt-10
-                    prose-p:text-gray-700
-                    prose-p:leading-relaxed 
-                    prose-p:text-justify
-                    prose-p:mb-6
-                    prose-li:text-gray-700
-                    prose-strong:text-nova-dark
-                    prose-strong:text-slate-900
-                    prose-img:rounded-3xl"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-            />
-        </article>
+                {/* LISTA WPISÓW */}
+                {posts && posts.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {posts.map((post: any) => (
+                            <BlogCard key={post.slug} post={post} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-200">
+                        <p className="text-gray-500 font-medium">
+                            Nie znaleziono jeszcze żadnych wpisów. 
+                            Dodaj i opublikuj pierwszy post w Sanity Studio!
+                        </p>
+                    </div>
+                )}
+            </div>
+        </main>
     );
 }

@@ -1,12 +1,9 @@
 import "@/app/globals.css";
-//import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { defaultSEO } from "./lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-//const inter = Inter({ subsets: ["latin"] });
-
+import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
 
 export const metadata: Metadata = defaultSEO;
 
@@ -25,9 +22,9 @@ export default function RootLayout({
                 <link rel="manifest" href="/site.webmanifest" />
             </head>
             <body>
-                <Header />
-                {children}
-                <Footer />
+                <ClientLayoutWrapper>
+                    {children}
+                </ClientLayoutWrapper>
             </body>
         </html>
     );
