@@ -13,6 +13,25 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'categories',
+      title: 'Kategorie / Tagi',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'Aktualności', value: 'Aktualności' },
+          { title: 'Chirurgia', value: 'Chirurgia' },
+          { title: 'Podologia', value: 'Podologia' },
+          { title: 'Podochirurgia', value: 'Podochirurgia' },
+          { title: 'Laseroterapia', value: 'Laseroterapia' },
+          { title: 'Medycyna estetyczna', value: 'Medycyna estetyczna' },
+          { title: 'Leczenie ran', value: 'Leczenie ran' },
+          { title: 'Ortopedia', value: 'Ortopedia' },
+          { title: 'Wazektomia', value: 'Wazektomia' },
+        ]
+      }
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug (końcówka adresu URL)',
       type: 'slug',

@@ -1,49 +1,55 @@
-import { getPosts } from "@/app/lib/sanity.queries";
-import BlogCard from "@/components/BlogCard";
+import { getPostBySlug, urlFor } from "@/app/lib/sanity.queries";
+import { notFound } from "next/navigation";
+import CustomPortableText from "@/components/CustomPortableText";
+import FloatingBackButton from "@/components/FloatingBackButton";
 
-// To wymusza odświeżanie danych przy każdym przeładowaniu (wyłącza cache statyczny)
-export const revalidate = 0;
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const post = await getPostBySlug(slug);
 
-export default async function BlogPage() {
-    // Pobieramy posty
-    const posts = await getPosts();
+    if (!post) notFound();
 
-    // Debugowanie: sprawdź w terminalu VS Code (nie w przeglądarce!), czy dane przychodzą
-    console.log("Pobrane posty z Sanity:", posts?.length);
+    // Wyciągamy bezpieczny link
+    const mainImageUrl = post.mainImage ? urlFor(post.mainImage).width(1200).url() : null;
+    const authorImageUrl = post.author?.image ? urlFor(post.author.image).width(48).height(48).fit('crop').url() : null;
 
     return (
-        <main className="pt-32 pb-20 min-h-screen bg-nova-bg/20">
-            <div className="max-w-7xl mx-auto px-4">
-                {/* NAGŁÓWEK SEKCJI */}
-                <div className="mb-12">
-                    <span className="text-nova-blue font-bold uppercase tracking-widest text-sm">
-                        Centrum Wiedzy
-                    </span>
-                    <h1 className="text-4xl md:text-5xl font-black text-nova-dark mt-2">
-                        Blog Novamedic
-                    </h1>
-                    <p className="text-gray-600 mt-4 max-w-2xl">
-                        Najnowsze informacje ze świata chirurgii, ortopedii i medycyny estetycznej. 
-                        Dowiedz się więcej o nowoczesnych metodach leczenia.
-                    </p>
-                </div>
-
-                {/* LISTA WPISÓW */}
-                {posts && posts.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {posts.map((post: any) => (
-                            <BlogCard key={post.slug} post={post} />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-200">
-                        <p className="text-gray-500 font-medium">
-                            Nie znaleziono jeszcze żadnych wpisów. 
-                            Dodaj i opublikuj pierwszy post w Sanity Studio!
-                        </p>
+        <main className="min-h-screen bg-slate-50 pt-32 pb-20">
+            <FloatingBackButton />
+            <article className="max-w-4xl mx-auto px-4">
+                {/* OBRAZEK GŁÓWNY */}
+                {mainImageUrl && (
+                    <div className="relative w-full h-[300px] md:h-[500px] rounded-3xl overflow-hidden mb-10 shadow-xl">
+                        <img src={mainImageUrl} alt={post.title} className="w-full h-full object-cover" />
                     </div>
                 )}
-            </div>
+
+                <div className="mb-10">
+                    <h1 className="text-3xl md:text-5xl font-black mb-8 text-nova-dark leading-tight">
+                        {post.title}
+                    </h1>
+                    
+                    <div className="flex items-center gap-4 py-6 border-y border-gray-200">
+                        <div className="w-12 h-12 rounded-full bg-nova-blue/10 overflow-hidden flex-shrink-0">
+                            {authorImageUrl ? (
+                                <img src={authorImageUrl} alt={post.author.name} className="w-full h-full object-cover" />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center font-bold text-nova-blue">NM</div>
+                            )}
+                        </div>
+                        <div>
+                            <p className="font-black text-nova-dark leading-none">{post.author?.name}</p>
+                            <p className="text-gray-500 text-xs font-bold uppercase mt-1">
+                                {new Date(post.publishedAt).toLocaleDateString('pl-PL')}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="prose prose-lg max-w-none bg-white p-6 md:p-12 rounded-3xl shadow-sm">
+                    <CustomPortableText value={post.body} />
+                </div>
+            </article>
         </main>
     );
 }

@@ -1,68 +1,68 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import { urlFor } from '@/app/lib/sanity.queries';
 
-interface BlogCardProps {
-  post: {
-    title: string;
-    slug: string;
-    publishedAt: string;
-    excerpt: string;
-    mainImage: string;
-    author: {
-      name: string;
-      image: string;
+export default function BlogCard({ post }: { post: any }) {
+    const author = post.author;
+
+    // Generujemy URL - zwiększyłem jakość wyjściową, żeby obrazek nie był rozmazany
+    const mainImageUrl = post.mainImage ? urlFor(post.mainImage).width(800).height(450).fit('crop').url() : '/images/placeholder.jpg';
+    const authorImageUrl = author?.image ? urlFor(author.image).width(100).height(100).fit('crop').url() : null;
+
+    const getInitials = (name: string) => {
+        if (!name || typeof name !== 'string') return "NM";
+        return name.split(' ').map(n => n[0]).join('').toUpperCase();
     };
-  };
-}
 
-export default function BlogCard({ post }: BlogCardProps) {
-  const date = new Date(post.publishedAt).toLocaleDateString('pl-PL', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
+    // BlogCard.tsx
 
-  return (
-    <Link href={`/blog/${post.slug}`} className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-      {/* Zdjęcie główne */}
-      <div className="relative h-52 w-full overflow-hidden">
-        <Image
-          src={post.mainImage || '/images/placeholder.jpg'}
-          alt={post.title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-        />
-      </div>
+return (
+    <article className="flex flex-col w-full max-w-md h-[600px] group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+        {/* OBRAZEK GŁÓWNY - BEZ ZMIAN */}
+        <Link href={`/blog/${post.slug}`} className="relative h-[220px] w-full overflow-hidden block shrink-0">
+            <img src={mainImageUrl} alt={post.title} className="h-full w-full object-cover" />
+        </Link>
 
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-nova-blue bg-nova-bg px-2 py-1 rounded">
-            Aktualności
-          </span>
-          <span className="text-xs text-gray-400">{date}</span>
+        {/* KONTENER TREŚCI - Tutaj robimy porządek */}
+        <div className="flex flex-col flex-grow p-6 min-h-0"> {/* min-h-0 jest kluczowe! */}
+            
+            <div className="flex-grow"> {/* Ten div bierze na siebie cały scroll/nadmiar tekstu */}
+                {/* TAGI */}
+                <div className="h-[26px] mb-3">{/* ... tagi ... */}</div>
+
+                {/* TYTUŁ - 3 linie */}
+                <div className="h-[75px] mb-3 overflow-hidden text-xl font-black leading-tight text-nova-dark">
+                    <Link href={`/blog/${post.slug}`} className="line-clamp-3">{post.title}</Link>
+                </div>
+
+                {/* OPIS - 3 linie */}
+                <div className="h-[72px] mb-4 overflow-hidden text-sm text-gray-600">
+                    <p className="line-clamp-3">{post.excerpt}</p>
+                </div>
+            </div>
+
+            {/* STOPKA - Wyjęta poza flex-grow, ze sztywnym marginesem */}
+            <div className="mt-auto pt-4 border-t border-gray-100 flex items-center h-[50px] shrink-0">
+                <div className="flex items-center gap-3">
+                    {/* AWATAR - Powrót do najprostszej metody, ale z klasą flex-none */}
+                    <div className="w-9 h-9 rounded-full bg-nova-blue/10 overflow-hidden shrink-0 flex-none border border-gray-50">
+                        {authorImageUrl ? (
+                            <img 
+                                src={authorImageUrl} 
+                                alt="" 
+                                className="w-full h-full object-cover display-block" 
+                            />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center font-bold text-nova-blue text-[10px]">{getInitials(author?.name)}</div>
+                        )}
+                    </div>
+                    
+                    <div className="min-w-0">
+                        <p className="text-[13px] font-black text-nova-dark truncate leading-none mb-1">{author?.name}</p>
+                        <p className="text-[10px] text-gray-500 font-bold uppercase truncate">{author?.role}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <h3 className="text-xl font-bold text-nova-dark group-hover:text-nova-blue transition-colors mb-3 line-clamp-2">
-          {post.title}
-        </h3>
-
-        <p className="text-gray-600 text-sm line-clamp-3 mb-6 flex-grow">
-          {post.excerpt}
-        </p>
-
-        {/* Autor */}
-        <div className="flex items-center gap-3 pt-4 border-t border-gray-50">
-          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-nova-blue/20">
-            <Image
-              src={post.author?.image || '/images/avatar-placeholder.jpg'}
-              alt={post.author?.name}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <span className="text-xs font-bold text-nova-dark">{post.author?.name}</span>
-        </div>
-      </div>
-    </Link>
-  );
+    </article>
+);
 }

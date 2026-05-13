@@ -1,30 +1,29 @@
-// sanity.queries.ts
-
-import { createClient } from 'next-sanity'
-import imageUrlBuilder from '@sanity/image-url';
+import { createClient } from 'next-sanity';
+import { createImageUrlBuilder } from '@sanity/image-url';
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion: '2026-05-12',
+  apiVersion: '2024-05-12',
   useCdn: false,
-})
+});
 
-const builder = imageUrlBuilder(client);
-
-export function urlFor(source: any) {
-  return builder.image(source);
+const builder = createImageUrlBuilder(client);
+// Ta funkcja jest kluczowa - ona zamienia obiekt Sanity na link .jpg
+export function urlFor(source: any) { 
+    return builder.image(source); 
 }
 
 export async function getPosts() {
-  return await client.fetch(`*[_type == "post"]{
+  return await client.fetch(`*[_type == "post"] | order(publishedAt desc) {
     title,
     "slug": slug.current,
     publishedAt,
     excerpt,
-    "mainImage": mainImage.asset->url,
-    "author": author->{name, role, "image": image.asset->url}
-  }`)
+    mainImage,
+    "author": author->{name, role, image},
+    "categories": categories[]
+  }`);
 }
 
 export async function getPostBySlug(slug: string) {
@@ -34,10 +33,10 @@ export async function getPostBySlug(slug: string) {
       "slug": slug.current,
       publishedAt,
       excerpt,
-      "mainImage": mainImage.asset->url,
-      "author": author->{name, role, "image": image.asset->url},
+      mainImage,
+      "author": author->{name, role, image},
       body,
-      "category": "Aktualności" // Możesz to później zamienić na pole w Sanity
+      "categories": categories[]
     }`,
     { slug }
   );
