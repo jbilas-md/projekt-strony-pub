@@ -58,14 +58,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>
-              <h2 className="text-4xl font-black text-nova-dark uppercase tracking-tight italic">W czym pomagamy?</h2>
-              <p className="text-slate-500 font-medium mt-2">Kompleksowa opieka w ramach naszych głównych ścieżek leczenia.</p>
+              <h2 className="text-4xl font-black text-nova-dark uppercase tracking-tight italic">Nasza Oferta</h2>
+              <p className="text-slate-500 font-medium mt-2">Kompleksowa opieka w ramach naszych głównych dziedzin terapii.</p>
             </div>
             <Link href="/oferta" className="text-nova-blue font-black uppercase tracking-widest text-sm hover:underline">Pełna oferta usług</Link>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-            {/* Mapowanie danych - upewnij się, że tablica 'allServices' jest dostępna w Twoim komponencie */}
             {allServices.map((s, i) => (
               <Link 
                 href={s.link} 
