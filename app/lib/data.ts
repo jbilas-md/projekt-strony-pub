@@ -31,19 +31,4 @@ export const packages: Package[] = [
         isPromoted: true,
         category: 'wazektomia'
     }
-];
-
-export const faqs: FAQItem[] = [
-    {
-        id: 1,
-        category: 'wazektomia',
-        question: "Czy zabieg jest bolesny?",
-        answer: "Zabieg wykonywany jest w znieczuleniu miejscowym, dzięki czemu jest praktycznie bezbolesny. Po zabiegu może wystąpić lekki dyskomfort."
-    },
-    {
-        id: 2,
-        category: 'wazektomia',
-        question: "Kiedy można wrócić do pracy?",
-        answer: "Większość pacjentów wraca do pracy biurowej już następnego dnia. Praca fizyczna zalecana jest po ok. 3-5 dniach."
-    }
-];
+]

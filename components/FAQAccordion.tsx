@@ -1,6 +1,8 @@
 'use client';
+
 import { useState } from 'react';
-import { FAQItem } from '@/app/(site)/lib/faqs';
+import { FAQItem } from '@/app/lib/faq-data';
+import { ChevronDown } from 'lucide-react';
 
 export default function FAQAccordion({ items }: { items: FAQItem[] }) {
     const [openIndexes, setOpenIndexes] = useState<number[]>([]);
@@ -12,25 +14,40 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
     };
 
     return (
-        <div className="space-y-4 max-w-4xl mx-auto">
-            {items.map((item, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden transition-all">
-                    <button
-                        onClick={() => toggle(i)}
-                        className="w-full flex justify-between items-center p-8 text-left hover:bg-white/10 transition-colors"
+        <div className="space-y-4 max-w-3xl mx-auto">
+            {items.map((item, i) => {
+                const isOpen = openIndexes.includes(i);
+                return (
+                    <div 
+                        key={i} 
+                        className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
                     >
-                        <span className="text-xl font-bold text-nova-light">{item.q}</span>
-                        <span className={`text-3xl text-nova-blue transition-transform duration-300 ${openIndexes.includes(i) ? 'rotate-45' : ''}`}>
-                            +
-                        </span>
-                    </button>
-                    <div className={`transition-all duration-300 ease-in-out ${openIndexes.includes(i) ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                        <p className="p-8 pt-0 text-gray-400 leading-relaxed text-lg border-t border-white/5">
-                            {item.a}
-                        </p>
+                        <button
+                            onClick={() => toggle(i)}
+                            className="w-full flex justify-between items-center p-5 md:p-6 text-left text-nova-dark hover:text-nova-blue transition-colors gap-4"
+                            aria-expanded={isOpen}
+                        >
+                            <span className="text-base md:text-lg font-black leading-snug">
+                                {item.question}
+                            </span>
+                            <ChevronDown 
+                                size={18} 
+                                className={`text-nova-blue shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+                            />
+                        </button>
+                        
+                        <div 
+                            className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                                isOpen ? 'max-h-[500px] border-t border-gray-50 bg-gray-50/30' : 'max-h-0'
+                            }`}
+                        >
+                            <p className="p-5 md:p-6 text-gray-600 leading-relaxed text-sm md:text-base font-medium">
+                                {item.answer}
+                            </p>
+                        </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 }

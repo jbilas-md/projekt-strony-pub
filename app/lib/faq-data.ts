@@ -44,6 +44,18 @@ export const FAQ_ITEMS: FAQItem[] = [
         categorySlug: "podologia",
         question: "Jak należy przygotować się do pierwszej wizyty u podologa?",
         answer: "Przed pierwszą wizytą podologiczną (szczególnie w przypadku pękających pięt czy wrastających paznokci) prosimy nie moczyć intensywnie stóp w domu ani nie usuwać samodzielnie zrogowaceń tarką czy pumeksem. Pozwoli to na trafną ocenę stanu skóry i dobór właściwej terapii."
+    },
+    {
+        id: "faq-05",
+        categorySlug: "wazektomia",
+        question: "Czy wazektomia wpływa na erekcyję lub libido?",
+        answer: "Nie, wazektomia nie wpływa na zdolność do osiągnięcia i utrzymania erekcji, ani na produkcję hormonów płciowych. Nie wykazano również związku między wazektomią a zwiększeniem ryzyka chorób serca, raka prostaty czy innych schorzeń."
+    },
+    {
+        id: "faq-06",
+        categorySlug: "wazektomia",
+        question: "Czy wazektomia ma jakiekolwiek skutki uboczne?",
+        answer: "Wazektomia jest ogólnie bezpieczną procedurą, ale jak każda operacja chirurgiczna, może mieć pewne skutki uboczne. Najczęstsze to lekkie bóle, obrzęk i zaczerwienienie w miejscu zabiegu. W rzadkich przypadkach mogą wystąpić infekcje lub krwotoki."
     }
 ];
 
