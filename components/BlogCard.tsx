@@ -17,10 +17,10 @@ export default function BlogCard({ post }: { post: any }) {
 
 return (
     <article className="flex flex-col w-full max-w-md h-[600px] group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-        {/* OBRAZEK GŁÓWNY - BEZ ZMIAN */}
-        <Link href={`/blog/${post.slug}`} className="relative h-[220px] w-full overflow-hidden block shrink-0">
-            <img src={mainImageUrl} alt={post.title} className="h-full w-full object-cover" />
-        </Link>
+       {/* Poprawiony odnośnik obrazka głównego */}
+<Link href={`/blog/${post.slug?.current || post.slug}`} className="relative h-[220px] w-full overflow-hidden block shrink-0">
+    <img src={mainImageUrl} alt={post.title} className="h-full w-full object-cover" />
+</Link>
 
         {/* KONTENER TREŚCI - Tutaj robimy porządek */}
         <div className="flex flex-col flex-grow p-6 min-h-0"> {/* min-h-0 jest kluczowe! */}
@@ -29,10 +29,10 @@ return (
                 {/* TAGI */}
                 <div className="h-[26px] mb-3">{/* ... tagi ... */}</div>
 
-                {/* TYTUŁ - 3 linie */}
-                <div className="h-[75px] mb-3 overflow-hidden text-xl font-black leading-tight text-nova-dark">
-                    <Link href={`/blog/${post.slug}`} className="line-clamp-3">{post.title}</Link>
-                </div>
+                {/* Poprawiony odnośnik w tytule */}
+<div className="h-[75px] mb-3 overflow-hidden text-xl font-black leading-tight text-nova-dark">
+    <Link href={`/blog/${post.slug?.current || post.slug}`} className="line-clamp-3">{post.title}</Link>
+</div>
 
                 {/* OPIS - 3 linie */}
                 <div className="h-[72px] mb-4 overflow-hidden text-sm text-gray-600">
