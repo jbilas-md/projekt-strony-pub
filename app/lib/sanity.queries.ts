@@ -9,7 +9,7 @@ export const client = createClient({
 });
 
 const builder = createImageUrlBuilder(client);
-// Ta funkcja jest kluczowa - ona zamienia obiekt Sanity na link .jpg
+
 export function urlFor(source: any) { 
     return builder.image(source); 
 }
@@ -39,5 +39,18 @@ export async function getPostBySlug(slug: string) {
       "categories": categories[]
     }`,
     { slug }
+  );
+}
+export async function getPricing() {
+  return await client.fetch(
+    `*[_type == "pricingCategory"] | order(order asc) {
+      categoryName,
+      items[] {
+        name,
+        price
+      }
+    }`,
+    {},
+    { next: { revalidate: 3600 } } // Cache na 1 godzinę (ISR)
   );
 }
