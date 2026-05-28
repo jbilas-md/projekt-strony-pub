@@ -47,7 +47,8 @@ export async function getPricing() {
       categoryName,
       items[] {
         name,
-        price
+        price,
+        description
       }
     }`,
     {},

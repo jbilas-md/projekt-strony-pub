@@ -1,4 +1,4 @@
-// sanity/schemas/pricingCategory.ts
+// sanity/schemaTypes/pricingCategory.ts
 
 export default {
   name: 'pricingCategory',
@@ -41,6 +41,13 @@ export default {
               type: 'string',
               description: 'Np. "250 zł", "od 400 zł", "600 zł - 1200 zł"',
               validation: (Rule: any) => Rule.required(),
+            },
+            /* NOWE POLE: Opcjonalny opis szczegółów ceny */
+            {
+              name: 'description',
+              title: 'Opcjonalny opis / uwagi (zakres cen)',
+              type: 'string',
+              description: 'Dodatkowe wyjaśnienie, np. "Cena zależy od wielkości zmiany" lub "W cenie uwzględniono badanie histopatologiczne".',
             },
           ],
         },

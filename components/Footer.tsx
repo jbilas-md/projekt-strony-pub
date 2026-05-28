@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer className="pt-20 pb-10 bg-nova-dark text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 border-b border-white/10 pb-12 text-center md:text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-6 text-center md:text-left">
 
           {/* Kolumna 1: Logo i opis */}
           <div className="flex flex-col items-center md:items-start">
@@ -23,9 +23,6 @@ export default function Footer() {
                 className="brightness-0 invert"
               />
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Nowoczesna klinika specjalistyczna w Szczecinie. Twój komfort i zdrowie są dla nas najwyższym priorytetem.
-            </p>
           </div>
 
           {/* Kolumna 2: Oferta */}

@@ -1,3 +1,4 @@
+// app/[slug]/page.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -7,7 +8,7 @@ import BlogCard from '@/components/BlogCard';
 import { servicesData } from '../lib/services';
 import { allPackages } from '../lib/packages';
 import { FAQ_ITEMS } from '../lib/faq-data';
-import { BLOG_POSTS } from '../lib/blog-data';
+import { getPosts } from '../lib/sanity.queries'; // Zmiana: import bezpośrednio ze zapytań Sanity
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -21,13 +22,32 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   if (!service) return notFound();
 
-  // Filtrowanie zasobów
+  // Filtrowanie zasobów lokalnych
   const servicePackages = allPackages.filter(p => p.tags.includes(slug));
   const serviceFaqs = FAQ_ITEMS.filter(f => f.categorySlug === slug);
-  const servicePosts = BLOG_POSTS.filter(post => {
-  const postCategory = typeof post.category === 'object' ? post.category?.current : post.category;
-  return postCategory?.toLowerCase() === slug.toLowerCase();
-});
+  
+  // Pobranie świeżych artykułów ze Sanity CMS
+  const allPosts = await getPosts();
+  
+  // Filtrowanie artykułów pod kątem dopasowania do sluga bieżącej usługi
+  const servicePosts = allPosts.filter((post: any) => {
+    // Sprawdzamy pole 'categories' (tablica ze Sanity)
+    if (Array.isArray(post.categories)) {
+      return post.categories.some((cat: any) => {
+        const catSlug = typeof cat === 'object' ? cat?.slug?.current || cat?.current || cat?._ref : cat;
+        return typeof catSlug === 'string' && catSlug.toLowerCase() === slug.toLowerCase();
+      });
+    }
+    
+    // Fallback w razie gdyby w bazie istniało pojedyncze pole 'category'
+    const categoryRaw = post.category;
+    const postCategory = categoryRaw && typeof categoryRaw === 'object' && 'current' in categoryRaw
+      ? categoryRaw.current
+      : categoryRaw;
+    
+    return typeof postCategory === 'string' && postCategory.toLowerCase() === slug.toLowerCase();
+  });
+
   return (
     <div className="min-h-screen bg-white font-sans text-nova-dark antialiased">
       <main className="pt-32 lg:pt-48">
@@ -51,7 +71,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
-        {/* STANDARD MEDYCZNY & SPECYFIKA (Merytoryczny zamiast reklamowego) */}
+        {/* STANDARD MEDYCZNY & SPECYFIKA */}
         <section className="bg-nova-bg/30 py-24 rounded-[4rem]">
           <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-20">
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-gray-100/60">
@@ -72,7 +92,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
-        {/* DETALICZNY ZAKRES ZABIEGÓW (Rozwiązanie dla SEO i wielozabiegowości) */}
+        {/* DETALICZNY ZAKRES ZABIEGÓW */}
         {service.treatments && service.treatments.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 py-28">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">
@@ -89,7 +109,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
-        {/* PAKIETY ZABIEGOWE - Renderowane TYLKO wtedy, gdy istnieją */}
+        {/* PAKIETY ZABIEGOWE */}
         {servicePackages.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 py-24 border-t border-gray-50">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">Koszty i pakiety świadczeń</h2>
@@ -145,17 +165,20 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
-        {/* BLOG / BAZA WIEDZY (Zintegrowana z Sanity) */}
+        {/* BLOG / BAZA WIEDZY (Odkomentowana i połączona z Sanity) */}
         {servicePosts.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 py-28">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">
-              Opracowania naukowe i <span className="text-nova-blue">artykuły medyczne</span>
+              Baza wiedzy i <span className="text-nova-blue">artykuły medyczne</span>
             </h2>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-              {servicePosts.slice(0, 3).map((post) => (
-                <BlogCard key={post._id || post.id} post={post} />
+              {servicePosts.slice(0, 3).map((post: any) => (
+                // Jako key podajemy post.slug, ponieważ funkcja getPosts() mapuje slug.current bezpośrednio na string
+                <BlogCard key={post.slug} post={post} />
               ))}
             </div>
+            
             {servicePosts.length > 3 && (
               <div className="text-center mt-16">
                 <Link href="/blog" className="inline-block bg-nova-blue text-white font-black px-10 py-4 rounded-full shadow-md hover:bg-nova-dark transition-all text-xs uppercase tracking-wider">

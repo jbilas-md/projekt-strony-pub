@@ -11,7 +11,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
     // Wyciągamy bezpieczny link
     const mainImageUrl = post.mainImage ? urlFor(post.mainImage).width(1200).url() : null;
-    const authorImageUrl = post.author?.image ? urlFor(post.author.image).width(48).height(48).fit('crop').url() : null;
+    const authorImageUrl = post.author?.image ? urlFor(post.author.image).width(80).height(80).fit('crop').url() : null;
 
     return (
         <main className="min-h-screen bg-slate-50 pt-32 pb-20">
@@ -30,7 +30,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     </h1>
                     
                     <div className="flex items-center gap-4 py-6 border-y border-gray-200">
-                        <div className="w-12 h-12 rounded-full bg-nova-blue/10 overflow-hidden flex-shrink-0">
+                        <div className="w-20 h-20 rounded-full bg-nova-blue/10 overflow-hidden flex-shrink-0">
                             {authorImageUrl ? (
                                 <img src={authorImageUrl} alt={post.author.name} className="w-full h-full object-cover" />
                             ) : (
@@ -39,8 +39,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         </div>
                         <div>
                             <p className="font-black text-nova-dark leading-none">{post.author?.name}</p>
-                            <p className="text-gray-500 text-xs font-bold uppercase mt-1">
-                                {new Date(post.publishedAt).toLocaleDateString('pl-PL')}
+                            <p className="text-gray-500 text-xs font-bold uppercase mt-3">
+                                Opublikowano: {new Date(post.publishedAt).toLocaleDateString('pl-PL')}
                             </p>
                         </div>
                     </div>

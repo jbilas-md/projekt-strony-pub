@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import BlogCard from "@/components/BlogCard";
+import { ChevronDown } from 'lucide-react';
 
 interface BlogClientProps {
     initialPosts: any[];
@@ -40,7 +41,9 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
     return (
         <main className="pt-32 pb-20 min-h-screen bg-white">
             <div className="max-w-7xl mx-auto px-4">
-                <div className="mx-auto max-w-2xl text-center mb-16">
+                
+                {/* NAGŁÓWEK */}
+                <div className="mx-auto max-w-2xl text-center mb-12">
                     <h2 className="text-4xl font-black tracking-tight text-nova-dark sm:text-5xl uppercase">
                         Baza Wiedzy <span className="text-nova-blue">Novamedic</span>
                     </h2>
@@ -49,30 +52,44 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                     </p>
                 </div>
 
-                <div className="relative z-20 flex flex-wrap items-center justify-center gap-3 mb-12 text-xs font-bold">
-                    <button
-                        onClick={() => setActiveCategory("Wszystkie")}
-                        className={`px-4 py-1 rounded-full border transition-all uppercase ${activeCategory === "Wszystkie" ? 'bg-nova-blue text-white border-nova-blue' : 'bg-white text-nova-dark border-gray-200 hover:border-nova-blue'}`}
-                    >
-                        Wszystkie
-                    </button>
-                    {CATEGORIES.map((cat) => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveCategory(cat)}
-                            className={`px-4 py-1 rounded-full border transition-all uppercase ${activeCategory === cat ? 'bg-nova-blue text-white border-nova-blue' : 'bg-white text-nova-dark border-gray-200 hover:border-nova-blue'}`}
+                {/* NOWY STYLIZOWANY SELECT BOX (Zastąpił przyciski) */}
+                <div className="flex justify-center mb-16 relative z-30">
+                    <div className="relative w-full max-w-xs">
+                        <select
+                            value={activeCategory === "Wszystkie" ? "" : activeCategory}
+                            onChange={(e) => {
+                                setActiveCategory(e.target.value || "Wszystkie");
+                            }}
+                            className="w-full appearance-none bg-white border border-gray-200 hover:border-nova-blue px-5 py-3.5 pr-10 rounded-xl text-nova-dark font-black tracking-wider uppercase focus:outline-none focus:border-nova-blue focus:ring-2 focus:ring-nova-blue/10 shadow-sm transition-all cursor-pointer text-xs md:text-sm"
                         >
-                            {cat}
-                        </button>
+                            <option value="" className="text-gray-400 font-bold">Wszystkie kategorie</option>
+                            {CATEGORIES.map((cat) => (
+                                <option key={cat} value={cat} className="text-nova-dark font-bold normal-case">
+                                    {cat}
+                                </option>
+                            ))}
+                        </select>
+                        
+                        {/* Własna strzałka z lucide-react */}
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-nova-blue">
+                            <ChevronDown size={16} className="stroke-[3]" />
+                        </div>
+                    </div>
+                </div>
+
+                {/* NAPRAWIONA SIATKA - z dodanym justify-items-center zgodnie z Twoim komentarzem */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start justify-items-center">
+                    {filteredPosts.map((post) => (
+                        <BlogCard key={post.slug?.current || post.slug} post={post} />
                     ))}
                 </div>
 
-                {/* NAPRAWIONA SIATKA - justify-items-center zapobiega rozciąganiu */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-                    {filteredPosts.map((post) => (
-                        <BlogCard key={post.slug} post={post} />
-                    ))}
-                </div>
+                {/* Brak wyników */}
+                {filteredPosts.length === 0 && (
+                    <div className="text-center py-12 text-gray-400 font-bold">
+                        Brak artykułów w wybranej kategorii.
+                    </div>
+                )}
             </div>
         </main>
     );
