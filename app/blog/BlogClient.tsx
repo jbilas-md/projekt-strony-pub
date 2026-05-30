@@ -52,7 +52,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                     </p>
                 </div>
 
-                {/* NOWY STYLIZOWANY SELECT BOX (Zastąpił przyciski) */}
+                {/* SELECT BOX */}
                 <div className="flex justify-center mb-16 relative z-30">
                     <div className="relative w-full max-w-xs">
                         <select
@@ -77,7 +77,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                     </div>
                 </div>
 
-                {/* NAPRAWIONA SIATKA - z dodanym justify-items-center zgodnie z Twoim komentarzem */}
+                {/* NAPRAWIONA SIATKA */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start justify-items-center">
                     {filteredPosts.map((post) => (
                         <BlogCard key={post.slug?.current || post.slug} post={post} />

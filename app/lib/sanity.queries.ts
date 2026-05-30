@@ -55,3 +55,19 @@ export async function getPricing() {
     { next: { revalidate: 3600 } } // Cache na 1 godzinę (ISR)
   );
 }
+export async function getFaqCategories() {
+  return await client.fetch(`*[_type == "faqCategory"] {
+    "slug": slug.current,
+    name
+  }`);
+}
+
+export async function getFaqItems() {
+  return await client.fetch(`*[_type == "faqItem"] | order(order asc, _createdAt desc) {
+    "_id": _id,
+    question,
+    answer,
+    "plainAnswer": pt::text(answer),
+    "categorySlug": category->slug.current
+  }`);
+}

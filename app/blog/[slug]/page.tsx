@@ -12,6 +12,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     // Wyciągamy bezpieczny link
     const mainImageUrl = post.mainImage ? urlFor(post.mainImage).width(1200).url() : null;
     const authorImageUrl = post.author?.image ? urlFor(post.author.image).width(80).height(80).fit('crop').url() : null;
+    const displayCategory = Array.isArray(post.categories) && post.categories[0]
+        ? (typeof post.categories[0] === 'object' ? post.categories[0].title : post.categories[0])
+        : (post.category ? (typeof post.category === 'object' ? post.category.title : post.category) : 'Medycyna');
 
     return (
         <main className="min-h-screen bg-slate-50 pt-32 pb-20">
@@ -28,7 +31,22 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     <h1 className="text-3xl md:text-5xl font-black mb-8 text-nova-dark leading-tight">
                         {post.title}
                     </h1>
-                    
+
+                    <div className="flex items-center gap-4 py-3  flex items-center justify-between text-[13px] font-black uppercase tracking-wider">
+                        {post.publishedAt ? (
+                            <span className="text-nova-blue font-medium shrink-0">
+                                {new Date(post.publishedAt).toLocaleDateString('pl-PL')}
+                            </span>
+                        ) : (
+                            <div /> 
+                        )}
+
+                        {/* KATEGORIA PO PRAWEJ STRONIE Z SZARYM PRZEDROSTKIEM */}
+                        <div className="text-right truncate max-w-[65%]">
+                            <span className="text-gray-400 font-medium">Kategoria: </span>
+                            <span className="text-nova-blue">{displayCategory}</span>
+                        </div>
+                    </div>
                     <div className="flex items-center gap-4 py-6 border-y border-gray-200">
                         <div className="w-20 h-20 rounded-full bg-nova-blue/10 overflow-hidden flex-shrink-0">
                             {authorImageUrl ? (
@@ -39,9 +57,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         </div>
                         <div>
                             <p className="font-black text-nova-dark leading-none">{post.author?.name}</p>
-                            <p className="text-gray-500 text-xs font-bold uppercase mt-3">
-                                Opublikowano: {new Date(post.publishedAt).toLocaleDateString('pl-PL')}
-                            </p>
+                            <p className="text-gray-400 text-xs font-bold uppercase mt-3">{post.author?.role}</p>
                         </div>
                     </div>
                 </div>

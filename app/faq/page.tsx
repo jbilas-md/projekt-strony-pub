@@ -1,7 +1,6 @@
 // app/faq/page.tsx
-import { FAQ_ITEMS, FAQ_CATEGORIES } from "@/app/lib/faq-data";
+import { getFaqItems, getFaqCategories } from "@/app/lib/sanity.queries";
 import FAQClient from "./FAQClient";
-import { constructMetadata } from "@/app/lib/seo"; // użyj swojej funkcji SEO jeśli ją masz
 
 export const metadata = {
     title: "FAQ – Najczęściej Zadawane Pytania | Novamedic Szczecin",
@@ -12,30 +11,36 @@ export const metadata = {
     }
 };
 
-export default function FAQPage() {
-    // Generowanie kodu JSON-LD dla Google do Rich Snippets
+export default async function FAQPage() {
+    // Równoległe pobieranie danych ze Sanity CMS dla maksymalnej wydajności
+    const [faqItems, faqCategories] = await Promise.all([
+        getFaqItems(),
+        getFaqCategories()
+    ]);
+
+    // Generowanie kodu JSON-LD opartego o czysty, pozbawiony znaczników html tekst z plainAnswer
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": FAQ_ITEMS.map(item => ({
+        "mainEntity": faqItems.map((item: any) => ({
             "@type": "Question",
             "name": item.question,
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": item.answer
+                "text": item.plainAnswer
             }
         }))
     };
 
     return (
         <main className="bg-white min-h-screen pt-32 pb-20">
-            {/* Wstrzyknięcie skryptu Schema dla wyszukiwarek */}
+            {/* Struktura Schema przesyłana bezbłędnie do wyszukiwarki Google */}
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             
-            <FAQClient items={FAQ_ITEMS} categories={FAQ_CATEGORIES} />
+            <FAQClient items={faqItems} categories={faqCategories} />
         </main>
     );
 }

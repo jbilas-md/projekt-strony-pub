@@ -2,8 +2,20 @@
 "use client";
 
 import { useState } from "react";
-import { FAQItem, FAQCategory } from "@/app/lib/faq-data";
 import { ChevronDown } from "lucide-react";
+import CustomPortableText from "@/components/CustomPortableText";
+
+interface FAQCategory {
+    slug: string;
+    name: string;
+}
+
+interface FAQItem {
+    _id: string;
+    question: string;
+    answer: any; // Format Portable Text z Sanity
+    categorySlug: string;
+}
 
 export default function FAQClient({ items, categories }: { items: FAQItem[], categories: FAQCategory[] }) {
     const [activeCategory, setActiveCategory] = useState("wszystkie");
@@ -29,16 +41,13 @@ export default function FAQClient({ items, categories }: { items: FAQItem[], cat
                 </p>
             </div>
 
-            {/* Nowy, Mobilny Układ Filtrowania */}
+            {/* Wybór kategorii */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16 text-xs font-bold bg-gray-50/50 p-4 rounded-2xl border border-gray-100 sm:border-none sm:bg-transparent sm:p-0">
-
-                {/* Separator / Tekst pomocniczy */}
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-left">
                     <span className="text-gray-500 uppercase tracking-wider text-[11px] font-black shrink-0 sm:mt-0 mt-2">
                         Wybierz interesującą kategorię:
                     </span>
                     
-                    {/* Stylizowany Select Box */}
                     <div className="relative w-full sm:w-72">
                         <select
                             value={activeCategory === "wszystkie" ? "" : activeCategory}
@@ -55,7 +64,6 @@ export default function FAQClient({ items, categories }: { items: FAQItem[], cat
                                 </option>
                             ))}
                         </select>
-                        {/* Własna strzałka zamiast domyślnej systemowej */}
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-nova-blue">
                             <ChevronDown size={16} className="stroke-[3]" />
                         </div>
@@ -67,14 +75,14 @@ export default function FAQClient({ items, categories }: { items: FAQItem[], cat
             <div className="space-y-4">
                 {filteredItems.length > 0 ? (
                     filteredItems.map((item) => {
-                        const isOpen = openId === item.id;
+                        const isOpen = openId === item._id;
                         return (
                             <div 
-                                key={item.id} 
+                                key={item._id} 
                                 className="border border-gray-100 rounded-2xl bg-white shadow-sm overflow-hidden transition-all duration-300"
                             >
                                 <button
-                                    onClick={() => toggleFaq(item.id)}
+                                    onClick={() => toggleFaq(item._id)}
                                     className="w-full flex items-center justify-between p-6 text-left font-black text-nova-dark hover:text-nova-blue transition-colors gap-4"
                                     aria-expanded={isOpen}
                                 >
@@ -87,11 +95,12 @@ export default function FAQClient({ items, categories }: { items: FAQItem[], cat
                                 
                                 <div 
                                     className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                                        isOpen ? "max-h-[500px] border-t border-gray-100 bg-white" : "max-h-0"
+                                        isOpen ? "max-h-[1000px] border-t border-gray-100 bg-white" : "max-h-0"
                                     }`}
                                 >
-                                    <div className="p-6 text-gray-600 text-sm md:text-base leading-relaxed font-medium">
-                                        {item.answer}
+                                    {/* DODANE KLASY PROSE DLA RENDEROWANIA RICH TEXT */}
+                                    <div className="p-6 text-gray-600 text-sm md:text-base leading-relaxed font-medium prose prose-sm md:prose-base max-w-none prose-strong:text-nova-dark prose-strong:font-black prose-ul:list-disc prose-ol:list-decimal">
+                                        <CustomPortableText value={item.answer} />
                                     </div>
                                 </div>
                             </div>

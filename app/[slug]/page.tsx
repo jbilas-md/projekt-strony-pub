@@ -7,7 +7,7 @@ import BlogCard from '@/components/BlogCard';
 
 import { servicesData } from '../lib/services';
 import { allPackages } from '../lib/packages';
-import { FAQ_ITEMS } from '../lib/faq-data';
+//import { FAQ_ITEMS } from '../lib/faq-data';
 import { getPosts } from '../lib/sanity.queries'; // Zmiana: import bezpośrednio ze zapytań Sanity
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -24,7 +24,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   // Filtrowanie zasobów lokalnych
   const servicePackages = allPackages.filter(p => p.tags.includes(slug));
-  const serviceFaqs = FAQ_ITEMS.filter(f => f.categorySlug === slug);
+  //const serviceFaqs = FAQ_ITEMS.filter(f => f.categorySlug === slug);
   
   // Pobranie świeżych artykułów ze Sanity CMS
   const allPosts = await getPosts();
@@ -146,7 +146,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
-        {/* FAQ */}
+        {/* FAQ 
         {serviceFaqs.length > 0 && (
           <section className="bg-nova-bg/40 py-28 rounded-[4rem]">
             <div className="max-w-7xl mx-auto px-4">
@@ -163,13 +163,13 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               )}
             </div>
           </section>
-        )}
+        )} */}
 
-        {/* BLOG / BAZA WIEDZY (Odkomentowana i połączona z Sanity) */}
+        {/* BLOG / BAZA WIEDZY */}
         {servicePosts.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 py-28">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">
-              Baza wiedzy i <span className="text-nova-blue">artykuły medyczne</span>
+              Dowiedz się więcej <span className="text-nova-blue">- nasza baza wiedzy</span>
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
