@@ -4,8 +4,10 @@ import ReviewsSection from '@/components/ReviewsSection';
 import type { Metadata } from "next";
 import Image from 'next/image';
 import Link from 'next/link';
+import { getFeaturedProcedures } from '@/app/lib/sanity.queries';
 
-export default function Home() {
+export default async function HomePage() {
+  const featuredProcedures = await getFeaturedProcedures();
   
   const allServices = [
     { title: "Chirurgia", desc: "Zabiegi w trybie ambulatoryjnym, usuwanie zmian skórnych, biopsje.", link: "/chirurgia", image: "/images/chirurgia.jpg" },
@@ -58,10 +60,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>
-              <h2 className="text-4xl font-black text-nova-dark uppercase tracking-tight italic">Nasza Oferta</h2>
-              <p className="text-slate-500 font-medium mt-2">Kompleksowa opieka w ramach naszych głównych dziedzin terapii.</p>
+              <h2 className="text-4xl font-black text-nova-dark uppercase tracking-tight italic">Nasze specjalności</h2>
+              {/*<p className="text-slate-500 font-medium mt-2">Kompleksowa opieka w ramach naszych głównych dziedzin terapii.</p>*/}
             </div>
-            <Link href="/oferta" className="text-nova-blue font-black uppercase tracking-widest text-sm hover:underline">Pełna oferta usług</Link>
+            {/*<Link href="/oferta" className="text-nova-blue font-black uppercase tracking-widest text-sm hover:underline">Pełna oferta usług</Link>*/}
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
@@ -73,7 +75,7 @@ export default function Home() {
               >
                 {/* Obraz tła z efektem grayscale, który znika po najechaniu */}
                 <div 
-                  className="absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                  className="absolute inset-0 bg-cover bg-center group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                   style={{ backgroundImage: `url(${s.image})` }}
                 />
                 {/* Gradient dla czytelności tekstu - wykorzystuje Twoją nową zmienną nova-dark */}
@@ -93,14 +95,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. NAJCZĘŚCIEJ WYBIERANE */}
+      {/* 3. NAJCZĘŚCIEJ WYBIERANE *
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
             <h2 className="text-3xl font-black text-nova-dark uppercase tracking-tight mb-12 italic underline decoration-nova-blue decoration-4 underline-offset-8">Najczęściej wybierane</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 {/* Przykład kafelka zabiegu */}
                 
-                {/*  WAZEKTOMIA */}
+                {/*  WAZEKTOMIA *
 
                 <div className="relative group overflow-hidden rounded-[4rem] aspect-[4/5] shadow-2xl">
                     <Image 
@@ -128,7 +130,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/*  PLASTYKA WAŁÓW */}
+                {/*  PLASTYKA WAŁÓW *
 
                 <div className="relative group overflow-hidden rounded-[4rem] aspect-[4/5] shadow-2xl">
                     <Image 
@@ -156,10 +158,53 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* ... kolejne kafelki ... */}
+                {/* ... kolejne kafelki ... *
             </div>
         </div>
-      </section>
+      </section>*/}
+
+      {/* 3. NAJCZĘŚCIEJ WYBIERANE */}
+<section className="py-24 bg-white">
+  <div className="max-w-7xl mx-auto px-4 text-center">
+    <h2 className="text-3xl font-black text-nova-dark uppercase tracking-tight mb-12 italic underline decoration-nova-blue decoration-4 underline-offset-8">
+      Najczęściej wybierane
+    </h2>
+    
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+  {featuredProcedures?.map((proc: any) => (
+    <div key={proc._id} className="relative group overflow-hidden rounded-[2.5rem] md:rounded-[4rem] h-44 md:h-auto md:aspect-square bg-nova-dark shadow-2xl flex flex-col justify-end">
+      
+      {/* Obrazek ukryty na telefonie */}
+      <Image 
+        src={proc.imageUrl} 
+        fill 
+        alt={proc.title} 
+        className="hidden md:block object-cover transition-transform duration-700 group-hover:scale-110" 
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-nova-dark via-nova-dark/60 to-transparent opacity-90"></div>
+      
+      <div className="absolute inset-0 p-6 md:p-12 flex flex-col justify-between z-10">
+        <div></div>
+        <div className="flex flex-col sm:flex-row md:flex-col justify-between items-start sm:items-center md:items-start gap-4 w-full">
+          <h4 className="text-white text-xl md:text-3xl font-black italic leading-[1.1] tracking-tight max-w-[250px]">
+            {proc.title}
+          </h4>
+          
+          {/* POPRAWKA: Link prowadzi teraz do /zabiegi/[slug] */}
+          <Link 
+            href={`/zabiegi/${proc.slug}`} 
+            className="inline-block bg-white text-nova-dark py-2.5 md:py-3 px-6 md:px-8 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-nova-blue hover:text-white transition-all shadow-lg shrink-0"
+          >
+            Sprawdź zabieg
+          </Link>
+        </div>
+      </div>
+
+    </div>
+  ))}
+</div>
+  </div>
+</section>
 
       {/* 4. OPINIE (Losowe z pliku reviews.ts) */}
       <ReviewsSection />
