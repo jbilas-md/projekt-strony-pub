@@ -78,7 +78,6 @@ export async function getFaqItems() {
   }`);
 }
 
-// --- ZABIEGI (NOWOŚĆ) ---
 export async function getFeaturedProcedures() {
   return await client.fetch(
     `*[_type == "procedure" && isFeatured == true] | order(_createdAt desc) {
@@ -92,14 +91,25 @@ export async function getFeaturedProcedures() {
   );
 }
 
+// app/lib/sanity.queries.ts
+
 export async function getProcedureBySlug(slug: string) {
   return await client.fetch(
     `*[_type == "procedure" && slug.current == $slug][0] {
       _id,
       title,
+      category,
       teaser,
       content,
-      "imageUrl": image.asset->url
+      "imageUrl": image.asset->url,
+      
+      // LOGIKA POBIERANIA CENY DLA WARIANTÓW:
+      // Definiujemy unikalny punkt szukany: jeśli wpisano specificPricingName, używamy go.
+      // W przeciwnym wypadku domyślnie szukamy po tytule procedury.
+      "price": coalesce(
+        pricingCategoryRef->items[name == ^.specificPricingName][0].price,
+        pricingCategoryRef->items[name == ^.title][0].price
+      )
     }`,
     { slug },
     { next: { revalidate: 0 } }

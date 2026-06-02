@@ -11,7 +11,9 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const procedure = await getProcedureBySlug(slug);
-  if (!procedure) return {};
+  if (!procedure) {
+    notFound();
+  }
 
   return {
     title: `${procedure.title} - Novamedic Szczecin`,
@@ -50,20 +52,25 @@ export default async function ProcedurePage({ params }: Props) {
 
         {/* NAGŁÓWEK I TYTUŁ ZABIEGU */}
         <div className="mb-10">
-          <h1 className="text-3xl md:text-5xl font-black mb-8 text-nova-dark leading-tight">
+        <h1 className="text-3xl md:text-5xl font-black mb-8 text-nova-dark leading-tight">
             {procedure.title}
-          </h1>
-          
-          {/* Opcjonalny podział wizualny/kategoria zabiegu, nawiązujący do siatki bloga */}
-          <div className="flex items-center justify-between text-[13px] font-black uppercase tracking-wider py-3 border-b border-gray-200">
-            <span className="text-nova-blue font-medium shrink-0">
-              Gabinet zabiegowy
-            </span>
-            <div className="text-right truncate max-w-[65%]">
-              <span className="text-gray-400 font-medium">Usługa: </span>
-              <span className="text-nova-blue">Specjalistyczna</span>
+        </h1>
+        
+        <div className="flex items-center justify-between text-[13px] font-black uppercase tracking-wider py-3 border-b border-gray-200">
+            {/* PO LEWEJ: Kategoria wyciągana dynamicznie ze schematu */}
+            <div className="truncate max-w-[50%] text-left">
+            <span className="text-gray-400 font-medium">Kategoria: </span>
+            <span className="text-nova-blue">{procedure.category || 'Medycyna'}</span>
             </div>
-          </div>
+            
+            {/* PO PRAWEJ: Cena pobierana z Sanity (z fallbackiem, jeśli nie podano) */}
+            <div className="text-right truncate max-w-[50%]">
+            <span className="text-gray-400 font-medium">Cena: </span>
+            <span className="text-nova-blue">
+                {procedure.price ? `od ${procedure.price}` : 'Sprawdź cennik'}
+            </span>
+            </div>
+        </div>
         </div>
 
         {/* ZAWARTOŚĆ I TREŚĆ BOGATA */}
