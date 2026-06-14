@@ -87,10 +87,10 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </section>
 
         {/* STANDARD MEDYCZNY & SPECYFIKA */}
-        <section className="bg-nova-bg/30 py-24 rounded-[4rem]">
-          <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-20">
-            <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-gray-100/60">
-              <h2 className="text-2xl font-black mb-8 text-nova-dark uppercase tracking-tight">Kliniczny standard opieki</h2>
+        <section className="bg-nova-bg/30 py-12 lg:py-24 rounded-[4rem]">
+          <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+            <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-gray-100/60 flex flex-col justify-start self-start">
+              <h2 className="text-2xl font-black mt-0 mb-8 text-nova-dark uppercase tracking-tight">Dlaczego <span className="text-nova-blue">Novamedic</span>?</h2>
               <ul className="space-y-5">
                 {service.clinicalStandards.map((standard: string, i: number) => (
                   <li key={i} className="flex items-start gap-4 text-base font-semibold text-slate-700">
@@ -100,8 +100,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                 ))}
               </ul>
             </div>
-            <div className="flex flex-col justify-center">
-              <h2 className="text-2xl font-black mb-6 text-nova-dark uppercase tracking-tight">Charakterystyka profilu leczenia</h2>
+            <div className="flex flex-col justify-start p-10 pt-10 self-start">
+              <h2 className="text-2xl font-black mt-0 mb-6 text-nova-dark uppercase tracking-tight">Co warto wiedzieć?</h2>
               <p className="text-slate-600 text-base md:text-lg leading-relaxed font-medium">{service.details}</p>
             </div>
           </div>

@@ -19,15 +19,17 @@ export interface Service {
 export const servicesData: Record<string, Service> = {
   'chirurgia': {
     title: "Chirurgia Ogólna",
-    h1: "Chirurgia Ogólna i Ambulatoryjna Szczecin",
-    intro: "Kompleksowa diagnostyka oraz zabiegi operacyjne w znieczuleniu miejscowym, realizowane zgodnie z rygorystycznymi protokołami bezpieczeństwa chirurgicznego.",
-    image: "/images/services/chirurgia-hero.jpg",
-    details: "W Novamedic procedury zabiegowe realizowane są przez doświadczonych operatorów w warunkach pełnej sterylności. Każda wycięta zmiana tkankowa standardowo podlega weryfikacji histopatologicznej. Specjalizujemy się w technikach małoinwazyjnych, minimalizujących uraz operacyjny i skracających okres rekonwalescencji.",
+    h1: "Chirurgia Ogólna",
+    intro: "Nowoczesna chirurgia ambulatoryjna oparta na doświadczeniu, estetyce i indywidualnym podejściu do pacjenta.",
+    image: "/images/chirurgia.jpg",
+    details: "Większość procedur przeprowadzana jest w warunkach ambulatoryjnych w znieczuleniu miejscowym, bez konieczności hospitalizacji. Każdy pacjent objęty jest indywidualną opieką – od konsultacji i kwalifikacji do zabiegu, przez leczenie operacyjne, aż po kontrole pooperacyjne. W razie potrzeby wykonujemy badania laboratoryjne i histopatologiczne, zapewniające pełną diagnostykę i bezpieczeństwo onkologiczne.",
     clinicalStandards: [
-      "Obowiązkowa weryfikacja histopatologiczna (H-P) pobranych bioptatów",
-      "Stosowanie śródskórnych szwów plastycznych ograniczających widoczność blizn",
-      "Kwalifikacja pacjenta oparta na aktualnych wytycznych Towarzystwa Chirurgów Polskich",
-      "Ciągłość opieki: od konsultacji, przez zabieg, aż po kontrole pooperacyjne"
+      "Ponad 15 lat doświadczenia",
+      "Nowoczesny sprzęt diagnostyczny i zabiegowy",
+      "Zabiegi wykonywane zgodnie z aktualnymi standardami",
+      "Małoinwazyjne techniki skracające czas rekonwalescencji",
+      "Estetyczne techniki szycia ran",
+      "Kompleksowa opieka przed i po zabiegu"
     ],
     treatments: [
       {
@@ -59,15 +61,15 @@ export const servicesData: Record<string, Service> = {
   },
   'wazektomia': {
     title: "Wazektomia",
-    h1: "Wazektomia Szczecin – Nowoczesna Antykoncepcja Męska",
-    intro: "Bezpieczna i wysoce skuteczna metoda stałej antykoncepcji dla mężczyzn, wykonywana procedurą bez skalpela (No-Scalpel Vasectomy).",
+    h1: "Wazektomia Szczecin",
+    intro: "Bezpieczna i wysoce skuteczna metoda stałej antykoncepcji dla mężczyzn.",
     image: "/images/services/wazektomia-hero.jpg",
-    details: "Zabieg polega na rozwarstwieniu skóry (bez użycia klasycznego skalpela) i zaopatrzeniu nasieniowodów metodą kanadyjską (koagulacja chirurgiczna i podwiązanie). Procedura charakteryzuje się minimalnym ryzykiem powikłań, brakiem konieczności zakładania tradycyjnych szwów i bardzo szybkim powrotem do pełnej aktywności życiowej.",
+    details: "Zabieg polega na zrobieniu niewielkiego otworu w skórze i zaopatrzeniu nasieniowodów metodą kanadyjską. Procedura charakteryzuje się minimalnym ryzykiem powikłań, wysoką skutecznością i szybkim powrotem do pełnej aktywności życiowej.",
     clinicalStandards: [
-      "Stosowanie metody bez skalpela (NSV) gwarantującej minimalny uraz tkanek",
-      "Procedura realizowana w znieczuleniu miejscowym nasiękowym",
-      "Weryfikacja skuteczności zabiegu poprzez obowiązkowe badanie nasienia (spermiogram)",
-      "Zgodność z wytycznymi Polskiego Towarzystwa Wazektomii"
+      "Stosowanie metody gwarantującej minimalny uraz tkanek",
+      "Szybko działające znieczulenie miejscowe",
+      "Zgodność z wytycznymi Amerykańskiego Towarzystwa Urologicznego (AUA)",
+      "Weryfikacja skuteczności zabiegu poprzez obowiązkowe badanie nasienia (spermiogram)"    
     ],
     treatments: [
       {
@@ -84,14 +86,14 @@ export const servicesData: Record<string, Service> = {
   },
   'podologia': {
     title: "Podologia",
-    h1: "Gabinet Podologiczny Szczecin",
-    intro: "Specjalistyczna diagnostyka, terapia schorzeń w obrębie skóry stóp i aparatu paznokciowego prowadzona w ścisłej współpracy medycznej.",
+    h1: "Podologia Szczecin",
+    intro: "Specjalistyczna diagnostyka i terapia schorzeń w obrębie skóry stóp i aparatu paznokciowego oraz profesjonalna pielęgnacja medyczna stóp.",
     image: "/images/services/podologia-hero.jpg",
     details: "Zapewniamy pełny profil zabiegów podologicznych, od podstawowej pielęgnacji profilaktycznej po skomplikowane terapie przewlekłych zmian skórnych, hyperkeratofii oraz deformacji płytki. Łączymy procedury kosmetyczne z zaawansowaną wiedzą z zakresu dermatologii i chirurgii stóp.",
     clinicalStandards: [
-      "Sterylizacja narzędzi w autoklawie klasy B według norm medycznych",
-      "Praca na certyfikowanych preparatach podofarmaceutycznych i odciążeniach",
-      "Prowadzenie cyfrowej dokumentacji fotograficznej postępów leczenia skóry stóp"
+      "Certyfikowane preparaty podofarmaceutyczne i odciążenia",
+      "Ścisła współpraca z lekarzem chirurgiem w przypadku zmian wymagających interwencji chirurgicznej",
+      "Indywidualne programy pielęgnacyjne i edukacja pacjenta w zakresie profilaktyki"
     ],
     treatments: [
       {
