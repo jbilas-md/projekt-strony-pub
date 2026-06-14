@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation"; // Zmiana: Importujemy useRouter zamiast Link
 import { ArrowLeft } from "lucide-react";
 
 export default function FloatingBackButton() {
     const [isScrolled, setIsScrolled] = useState(false);
+    const router = useRouter(); // Inicjalizacja routera Next.js
 
     useEffect(() => {
         const handleScroll = () => {
@@ -15,28 +16,29 @@ export default function FloatingBackButton() {
     }, []);
 
     return (
-        <Link
-            href="/blog"
-            style={{ 
-                borderTopRightRadius: '100px', 
-                borderBottomRightRadius: '100px' 
+        <button
+            type="button"
+            onClick={() => router.back()} // Zmiana: Dynamiczne cofanie w historii przeglądarki
+            style={{
+                borderTopRightRadius: '100px',
+                borderBottomRightRadius: '100px'
             }}
             className={`
                 fixed left-0 top-1/2 -translate-y-1/2 z-50
                 flex items-center transition-all duration-500 ease-in-out
-                bg-nova-blue text-white shadow-2xl
-                ${isScrolled 
-                    ? "py-4 px-3 translate-x-[-12px]" 
+                bg-nova-blue text-white shadow-2xl cursor-pointer
+                ${isScrolled
+                    ? "py-4 px-3 translate-x-[-12px]"
                     : "py-4 px-6 translate-x-0"
                 }
                 group hover:translate-x-0 hover:px-8
             `}
         >
-            <ArrowLeft 
-                size={20} 
-                className="shrink-0 transition-transform duration-300 group-hover:-translate-x-1" 
+            <ArrowLeft
+                size={20}
+                className="shrink-0 transition-transform duration-300 group-hover:-translate-x-1"
             />
-            
+
             <span
                 className={`
                     font-black uppercase tracking-widest text-xs overflow-hidden transition-all duration-500
@@ -46,6 +48,6 @@ export default function FloatingBackButton() {
             >
                 Powrót
             </span>
-        </Link>
+        </button>
     );
 }

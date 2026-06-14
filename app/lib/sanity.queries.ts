@@ -11,8 +11,8 @@ export const client = createClient({
 
 const builder = createImageUrlBuilder(client);
 
-export function urlFor(source: any) { 
-    return builder.image(source); 
+export function urlFor(source: any) {
+  return builder.image(source);
 }
 
 // --- BLOG ---
@@ -118,4 +118,17 @@ export async function getProcedureBySlug(slug: string) {
 
 export async function getAllProcedureSlugs() {
   return await client.fetch(`*[_type == "procedure" && defined(slug.current)][].slug.current`);
+}
+
+export async function getProceduresByCategory(categoryName: string) {
+  return await client.fetch(
+    `*[_type == "procedure" && category == $categoryName] | order(title asc) {
+      _id,
+      title,
+      teaser,
+      slug
+    }`,
+    { categoryName },
+    { next: { revalidate: 0 } } // Odświeżanie na żywo w trybie deweloperskim
+  );
 }

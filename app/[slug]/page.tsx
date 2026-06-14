@@ -7,8 +7,20 @@ import BlogCard from '@/components/BlogCard';
 
 import { servicesData } from '../lib/services';
 import { allPackages } from '../lib/packages';
-//import { FAQ_ITEMS } from '../lib/faq-data';
-import { getPosts } from '../lib/sanity.queries'; // Zmiana: import bezpośrednio ze zapytań Sanity
+// Zmiana: Importujemy nową funkcję pobierania zabiegów z Sanity
+import { getPosts, getProceduresByCategory } from '../lib/sanity.queries';
+
+// Słownik mapujący slugi z adresu URL na wartości kategorii zdefiniowane w Sanity
+const slugToCategoryMap: Record<string, string> = {
+  'chirurgia': 'Chirurgia',
+  'ortopedia': 'Ortopedia',
+  'podologia': 'Podologia',
+  'podochirurgia': 'Podochirurgia',
+  'laseroterapia': 'Laseroterapia',
+  'medycyna-estetyczna': 'Medycyna Estetyczna',
+  'wazektomia': 'Wazektomia',
+  'leczenie-ran': 'Leczenie ran',
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -22,29 +34,32 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   if (!service) return notFound();
 
+  // 1. Mapowanie sluga na kategorię Sanity i pobranie zabiegów bezpośrednio z CMS
+  const sanityCategoryName = slugToCategoryMap[slug] || '';
+  const sanityProcedures = sanityCategoryName
+    ? await getProceduresByCategory(sanityCategoryName)
+    : [];
+
   // Filtrowanie zasobów lokalnych
   const servicePackages = allPackages.filter(p => p.tags.includes(slug));
-  //const serviceFaqs = FAQ_ITEMS.filter(f => f.categorySlug === slug);
-  
+
   // Pobranie świeżych artykułów ze Sanity CMS
   const allPosts = await getPosts();
-  
+
   // Filtrowanie artykułów pod kątem dopasowania do sluga bieżącej usługi
   const servicePosts = allPosts.filter((post: any) => {
-    // Sprawdzamy pole 'categories' (tablica ze Sanity)
     if (Array.isArray(post.categories)) {
       return post.categories.some((cat: any) => {
         const catSlug = typeof cat === 'object' ? cat?.slug?.current || cat?.current || cat?._ref : cat;
         return typeof catSlug === 'string' && catSlug.toLowerCase() === slug.toLowerCase();
       });
     }
-    
-    // Fallback w razie gdyby w bazie istniało pojedyncze pole 'category'
+
     const categoryRaw = post.category;
     const postCategory = categoryRaw && typeof categoryRaw === 'object' && 'current' in categoryRaw
       ? categoryRaw.current
       : categoryRaw;
-    
+
     return typeof postCategory === 'string' && postCategory.toLowerCase() === slug.toLowerCase();
   });
 
@@ -92,18 +107,33 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
-        {/* DETALICZNY ZAKRES ZABIEGÓW */}
-        {service.treatments && service.treatments.length > 0 && (
+        {/* DETALICZNY ZAKRES ZABIEGÓW (Teraz zasilany dynamicznie ze Sanity i klikalny) */}
+        {sanityProcedures && sanityProcedures.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 py-28">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">
               Wykonywane <span className="text-nova-blue">procedury zabiegowe</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {service.treatments.map((treatment, idx) => (
-                <div key={idx} className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm hover:border-nova-blue/30 transition-all">
-                  <h3 className="text-xl font-black text-nova-dark mb-3 leading-snug">{treatment.name}</h3>
-                  <p className="text-sm md:text-base text-slate-600 leading-relaxed font-medium">{treatment.description}</p>
-                </div>
+              {sanityProcedures.map((procedure: any) => (
+                <Link
+                  key={procedure._id}
+                  // Dynamiczny adres URL pobierany prosto ze sluga w Sanity
+                  href={`/zabiegi/${procedure.slug?.current}`}
+                  className="block bg-white border border-gray-100 p-8 rounded-3xl shadow-sm hover:border-nova-blue/30 hover:shadow-md transition-all group"
+                >
+                  {/* group-hover:text-nova-blue sprawi, że tytuł zmieni kolor przy najechaniu na dowolne miejsce kafelka */}
+                  <h3 className="text-xl font-black text-nova-dark mb-3 leading-snug group-hover:text-nova-blue transition-colors">
+                    {procedure.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-slate-600 leading-relaxed font-medium">
+                    {procedure.teaser}
+                  </p>
+
+                  {/* Subtelny akcent wizualny (strzałka), który pojawia się przy najechaniu (hover) */}
+                  <div className="mt-4 text-xs font-bold text-nova-blue uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-4px] group-hover:translate-x-0">
+                    Szczegóły zabiegu <span>→</span>
+                  </div>
+                </Link>
               ))}
             </div>
           </section>
@@ -146,39 +176,19 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
-        {/* FAQ 
-        {serviceFaqs.length > 0 && (
-          <section className="bg-nova-bg/40 py-28 rounded-[4rem]">
-            <div className="max-w-7xl mx-auto px-4">
-              <h2 className="text-3xl font-black mb-16 text-center text-nova-dark uppercase tracking-tight">
-                Konsultacje i zabiegi – <span className="text-nova-blue">FAQ</span>
-              </h2>
-              <FAQAccordion items={serviceFaqs.slice(0, 3)} />
-              {serviceFaqs.length > 3 && (
-                <div className="text-center mt-12">
-                  <Link href="/faq" className="inline-block bg-white hover:bg-gray-50 border border-gray-200 text-nova-dark font-bold px-8 py-3.5 rounded-full shadow-sm text-xs uppercase tracking-wider">
-                    Zobacz pełną bazę pytań
-                  </Link>
-                </div>
-              )}
-            </div>
-          </section>
-        )} */}
-
         {/* BLOG / BAZA WIEDZY */}
         {servicePosts.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 py-28">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">
               Dowiedz się więcej <span className="text-nova-blue">- nasza baza wiedzy</span>
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
               {servicePosts.slice(0, 3).map((post: any) => (
-                // Jako key podajemy post.slug, ponieważ funkcja getPosts() mapuje slug.current bezpośrednio na string
                 <BlogCard key={post.slug} post={post} />
               ))}
             </div>
-            
+
             {servicePosts.length > 3 && (
               <div className="text-center mt-16">
                 <Link href="/blog" className="inline-block bg-nova-blue text-white font-black px-10 py-4 rounded-full shadow-md hover:bg-nova-dark transition-all text-xs uppercase tracking-wider">
