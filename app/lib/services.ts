@@ -89,11 +89,13 @@ export const servicesData: Record<string, Service> = {
     h1: "Podologia Szczecin",
     intro: "Specjalistyczna diagnostyka i terapia schorzeń w obrębie skóry stóp i aparatu paznokciowego oraz profesjonalna pielęgnacja medyczna stóp.",
     image: "/images/services/podologia-hero.jpg",
-    details: "Zapewniamy pełny profil zabiegów podologicznych, od podstawowej pielęgnacji profilaktycznej po skomplikowane terapie przewlekłych zmian skórnych, hyperkeratofii oraz deformacji płytki. Łączymy procedury kosmetyczne z zaawansowaną wiedzą z zakresu dermatologii i chirurgii stóp.",
+    details: "Zapewniamy pełny profil zabiegów podologicznych, od podstawowej pielęgnacji profilaktycznej, przez terapie brodawek wirusowych, hyperkeratozy, po wrastające paznokcie i deformacje płytki paznokciowej. Łączymy procedury kosmetyczne z zaawansowaną wiedzą z zakresu podologii i chirurgii stóp.",
     clinicalStandards: [
-      "Certyfikowane preparaty podofarmaceutyczne i odciążenia",
-      "Ścisła współpraca z lekarzem chirurgiem w przypadku zmian wymagających interwencji chirurgicznej",
-      "Indywidualne programy pielęgnacyjne i edukacja pacjenta w zakresie profilaktyki"
+      "Multidyscyplinarny zespół z wykształceniem medycznym",
+      "Wieloletnie doświadczenie w terapii schorzeń stóp i paznokci",
+      "Zabiegi bez bólu - możliwość zastosowania znieczulenia przy bolesnych procedurach",
+      "Kompleksowa opieka i szybka pomoc chirurgiczna w jednym gabinecie, w razie potrzeby",
+      "Bezpieczeństwo i najwysze standardy profesjonalnej opieki medycznej"
     ],
     treatments: [
       {
@@ -115,14 +117,15 @@ export const servicesData: Record<string, Service> = {
   },
   'podochirurgia': {
     title: "Podochirurgia",
-    h1: "Zaawansowana Podochirurgia Szczecin",
-    intro: "Chirurgiczne, trwałe eliminowanie bolesnych wad aparatu paznokciowego oraz zmian patologicznych w obrębie palców stóp.",
+    h1: "Podochirurgia Szczecin",
+    intro: "W Novamedic trwale i bezboleśnie leczymy takie problemy podologiczne jak: wrastające paznokcie, wrośla kostne (egzostoza podpaznokciowa), retronychia, guzy macierzy paznokcia (onychomatricoma) i inne.",
     image: "/images/services/podochirurgia-hero.jpg",
-    details: "W przypadkach, gdzie zachowawcza terapia podologiczna jest niewystarczająca, wdrażamy techniki chirurgiczne. Specjalizujemy się w nowoczesnych operacjach plastycznych wałów okołopaznokciowych, które eliminują problem wrastania bez konieczności traumatycznego zrywania całej płytki paznokciowej.",
+    details: "Jeśli leczenie zachowawcze nie przynosi efektów, sięgamy po skuteczne rozwiązania chirurgiczne. Specjalizujemy się w nowoczesnych operacjach korygujących wzrost płytki paznokciowej, jak plastyka wałów okołopaznokciowych czy plastyka opuszki palca. Zabiegi przeprowadzamy bezboleśnie w znieczuleniu miejscowym, a w określonych przypadkach – również w znieczuleniu ogólnym.",
     clinicalStandards: [
-      "Zabiegi wykonywane przez chirurga we współpracy z licencjonowanym podologiem",
-      "Zastosowanie znieczulenia przewodowego (blokada Obersta) gwarantującego bezbolesność",
-      "Priorytet zachowania naturalnego kształtu i estetyki aparatu paznokciowego"
+      "Zabiegi wykonywane przez wykwalifikowanego chirurga",
+      "Współpraca z wieloma gabinetami podologicznymi w Szczecinie i regionie - zapewniamy kompleksową opiekę",
+      "Naszym priorytetem jest zachowanie naturalnego kształtu i estetyki paznokcia",
+      "Operujemy zarówno dorosłych, jak i dzieci"
     ],
     treatments: [
       {

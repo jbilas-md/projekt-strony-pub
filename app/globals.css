@@ -66,3 +66,46 @@ body {
     height: auto;
   }
 }
+
+/* Dostępność - WCAG 2.1 */
+
+@layer base {
+    /* 1. WYSOKI KONTRAST (Kompatybilny z Safari i Chrome) */
+    html.wcag-high-contrast,
+    html.wcag-high-contrast body,
+    html.wcag-high-contrast #root,
+    html.wcag-high-contrast main {
+        background-color: #000000 !important;
+        color: #ffff00 !important;
+    }
+    
+    /* Wymuszenie koloru dla absolutnie każdego elementu tekstowego i kontenera */
+    html.wcag-high-contrast * {
+        background-color: #000000 !important;
+        color: #ffff00 !important;
+        border-color: #ffff00 !important;
+        box-shadow: none !important;
+    }
+    
+    /* Ochrona dla grafik, ikon SVG i przycisków dostępności */
+    html.wcag-high-contrast img, 
+    html.wcag-high-contrast svg,
+    html.wcag-high-contrast button svg {
+        background-color: transparent !important;
+        color: inherit !important;
+    }
+
+    /* 2. POWIĘKSZENIE TEKSTU (Safari wymaga zmiany na poziomie HTML) */
+    html.wcag-large-text,
+    body.wcag-large-text {
+        font-size: 125% !important; /* Zmiana na 125% dla lepszej czytelności w Safari */
+        line-height: 1.5 !important;
+    }
+
+    /* 3. PODKREŚLENIE LINKÓW */
+    html.wcag-highlight-links a {
+        text-decoration: underline !important;
+        text-decoration-thickness: 3px !important;
+        text-underline-offset: 4px !important;
+    }
+}

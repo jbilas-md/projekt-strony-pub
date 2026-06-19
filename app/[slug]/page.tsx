@@ -86,7 +86,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
-        {/* STANDARD MEDYCZNY & SPECYFIKA */}
+        {/* DLACZEGO NOVAMEDIC & CO WARTO WIEDZIEĆ */}
         <section className="bg-nova-bg/30 py-12 lg:py-24 rounded-[4rem]">
           <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-gray-100/60 flex flex-col justify-start self-start">
@@ -142,7 +142,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         {/* PAKIETY ZABIEGOWE */}
         {servicePackages.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 py-24 border-t border-gray-50">
-            <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">Koszty i pakiety świadczeń</h2>
+            <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">Pakiety zabiegowe</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto items-stretch">
               {servicePackages.map((pkg, i) => (
                 <div
@@ -168,7 +168,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                     ))}
                   </ul>
                   <button className={`w-full py-4 font-black rounded-xl text-sm transition-all ${pkg.isPromoted ? 'bg-nova-blue text-white shadow-md' : 'bg-nova-dark text-white hover:bg-nova-blue'}`}>
-                    Wybierz strukturę pakietu
+                    Wybierz pakiet
                   </button>
                 </div>
               ))}

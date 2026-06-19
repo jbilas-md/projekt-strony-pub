@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import AccessibilityMenu from './AccessibilityMenu';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -87,12 +88,7 @@ export default function Header() {
         {/* PRAWA STRONA */}
         <div className="flex items-center gap-1 sm:gap-4 relative z-[130] h-full ml-auto">
           
-          <button title="Dostępność" className="hidden sm:block p-2 text-nova-dark hover:text-nova-blue transition-colors">
-            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-          </button>
+          <AccessibilityMenu />
 
           <div className="relative">
             <button
@@ -147,6 +143,15 @@ export default function Header() {
             <button onClick={() => setIsMenuOpen(false)} className="text-nova-dark text-3xl p-2">&times;</button>
           </div>
           
+          <a
+            href="https://www.znanylekarz.pl/jaroslaw-bilas/chirurg-lekarze-wykonujacy-zabiegi-medycyny-estetycznej/szczecin"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-center bg-nova-accent text-white py-3 rounded-full font-bold text-sm uppercase mb-6"
+          >
+            Umów wizytę
+          </a>
+
           <nav className="flex flex-col space-y-4 overflow-y-auto pb-8">
             <Link href="/o-nas" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-nova-dark uppercase">O nas</Link>
             
@@ -165,15 +170,6 @@ export default function Header() {
             <Link href="/faq" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-nova-dark uppercase">FAQ</Link>
             <Link href="/blog" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-nova-dark uppercase">Blog</Link>
             <Link href="/kontakt" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-nova-dark uppercase">Kontakt</Link>
-            
-            <div className="pt-4">
-               <a
-                href="https://www.znanylekarz.pl/jaroslaw-bilas/chirurg-lekarze-wykonujacy-zabiegi-medycyny-estetycznej/szczecin"
-                className="block text-center bg-nova-accent text-white py-3 rounded-full font-bold text-sm uppercase"
-              >
-                Umów wizytę
-              </a>
-            </div>
           </nav>
         </div>
       </div>
