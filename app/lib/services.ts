@@ -119,7 +119,7 @@ export const servicesData: Record<string, Service> = {
     title: "Podochirurgia",
     h1: "Podochirurgia Szczecin",
     intro: "W Novamedic trwale i bezboleśnie leczymy takie problemy podologiczne jak: wrastające paznokcie, wrośla kostne (egzostoza podpaznokciowa), retronychia, guzy macierzy paznokcia (onychomatricoma) i inne.",
-    image: "/images/services/podochirurgia-hero.jpg",
+    image: "/images/podochirurgia.jpg",
     details: "Jeśli leczenie zachowawcze nie przynosi efektów, sięgamy po skuteczne rozwiązania chirurgiczne. Specjalizujemy się w nowoczesnych operacjach korygujących wzrost płytki paznokciowej, jak plastyka wałów okołopaznokciowych czy plastyka opuszki palca. Zabiegi przeprowadzamy bezboleśnie w znieczuleniu miejscowym, a w określonych przypadkach – również w znieczuleniu ogólnym.",
     clinicalStandards: [
       "Zabiegi wykonywane przez wykwalifikowanego chirurga",

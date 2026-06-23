@@ -107,34 +107,44 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
-        {/* DETALICZNY ZAKRES ZABIEGÓW (Teraz zasilany dynamicznie ze Sanity i klikalny) */}
+        {/* SZCZEGÓŁOWY ZAKRES ZABIEGÓW */}
         {sanityProcedures && sanityProcedures.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 py-28">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">
               Wykonywane <span className="text-nova-blue">procedury zabiegowe</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {sanityProcedures.map((procedure: any) => (
-                <Link
-                  key={procedure._id}
-                  // Dynamiczny adres URL pobierany prosto ze sluga w Sanity
-                  href={`/zabiegi/${procedure.slug?.current}`}
-                  className="block bg-white border border-gray-100 p-8 rounded-3xl shadow-sm hover:border-nova-blue/30 hover:shadow-md transition-all group"
-                >
-                  {/* group-hover:text-nova-blue sprawi, że tytuł zmieni kolor przy najechaniu na dowolne miejsce kafelka */}
-                  <h3 className="text-xl font-black text-nova-dark mb-3 leading-snug group-hover:text-nova-blue transition-colors">
-                    {procedure.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-slate-600 leading-relaxed font-medium">
-                    {procedure.teaser}
-                  </p>
+              {sanityProcedures.map((procedure: any) => {
+                const hasContent = procedure.content && procedure.content.length > 0;
+                const cardClasses = 'block bg-white border border-gray-100 p-8 rounded-3xl shadow-sm transition-all ' + (hasContent ? 'hover:border-nova-blue/30 hover:shadow-md group' : 'opacity-90 cursor-not-allowed');
 
-                  {/* Subtelny akcent wizualny (strzałka), który pojawia się przy najechaniu (hover) */}
-                  <div className="mt-4 text-xs font-bold text-nova-blue uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-4px] group-hover:translate-x-0">
-                    Szczegóły zabiegu <span>→</span>
+                return hasContent ? (
+                  <Link
+                    key={procedure._id}
+                    href={`/zabiegi/${procedure.slug?.current}`}
+                    className={cardClasses}
+                  >
+                    <h3 className="text-xl font-black text-nova-dark mb-3 leading-snug group-hover:text-nova-blue transition-colors">
+                      {procedure.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-slate-600 leading-relaxed font-medium">
+                      {procedure.teaser}
+                    </p>
+                    <div className="mt-4 text-xs font-bold text-nova-blue uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-4px] group-hover:translate-x-0">
+                      Szczegóły zabiegu <span>→</span>
+                    </div>
+                  </Link>
+                ) : (
+                  <div key={procedure._id} className={cardClasses}>
+                    <h3 className="text-xl font-black text-nova-dark mb-3 leading-snug">
+                      {procedure.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-slate-600 leading-relaxed font-medium">
+                      {procedure.teaser}
+                    </p>
                   </div>
-                </Link>
-              ))}
+                );
+              })}
             </div>
           </section>
         )}

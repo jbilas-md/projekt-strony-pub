@@ -126,6 +126,7 @@ export async function getProceduresByCategory(categoryName: string) {
       _id,
       title,
       teaser,
+      content,
       slug
     }`,
     { categoryName },

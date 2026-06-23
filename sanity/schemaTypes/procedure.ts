@@ -48,7 +48,6 @@ export default {
       title: 'Zdjęcie główne (Kafelki i Nagłówek)',
       type: 'image',
       options: { hotspot: true },
-      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'isFeatured',
