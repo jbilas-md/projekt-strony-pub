@@ -11,8 +11,8 @@ export default defineConfig({
   name: 'default',
   title: 'Novamedic CMS',
   basePath: '/studio',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ouwqhntn',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   schema, // To pobiera obiekt z poprawioną tablicą types
   plugins: [
     structureTool({structure}), // Używamy nowej wersji bez zbędnych dodatków na start

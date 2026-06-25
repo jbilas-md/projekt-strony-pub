@@ -5,19 +5,6 @@ export const apiVersion =
   process.env.SANITY_STUDIO_API_VERSION ||
   '2026-06-02';
 
-export const dataset = assertValue(
-  process.env.NEXT_PUBLIC_SANITY_DATASET || process.env.SANITY_STUDIO_DATASET,
-  'Brak zmiennej środowiskowej: SANITY_DATASET'
-);
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
-export const projectId = assertValue(
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANITY_STUDIO_PROJECT_ID,
-  'Brak zmiennej środowiskowej: SANITY_PROJECT_ID'
-);
-
-function assertValue<T>(v: T | undefined, errorMessage: string): T {
-  if (v === undefined) {
-    throw new Error(errorMessage);
-  }
-  return v;
-}
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ouwqhntn';

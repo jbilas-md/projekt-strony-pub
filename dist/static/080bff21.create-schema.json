@@ -1,0 +1,790 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Tytuł"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Aktualności",
+              "value": "Aktualności"
+            },
+            {
+              "title": "Chirurgia",
+              "value": "Chirurgia"
+            },
+            {
+              "title": "Podologia",
+              "value": "Podologia"
+            },
+            {
+              "title": "Podochirurgia",
+              "value": "Podochirurgia"
+            },
+            {
+              "title": "Laseroterapia",
+              "value": "Laseroterapia"
+            },
+            {
+              "title": "Medycyna estetyczna",
+              "value": "Medycyna estetyczna"
+            },
+            {
+              "title": "Leczenie ran",
+              "value": "Leczenie ran"
+            },
+            {
+              "title": "Ortopedia",
+              "value": "Ortopedia"
+            },
+            {
+              "title": "Wazektomia",
+              "value": "Wazektomia"
+            }
+          ]
+        },
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "categories",
+        "type": "array",
+        "title": "Kategorie / Tagi"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "Slug (końcówka adresu URL)"
+      },
+      {
+        "to": [
+          {
+            "type": "author"
+          }
+        ],
+        "name": "author",
+        "type": "reference",
+        "title": "Autor"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "mainImage",
+        "type": "image",
+        "title": "Zdjęcie główne"
+      },
+      {
+        "name": "publishedAt",
+        "type": "datetime",
+        "title": "Data publikacji"
+      },
+      {
+        "rows": 3,
+        "name": "excerpt",
+        "type": "text",
+        "title": "Krótki opis (zajawka)"
+      },
+      {
+        "name": "body",
+        "type": "blockContent",
+        "title": "Treść artykułu"
+      }
+    ],
+    "name": "post",
+    "type": "document",
+    "title": "Blog Post"
+  },
+  {
+    "fields": [
+      {
+        "name": "name",
+        "type": "string",
+        "title": "Imię i Nazwisko"
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "title": "Rola/Specjalizacja"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Zdjęcie"
+      },
+      {
+        "name": "bio",
+        "type": "text"
+      }
+    ],
+    "name": "author",
+    "type": "document",
+    "title": "Autorzy"
+  },
+  {
+    "of": [
+      {
+        "lists": [
+          {
+            "value": "bullet",
+            "title": "Bullet"
+          },
+          {
+            "value": "number",
+            "title": "Number"
+          }
+        ],
+        "marks": {
+          "annotations": [
+            {
+              "i18nTitleKey": "inputs.portable-text.annotation.link",
+              "options": {
+                "modal": {
+                  "type": "popover"
+                }
+              },
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "level": "error",
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/",
+                                "/^tel$/",
+                                "/^mailto$/"
+                              ],
+                              "allowRelative": true,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "description": "A valid web, email, phone, or relative link.",
+                  "name": "href",
+                  "type": "url",
+                  "title": "Link"
+                }
+              ],
+              "name": "link",
+              "type": "object"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "strong",
+              "title": "Strong"
+            },
+            {
+              "value": "em",
+              "title": "Emphasis"
+            }
+          ]
+        },
+        "of": [],
+        "styles": [
+          {
+            "value": "normal",
+            "title": "Normal"
+          },
+          {
+            "value": "h2",
+            "title": "H2"
+          },
+          {
+            "value": "h3",
+            "title": "H3"
+          },
+          {
+            "value": "blockquote",
+            "title": "Quote"
+          }
+        ],
+        "type": "block"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "type": "image"
+      }
+    ],
+    "name": "blockContent",
+    "type": "array"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "Np. Chirurgia Ogólna, Laseroterapia Medyczna",
+        "name": "categoryName",
+        "type": "string",
+        "title": "Nazwa Kategorii"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "Liczba określająca pozycję (np. 1 wyświetli się na samej górze, potem 2, 3...)",
+        "name": "order",
+        "type": "number",
+        "title": "Kolejność wyświetlania"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "name": "name",
+                "type": "string",
+                "title": "Nazwa zabiegu / konsultacji"
+              },
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "description": "Np. \"250 zł\", \"od 400 zł\", \"600 zł - 1200 zł\"",
+                "name": "price",
+                "type": "string",
+                "title": "Cena"
+              },
+              {
+                "description": "Dodatkowe wyjaśnienie, np. \"Cena zależy od wielkości zmiany\" lub \"W cenie uwzględniono badanie histopatologiczne\".",
+                "name": "description",
+                "type": "string",
+                "title": "Opcjonalny opis / uwagi (zakres cen)"
+              }
+            ],
+            "type": "object",
+            "name": "pricingItem",
+            "title": "Pozycja cennika"
+          }
+        ],
+        "name": "items",
+        "type": "array",
+        "title": "Pozycje w cenniku"
+      }
+    ],
+    "name": "pricingCategory",
+    "type": "document",
+    "title": "Cennik - Kategorie"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Nazwa kategorii"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      }
+    ],
+    "name": "faqCategory",
+    "type": "document",
+    "title": "FAQ - Kategorie"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "question",
+        "type": "string",
+        "title": "Pytanie (H3/H4 dla SEO)"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "of": [
+          {
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Lista punktowa (Najlepsza dla Google)"
+              },
+              {
+                "value": "number",
+                "title": "Lista numerowana"
+              }
+            ],
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "level": "error",
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Pogrubienie (Słowa kluczowe)"
+                },
+                {
+                  "value": "em",
+                  "title": "Kursywa"
+                }
+              ]
+            },
+            "of": [],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normalny"
+              }
+            ],
+            "type": "block"
+          }
+        ],
+        "name": "answer",
+        "type": "array",
+        "title": "Odpowiedź (Bogaty tekst z formatowaniem pod SEO)"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "to": [
+          {
+            "type": "faqCategory"
+          }
+        ],
+        "name": "category",
+        "type": "reference",
+        "title": "Kategoria FAQ"
+      },
+      {
+        "initialValue": 0,
+        "description": "Im niższa cyfra (np. 1, 2, 3), tym wyżej pojawi się pytanie.",
+        "name": "order",
+        "type": "number",
+        "title": "Kolejność wyświetlania"
+      }
+    ],
+    "name": "faqItem",
+    "type": "document",
+    "title": "FAQ - Pytania i Odpowiedzi"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Nazwa zabiegu"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "Slug (Adres URL)"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Chirurgia",
+              "value": "Chirurgia"
+            },
+            {
+              "title": "Ortopedia",
+              "value": "Ortopedia"
+            },
+            {
+              "title": "Podologia",
+              "value": "Podologia"
+            },
+            {
+              "title": "Podochirurgia",
+              "value": "Podochirurgia"
+            },
+            {
+              "title": "Laseroterapia",
+              "value": "Laseroterapia"
+            },
+            {
+              "title": "Medycyna Estetyczna",
+              "value": "Medycyna Estetyczna"
+            },
+            {
+              "title": "Wazektomia",
+              "value": "Wazektomia"
+            },
+            {
+              "title": "Leczenie ran",
+              "value": "Leczenie ran"
+            }
+          ],
+          "layout": "dropdown"
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "Chirurgia",
+                  "Ortopedia",
+                  "Podologia",
+                  "Podochirurgia",
+                  "Laseroterapia",
+                  "Medycyna Estetyczna",
+                  "Wazektomia",
+                  "Leczenie ran"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "Wybierz specjalizację, do której należy ten zabieg.",
+        "name": "category",
+        "type": "string",
+        "title": "Kategoria zabiegu"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Zdjęcie główne (Kafelki i Nagłówek)"
+      },
+      {
+        "initialValue": false,
+        "name": "isFeatured",
+        "type": "boolean",
+        "title": "Najczęściej wybierane (Strona Główna)"
+      },
+      {
+        "rows": 3,
+        "name": "teaser",
+        "type": "text",
+        "title": "Zajawka / Krótki opis"
+      },
+      {
+        "of": [
+          {
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Kropki"
+              }
+            ],
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "level": "error",
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Pogrubienie"
+                },
+                {
+                  "value": "em",
+                  "title": "Kursywa"
+                }
+              ]
+            },
+            "of": [],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normalny tekst"
+              },
+              {
+                "value": "h2",
+                "title": "Nagłówek H2"
+              },
+              {
+                "value": "h3",
+                "title": "Nagłówek H3"
+              }
+            ],
+            "type": "block"
+          }
+        ],
+        "name": "content",
+        "type": "array",
+        "title": "Szczegółowy opis zabiegu"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "Wskaż kategorię z cennika (np. Medycyna Estetyczna lub Podochirurgia).",
+        "to": [
+          {
+            "type": "pricingCategory"
+          }
+        ],
+        "name": "pricingCategoryRef",
+        "type": "reference",
+        "title": "Powiązana kategoria z cennika"
+      },
+      {
+        "description": "Jeśli w cenniku nazwa różni się od tytułu strony (np. strona to \"Botox\", a w cenniku masz \"Botox - 1 okolica\"), wpisz tutaj DOKŁADNĄ nazwę z cennika, aby pobrać właściwą cenę startową.",
+        "name": "specificPricingName",
+        "type": "string",
+        "title": "Nazwa zabiegu w cenniku (opcjonalnie)"
+      }
+    ],
+    "name": "procedure",
+    "type": "document",
+    "title": "Zabiegi i Usługi"
+  }
+]
