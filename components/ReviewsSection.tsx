@@ -50,7 +50,7 @@
 //
 
 'use client';
-import { reviewsData, Review } from '@/app/lib/reviews';
+import { Review } from '@/app/lib/reviews';
 import { useState, useEffect } from 'react';
 import { getRelativeDate } from '@/app/lib/formatDate';
 
@@ -93,13 +93,14 @@ import { getRelativeDate } from '@/app/lib/formatDate';
 //   return "jakiś czas temu";
 // }
 
-export default function ReviewsSection() {
+export default function ReviewsSection({ reviews }: { reviews?: Review[] }) {
   const [randomReviews, setRandomReviews] = useState<Review[]>([]);
 
   useEffect(() => {
-    const shuffled = [...reviewsData].sort(() => 0.5 - Math.random());
+    const safeReviews = reviews ?? [];
+    const shuffled = [...safeReviews].sort(() => 0.5 - Math.random());
     setRandomReviews(shuffled.slice(0, 3));
-  }, []);
+  }, [reviews]);
 
   return (
     <section className="py-20 bg-white">

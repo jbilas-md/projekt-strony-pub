@@ -7,9 +7,10 @@ import pricingCategory from './pricingCategory'
 import faqItem from './faqItem'
 import faqCategory from './faqCategory'
 import procedure from './procedure'
+import review from './review'
 
 
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, author, blockContent, pricingCategory, faqCategory, faqItem, procedure],
+  types: [post, author, blockContent, pricingCategory, faqCategory, faqItem, procedure, review],
 }

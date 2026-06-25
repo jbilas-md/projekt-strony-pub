@@ -91,6 +91,21 @@ export async function getFeaturedProcedures() {
   );
 }
 
+export async function getReviews(limit: number = 3) {
+  return await client.fetch(
+    `*[_type == "review" && isVisible == true] | order(date desc)[0...$limit] {
+      "id": _id,
+      author,
+      rating,
+      source,
+      comment,
+      date
+    }`,
+    { limit },
+    { next: { revalidate: 0 } }
+  );
+}
+
 // app/lib/sanity.queries.ts
 
 export async function getProcedureBySlug(slug: string) {

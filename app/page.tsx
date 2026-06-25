@@ -4,10 +4,11 @@ import ReviewsSection from '@/components/ReviewsSection';
 import type { Metadata } from "next";
 import Image from 'next/image';
 import Link from 'next/link';
-import { getFeaturedProcedures } from '@/app/lib/sanity.queries';
+import { getFeaturedProcedures, getReviews } from '@/app/lib/sanity.queries';
 
 export default async function HomePage() {
   const featuredProcedures = await getFeaturedProcedures();
+  const reviews = await getReviews();
   
   const allServices = [
     { title: "Chirurgia", desc: "Zabiegi w trybie ambulatoryjnym, usuwanie zmian skórnych, biopsje.", link: "/chirurgia", image: "/images/chirurgia.jpg" },
@@ -206,8 +207,8 @@ export default async function HomePage() {
   </div>
 </section>
 
-      {/* 4. OPINIE (Losowe z pliku reviews.ts) */}
-      <ReviewsSection />
+      {/* 4. OPINIE */}
+      <ReviewsSection reviews={reviews} />
     </>
   );
 }
