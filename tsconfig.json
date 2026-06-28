@@ -23,6 +23,7 @@
         "name": "next"
       }
     ],
+    "moduleResolution": "bundler",
     "paths": {
       "@/*": [
         "./*"

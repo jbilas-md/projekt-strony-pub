@@ -17,7 +17,7 @@ export default function Header() {
 
   const services = [
     { name: "Chirurgia", href: "/chirurgia" },
-    { name: "Ortopedia", href: "/ortopedia" },
+    // { name: "Ortopedia", href: "/ortopedia" },
     { name: "Wazektomia", href: "/wazektomia" },
     { name: "Podologia", href: "/podologia" },
     { name: "Podochirurgia", href: "/podochirurgia" },

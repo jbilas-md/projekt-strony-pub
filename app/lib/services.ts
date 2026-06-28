@@ -212,7 +212,7 @@ export const servicesData: Record<string, Service> = {
     title: "Laseroterapia",
     h1: "Laseroterapia Medyczna Szczecin",
     intro: "Wykorzystanie energii wiązki laserowej o precyzyjnie dobranych parametrach do ablacji patologii naskórkowych, zamykania naczyń i resurfacingu.",
-    image: "/images/services/laseroterapia-hero.jpg",
+    image: "/images/laseroterapia.jpg",
     details: "Nowoczesne systemy laserowe w rękach personelu medycznego pozwalają na prowadzenie bezkrwawych zabiegów o bardzo wysokiej czystości mikrobiologicznej. Energia lasera działa wybiórczo na docelowe struktury (melaninę, hemoglobinę lub wodę w tkankach), chroniąc zdrową skórę.",
     clinicalStandards: [
       "Indywidualny dobór gęstości energii oraz czasu impulsu do fototypu skóry pacjenta",

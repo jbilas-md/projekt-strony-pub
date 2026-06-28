@@ -27,5 +27,9 @@ export default defineType({
       type: 'image',
       options: {hotspot: true},
     }),
+    // Table block provided by @sanity/table plugin
+    defineArrayMember({
+      type: 'table',
+    }),
   ],
 })

@@ -27,6 +27,40 @@ const components: PortableTextComponents = {
         />
       </div>
     ),
+    // Table renderer for @sanity/table plugin
+    table: ({ value }) => {
+      const rows = value?.rows || [];
+      if (!rows || rows.length === 0) return null;
+
+      const headerCells = rows[0]?.cells || [];
+
+      return (
+        <div className="my-8 overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse">
+            <thead className="bg-nova-bg">
+              <tr>
+                {headerCells.map((cell: any, i: number) => (
+                  <th key={i} className="text-left font-semibold text-sm md:text-base px-4 py-3 border-b border-gray-100">
+                    {cell}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.slice(1).map((row: any) => (
+                <tr key={row._key} className="odd:bg-white even:bg-gray-50">
+                  {row.cells.map((cell: any, j: number) => (
+                    <td key={j} className="py-3 px-4 align-top text-sm text-gray-700 border-b border-gray-100">
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    },
   },
 };
 

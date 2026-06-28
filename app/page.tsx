@@ -12,7 +12,7 @@ export default async function HomePage() {
   
   const allServices = [
     { title: "Chirurgia", desc: "Zabiegi w trybie ambulatoryjnym, usuwanie zmian skórnych, biopsje.", link: "/chirurgia", image: "/images/chirurgia.jpg" },
-    { title: "Ortopedia", desc: "Diagnostyka USG, iniekcje dostawowe, leczenie urazów.", link: "/ortopedia", image: "/images/ortopedia.jpg" },
+    // { title: "Ortopedia", desc: "Diagnostyka USG, iniekcje dostawowe, leczenie urazów.", link: "/ortopedia", image: "/images/ortopedia.jpg" },
     { title: "Podologia", desc: "Specjalistyczna pielęgnacja stóp, usuwanie modzeli.", link: "/podologia", image: "/images/podologia.jpg" },
     { title: "Podochirurgia", desc: "Chirurgiczne leczenie wrastających paznokci.", link: "/podochirurgia", image: "/images/podochirurgia.jpg" },
     { title: "Laseroterapia", desc: "Zamykanie naczynek, usuwanie przebarwień.", link: "/laseroterapia", image: "/images/laseroterapia.jpg" },
@@ -32,7 +32,7 @@ export default async function HomePage() {
             src="/images/hero-glowna.jpg" 
             alt="Novamedic Team" 
             fill 
-            className="object-cover object-center scale-105" // lekki zoom dla efektu głębi
+            className="object-cover object-right scale-105"
             priority
           />
           {/* Nakładka (overlay), żeby tekst był czytelny */}
@@ -41,7 +41,6 @@ export default async function HomePage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
           <div className="max-w-2xl">
-            <span className="bg-nova-blue/10 text-nova-blue px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest">Twoje zdrowie w Szczecinie</span>
             <h1 className="text-5xl md:text-8xl font-black text-nova-dark mt-6 leading-[0.9] tracking-tighter italic">
               TWOJE ZDROWIE <br />W RĘKACH <br /><span className="text-nova-blue">EKSPERTÓW.</span>
             </h1>
