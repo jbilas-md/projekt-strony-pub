@@ -176,14 +176,17 @@ export const servicesData: Record<string, Service> = {
   },
   'medycyna-estetyczna': {
     title: "Medycyna Estetyczna",
-    h1: "Medycyna Estetyczna i Regeneracyjna Szczecin",
-    intro: "Bezpieczne zabiegi anti-aging, rewitalizacja tkanek oraz korekcje estetyczne wykonywane przez lekarza na bazie certyfikowanych preparatów medycznych.",
-    image: "/images/services/medycyna-estetyczna-hero.jpg",
-    details: "Kliniczne podejście do medycyny estetycznej w Novamedic stawia na pierwszym miejscu bezpieczeństwo pacjenta oraz osiągnięcie naturalnych, harmonijnych rezultatów. Pracujemy wyłącznie na produktach zarejestrowanych jako wyroby medyczne klasy III (toksyna botulinowa, zaawansowane stymulatory tkankowe).",
+    h1: "Medycyna Estetyczna i Regeneracyjna Szczecin ",
+    intro: "Profesjonalne zabiegi estetyczne i anti-aging. Odkryj sekret promiennej i jędrnej skóry z pomocą nowoczesnych terapii iniekcyjnych i laserowych.",
+    image: "/images/estetyczna.jpg",
+    details: "Większość procedur medycyny estetycznej to zabiegi mało inwazyjne, wykonywane w warunkach ambulatoryjnych. Aby zapewnić pełen komfort, miejsca poddawane iniekcji są znieczulane specjalistycznym kremem o wysokim stężeniu substancji aktywnych. Każda terapia poprzedzona jest konsultacją, podczas której wykluczamy przeciwwskazania, oceniamy stan skóry i dobieramy idealną dawkę preparatów. Należy pamiętać, że po zabiegach iniekcyjnych (takich jak mezoterapia, stymulatory tkankowe czy kwas hialuronowy) na skórze mogą pojawić się chwilowe, drobne obrzęki, zaczerwienienia lub małe siniaki – jest to w pełni naturalna reakcja, która ustępuje samoistnie w ciągu kilku dni. W celu osiągnięcia optymalnych rezultatów i uniknięcia powikłań, po zabiegach należy ściśle przestrzegać zaleceń lekarza, w tym unikać sauny, solarium, intensywnego wysiłku fizycznego oraz masowania miejsc poddanych terapii przez wskazany okres.",
     clinicalStandards: [
-      "Wszystkie zabiegi iniekcyjne wykonywane są wyłącznie przez wykwalifikowanego lekarza",
-      "Stosowanie preparatów z oficjalnej, bezpiecznej dystrybucji medycznej",
-      "Przestrzeganie procedur aseptyki i pełnej sterylności podczas iniekcji"
+      "Pełen profil nowoczesnych usług: od redukcji zmarszczek i wolumetrii kwasem hialuronowym, po zaawansowany lifting i terapię anti-aging",
+      "Naturalna regeneracja komórkowa: bezpieczne zabiegi z użyciem preparatów autologicznych (osocze bogatopłytkowe, fibryna bogatopłytkowa)",
+      "Skuteczne wygładzanie zmarszczek mimicznych za pomocą precyzyjnie dawkowanych neuromodulatorów",
+      "Głęboka odbudowa gęstości skóry: nowoczesne stymulatory kolagenu oraz mezoterapia igłowa zapewniające intensywne nawilżenie i ujędrnienie",
+      "Bezpieczeństwo medyczne: procedury wykonywane wyłącznie przez doświadczony personel, w sterylnych warunkach i na bazie certyfikowanych preparatów",
+      "Stawiamy na subtelne, harmonijne i naturalne efekty, bez przerysowanego wyglądu"
     ],
     treatments: [
       {
@@ -210,14 +213,19 @@ export const servicesData: Record<string, Service> = {
   },
   'laseroterapia': {
     title: "Laseroterapia",
-    h1: "Laseroterapia Medyczna Szczecin",
-    intro: "Wykorzystanie energii wiązki laserowej o precyzyjnie dobranych parametrach do ablacji patologii naskórkowych, zamykania naczyń i resurfacingu.",
+    h1: "Laseroterapia i zabiegi laserowe Szczecin",
+    intro: "Nowoczesna chirurgia laserowa, medycyna estetyczna i epilacja. Poznaj moc zaawansowanych technologii CO2, Nd:YAG oraz laserów naczyniowych w rękach specjalistów.",
     image: "/images/laseroterapia.jpg",
-    details: "Nowoczesne systemy laserowe w rękach personelu medycznego pozwalają na prowadzenie bezkrwawych zabiegów o bardzo wysokiej czystości mikrobiologicznej. Energia lasera działa wybiórczo na docelowe struktury (melaninę, hemoglobinę lub wodę w tkankach), chroniąc zdrową skórę.",
+    details: "Większość procedur laserowych przeprowadzana jest bezinwazyjnie lub w znieczuleniu miejscowym, bez konieczności rezygnacji z codziennych obowiązków. Każdy zabieg poprzedzony jest kwalifikacją w celu wykluczenia przeciwwskazań (np. aktywnych infekcji czy leków światłouczulających). Należy pamiętać, że skóra przed i po laseroterapii nie może być opalona, a po zabiegu bezwzględnie wymaga ochrony filtrem SPF 50+. Część procedur o charakterze głęboko regenerującym (np. resurfacing laserem CO2) może wymagać kilku dni domowej rekonwalescencji, dlatego ich wykonanie najbezpieczniej zaplanować w okresie jesienno-zimowym.",
     clinicalStandards: [
-      "Indywidualny dobór gęstości energii oraz czasu impulsu do fototypu skóry pacjenta",
-      "Zabiegi poparte procedurą bezwzględnej ochrony wzroku (specjalistyczne okulary ochronne)",
-      "Minimalizacja termicznego uszkodzenia sąsiednich tkanek"
+      "Zaawansowane technologie laserowe dopasowane do różnych potrzeb pacjenta",
+      "Bezpieczne i bezszwowe usuwanie zmian skórnych laserem chirurgicznym CO2",
+      "Nowoczesne, małoinwazyjne techniki leczenia torbieli pilonidalnej za pomocą lasera naczyniowego",
+      "Zamykanie naczynek i leczenie rumienia laserem naczyniowym Nd:YAG",
+      "Redukcja blizn i przebarwień za pomocą resurfacingu laserowego CO2",
+      "Wysokiej jakości epilacja laserowa przy użyciu lasera diodowego o dużej mocy i chłodzeniu kontaktowym",
+      "Wieloletnie doświadczenie w pracy z laserami medycznymi i estetycznymi",
+      "Wszystkie zabiegi wykonywane są przez wykwalifikowanego lekarza lub doświadczoną pielęgniarkę medyczną"
     ],
     treatments: [
       {
@@ -236,7 +244,7 @@ export const servicesData: Record<string, Service> = {
     title: "Leczenie Ran",
     h1: "Poradnia Leczenia Ran Trudnogojących Szczecin",
     intro: "Specjalistyczna opieka lekarsko-pielęgniarska nad ranami przewlekłymi, owrzodzeniami troficznymi oraz zespołem stopy cukrzycowej.",
-    image: "/images/services/leczenie-ran-hero.jpg",
+    image: "/images/rany.jpg",
     details: "Leczenie ran w Novamedic oparte jest na nowoczesnym standardzie TIME (Tissue, Infection, Moisture, Edge). Diagnozujemy naczyniowe i metaboliczne przyczyny braku gojenia, wdrażamy chirurgiczne oczyszczanie łożyska rany z tkanek martwiczych i eliminujemy infekcje drobnoustrojowe.",
     clinicalStandards: [
       "Praca w oparciu o medyczny schemat postępowania z raną przewlekłą TIME",

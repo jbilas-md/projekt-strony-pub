@@ -60,7 +60,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>
-              <h2 className="text-4xl font-black text-nova-dark uppercase tracking-tight italic">Nasze specjalności</h2>
+              <h2 className="text-4xl font-black text-black uppercase tracking-tight italic">Nasze specjalności</h2>
               {/*<p className="text-slate-500 font-medium mt-2">Kompleksowa opieka w ramach naszych głównych dziedzin terapii.</p>*/}
             </div>
             {/*<Link href="/oferta" className="text-nova-blue font-black uppercase tracking-widest text-sm hover:underline">Pełna oferta usług</Link>*/}
@@ -78,8 +78,8 @@ export default async function HomePage() {
                   className="absolute inset-0 bg-cover bg-center group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                   style={{ backgroundImage: `url(${s.image})` }}
                 />
-                {/* Gradient dla czytelności tekstu - wykorzystuje Twoją nową zmienną nova-dark */}
-                <div className="absolute inset-0 bg-gradient-to-t from-nova-dark via-nova-dark/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                {/* Głęboki, ciemny gradient dla lepszego efektu wizualnego */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/20 opacity-90 group-hover:opacity-75 transition-opacity" />
                 
                 <div className="absolute bottom-0 left-0 p-6 text-white w-full">
                   <h3 className="text-xl lg:text-2xl font-bold mb-2 group-hover:text-nova-accent transition-colors italic">
@@ -166,13 +166,13 @@ export default async function HomePage() {
       {/* 3. NAJCZĘŚCIEJ WYBIERANE */}
 <section className="py-24 bg-white">
   <div className="max-w-7xl mx-auto px-4 text-center">
-    <h2 className="text-3xl font-black text-nova-dark uppercase tracking-tight mb-12 italic underline decoration-nova-blue decoration-4 underline-offset-8">
+    <h2 className="text-3xl font-black text-nova-dark uppercase tracking-tight mb-12 italic underline decoration-black decoration-4 underline-offset-8">
       Najczęściej wybierane
     </h2>
     
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
   {featuredProcedures?.map((proc: any) => (
-    <div key={proc._id} className="relative group overflow-hidden rounded-[2.5rem] md:rounded-[4rem] h-44 md:h-auto md:aspect-square bg-nova-dark shadow-2xl flex flex-col justify-end">
+    <div key={proc._id} className="relative group overflow-hidden rounded-[2.5rem] md:rounded-[4rem] h-44 md:h-auto md:aspect-square bg-black shadow-2xl flex flex-col justify-end">
       
       {/* Obrazek ukryty na telefonie */}
       <Image 
@@ -181,7 +181,7 @@ export default async function HomePage() {
         alt={proc.title} 
         className="hidden md:block object-cover transition-transform duration-700 group-hover:scale-110" 
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-nova-dark via-nova-dark/60 to-transparent opacity-90"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-[#050505]/80 to-transparent opacity-95"></div>
       
       <div className="absolute inset-0 p-6 md:p-12 flex flex-col justify-between z-10">
         <div></div>
@@ -193,7 +193,7 @@ export default async function HomePage() {
           {/* POPRAWKA: Link prowadzi teraz do /zabiegi/[slug] */}
           <Link 
             href={`/zabiegi/${proc.slug}`} 
-            className="inline-block bg-white text-nova-dark py-2.5 md:py-3 px-6 md:px-8 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-nova-blue hover:text-white transition-all shadow-lg shrink-0"
+            className="inline-block bg-white text-nova-dark py-2.5 md:py-3 px-6 md:px-8 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shrink-0"
           >
             Sprawdź zabieg
           </Link>
