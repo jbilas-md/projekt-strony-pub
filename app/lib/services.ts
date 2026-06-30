@@ -242,14 +242,18 @@ export const servicesData: Record<string, Service> = {
   },
   'leczenie-ran': {
     title: "Leczenie Ran",
-    h1: "Poradnia Leczenia Ran Trudnogojących Szczecin",
-    intro: "Specjalistyczna opieka lekarsko-pielęgniarska nad ranami przewlekłymi, owrzodzeniami troficznymi oraz zespołem stopy cukrzycowej.",
+    h1: "Leczenie trudno gojących się ran Szczecin",
+    intro: "Specjalistyczna opieka nad ranami przewlekłymi. Skuteczna terapia owrzodzeń, stopy cukrzycowej i odleżyn przy użyciu nowoczesnych opatrunków aktywnych oraz zaawansowanych metod leczniczych.",
     image: "/images/rany.jpg",
-    details: "Leczenie ran w Novamedic oparte jest na nowoczesnym standardzie TIME (Tissue, Infection, Moisture, Edge). Diagnozujemy naczyniowe i metaboliczne przyczyny braku gojenia, wdrażamy chirurgiczne oczyszczanie łożyska rany z tkanek martwiczych i eliminujemy infekcje drobnoustrojowe.",
+    details: "Leczenie ran przewlekłych (utrzymujących się powyżej 6–8 tygodni) to proces złożony, wymagający czasu, cierpliwości oraz ścisłego partnerstwa między pacjentem a personelem medycznym. Każda terapia w Novamedic rozpoczyna się od szczegółowej diagnostyki – w zależności od potrzeb pobieramy wymazy na posiew bakteryjny, zlecamy badania laboratoryjne czy obrazowe. Samo miejscowe zaopatrzenie rany to za mało; kluczem do sukcesu jest ścisłe przestrzeganie zaleceń domowych. Pacjent (lub jego rodzina) musi dbać o odpowiednie odciążenie chorego miejsca, stosowanie zaleconej kompresjoterapii (w przypadku owrzodzeń żylnych), a także o zbilansowaną dietę bogatą w białko i witaminy, która stanowi budulec dla nowo powstających tkanek. Regularne, planowe wizyty kontrolne w naszej klinice pozwalają na bieżąco monitorować postępy, modyfikować rodzaj opatrunków i bezpiecznie przeprowadzić pacjenta przez cały proces rekonwalescencji, aż do całkowitego zamknięcia rany.",
     clinicalStandards: [
-      "Praca w oparciu o medyczny schemat postępowania z raną przewlekłą TIME",
-      "Stosowanie zaawansowanych opatrunków aktywnych (srebro, miedź, hydrożele, alginiany)",
-      "Możliwość zastosowania specjalistycznych systemów podciśnieniowych (NPWT)"
+      "Kompleksowa terapia ran o różnej etiologii: owrzodzeń żylnych i tętniczych, zespołu stopy cukrzycowej, odleżyn, oparzeń oraz powikłanych ran pooperacyjnych",
+      "Nowoczesne opatrunki specjalistyczne: indywidualny dobór opatrunków aktywnych (srebrowych, alginianowych, hydrożelowych, piankowych) dopasowanych do aktualnej fazy gojenia rany",
+      "Leczenie przyczynowe, a nie tylko objawowe: ścisła współpraca ze specjalistami w celu wyeliminowania podłoża choroby",
+      "Profesjonalne oczyszczanie ran: bezbolesne, chirurgiczne lub enzymatyczne usuwanie tkanek martwiczych oraz skuteczna likwidacja biofilmu bakteryjnego",
+      "Zaawansowane metody wspomagające: możliwość zastosowania terapii podciśnieniowej (NPWT) oraz preparatów autologicznych (osocze bogatopłytkowe PRP) przyspieszających regenerację tkanek",
+      "Skuteczna redukcja dolegliwości bólowych: wdrażanie nowoczesnych standardów leczenia bólu towarzyszącego ranom przewlekłym",
+      "Wsparcie i edukacja: szczegółowy instruktaż dla pacjenta oraz jego opiekunów w zakresie prawidłowej pielęgnacji i higieny rany w warunkach domowych"
     ],
     treatments: [
       {
