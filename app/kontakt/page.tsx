@@ -40,20 +40,58 @@ export default function KontaktPage() {
                     </p>
                 </section>
 
-                <section className="max-w-7xl mx-auto px-4">
+                <section className="max-w-7xl mx-auto px-4 space-y-8">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                        {/* PIERWSZY KONTAINER: widget i formularz */}
+                        <div className="lg:col-span-5">
+                            <div className="bg-white p-12 lg:p-16 rounded-[3rem] shadow-xl border border-white h-full flex flex-col justify-between">
+                                <h2 className="text-3xl font-black mb-8 text-nova-dark text-center uppercase tracking-tight">
+                                    Umów wizytę
+                                </h2>
+                                <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8 text-center">
+                                    Wybierz dogodny termin konsultacji lub zabiegu online bezpośrednio przez ZnanyLekarz.
+                                </p>
+                                <div className="flex justify-center mb-6">
+                                    <a
+                                        id="zl-url"
+                                        className="zl-url inline-flex items-center justify-center rounded-full bg-nova-blue px-6 py-3 text-sm font-black uppercase tracking-[0.2em] text-white shadow-md transition-all hover:bg-nova-dark"
+                                        href="https://www.znanylekarz.pl/jaroslaw-bilas/chirurg-lekarze-wykonujacy-zabiegi-medycyny-estetycznej/szczecin"
+                                        rel="nofollow"
+                                        data-zlw-doctor="jaroslaw-bilas"
+                                        data-zlw-type="big_with_calendar"
+                                        data-zlw-opinion="false"
+                                        data-zlw-hide-branding="true"
+                                        data-zlw-saas-only="true"
+                                        data-zlw-a11y-title="Widget umówienia wizyty lekarskiej"
+                                    >
+                                        Umów wizytę
+                                    </a>
+                                </div>
+                                <script dangerouslySetInnerHTML={{__html: `!function($_x,_s,id){var js,fjs=$_x.getElementsByTagName(_s)[0];if(!$_x.getElementById(id)){js = $_x.createElement(_s);js.id = id;js.src = "//platform.docplanner.com/js/widget.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","zl-widget-s");`}} />
+                            </div>
+                        </div>
 
-                        {/* LEWA KOLUMNA: Dane i Mapa */}
-                        <div className="lg:col-span-5 flex flex-col gap-8">
-
-                            {/* KAFELEK DANYCH */}
-                            <div className="bg-white p-12 lg:p-16 rounded-[3rem] shadow-xl border border-white flex-1">
+                        <div className="lg:col-span-7">
+                            <div className="bg-white p-12 lg:p-16 rounded-[4rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] border border-white/50 h-full flex flex-col">
                                 <h2 className="text-3xl font-black mb-12 text-nova-dark text-center uppercase tracking-tight">
+                                    Napisz do nas
+                                </h2>
+                                <p className="text-slate-500 font-medium leading-relaxed text-center mb-10 max-w-md mx-auto italic">
+                                    Masz pytania? Skorzystaj z formularza – odpowiemy tak szybko, jak to możliwe.
+                                </p>
+                                <ContactForm />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                        {/* DRUGI KONTAINER: dane gabinetu i mapa */}
+                        <div className="lg:col-span-5">
+                            <div className="bg-white p-10 lg:p-12 rounded-[3rem] shadow-xl border border-white h-full flex flex-col">
+                                <h2 className="text-3xl font-black mb-8 text-nova-dark text-center uppercase tracking-tight">
                                     DANE GABINETU
                                 </h2>
-
-                                <div className="space-y-10 max-w-sm mx-auto">
-                                    {/* ADRES */}
+                                <div className="space-y-8 max-w-sm mx-auto w-full">
                                     <div className="flex gap-6">
                                         <div className="w-12 h-12 bg-nova-bg rounded-2xl flex items-center justify-center shrink-0 text-nova-blue">
                                             <Icons.Pin />
@@ -65,8 +103,6 @@ export default function KontaktPage() {
                                             </p>
                                         </div>
                                     </div>
-
-                                    {/* TELEFON */}
                                     <div className="flex gap-6">
                                         <div className="w-12 h-12 bg-nova-bg rounded-2xl flex items-center justify-center shrink-0 text-nova-blue">
                                             <Icons.Phone />
@@ -83,8 +119,6 @@ export default function KontaktPage() {
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* GODZINY */}
                                     <div className="flex gap-6">
                                         <div className="w-12 h-12 bg-nova-bg rounded-2xl flex items-center justify-center shrink-0 text-nova-blue">
                                             <Icons.Clock />
@@ -98,31 +132,20 @@ export default function KontaktPage() {
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            {/* MAPA */}
-                            <div className="h-[350px] w-full rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white bg-gray-100">
+                        <div className="lg:col-span-7">
+                            <div className="h-[100%] bg-white rounded-[3rem] shadow-2xl border-8 border-white overflow-hidden">
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2375.43734734731!2d14.5315!3d53.4285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47aa09148d4c9d7d%3A0x6b6c6b6c6b6c6b6c!2sWawrzyniaka%206c%2F1%2C%2070-392%20Szczecin!5e0!3m2!1spl!2spl!4v1712345678901"
                                     width="100%"
                                     height="100%"
-                                    style={{ border: 0 }}
+                                    style={{ minHeight: '350px', border: 0 }}
                                     allowFullScreen
                                     loading="lazy"
                                 ></iframe>
                             </div>
                         </div>
-
-                        {/* PRAWA KOLUMNA: Formularz */}
-                        <div className="lg:col-span-7 bg-white p-12 lg:p-16 rounded-[4rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] border border-white/50 flex flex-col">
-                            <h2 className="text-3xl font-black mb-12 text-nova-dark text-center uppercase tracking-tight">
-                                Napisz do nas
-                            </h2>
-                            <p className="text-slate-500 font-medium leading-relaxed text-center mb-10 max-w-md mx-auto italic">
-                                Masz pytania? Skorzystaj z formularza – odpowiemy tak szybko, jak to możliwe.
-                            </p>
-                            <ContactForm />
-                        </div>
-
                     </div>
                 </section>
             </main>

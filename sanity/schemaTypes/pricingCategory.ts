@@ -37,17 +37,45 @@ export default {
             },
             {
               name: 'price',
-              title: 'Cena',
+              title: 'Cena podstawowa / pojedyncza',
               type: 'string',
-              description: 'Np. "250 zł", "od 400 zł", "600 zł - 1200 zł"',
-              validation: (Rule: any) => Rule.required(),
+              description: 'Np. "250 zł" lub "od 400 zł". Używaj tylko, gdy zabieg NIE posiada wariantów cenowych.',
             },
-            /* NOWE POLE: Opcjonalny opis szczegółów ceny */
             {
               name: 'description',
-              title: 'Opcjonalny opis / uwagi (zakres cen)',
+              title: 'Opcjonalny opis / uwagi',
               type: 'string',
-              description: 'Dodatkowe wyjaśnienie, np. "Cena zależy od wielkości zmiany" lub "W cenie uwzględniono badanie histopatologiczne".',
+              description: 'Dodatkowe wyjaśnienie, np. "Cena zależy od wielkości zmiany".',
+            },
+            /* NOWE POLE: Warianty cenowe */
+            {
+              name: 'variants',
+              title: 'Warianty cenowe (opcjonalnie)',
+              type: 'array',
+              description: 'Użyj, jeśli cena zależy od ilości, obszaru lub wariantu (np. "do 10 sztuk - 600 zł").',
+              of: [
+                {
+                  type: 'object',
+                  name: 'pricingVariant',
+                  title: 'Wariant',
+                  fields: [
+                    {
+                      name: 'variantName',
+                      title: 'Nazwa wariantu',
+                      type: 'string',
+                      description: 'Np. "do 10 sztuk", "10–20 sztuk", "powyżej 20 sztuk"',
+                      validation: (Rule: any) => Rule.required(),
+                    },
+                    {
+                      name: 'price',
+                      title: 'Cena wariantu',
+                      type: 'string',
+                      description: 'Np. "600 zł", "800 zł", "od 1000 zł"',
+                      validation: (Rule: any) => Rule.required(),
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },

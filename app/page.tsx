@@ -79,10 +79,10 @@ export default async function HomePage() {
                   style={{ backgroundImage: `url(${s.image})` }}
                 />
                 {/* Głęboki, ciemny gradient dla lepszego efektu wizualnego */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/20 opacity-90 group-hover:opacity-75 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/0 opacity-90 group-hover:opacity-75 transition-opacity" />
                 
                 <div className="absolute bottom-0 left-0 p-6 text-white w-full">
-                  <h3 className="text-xl lg:text-2xl font-bold mb-2 group-hover:text-nova-accent transition-colors italic">
+                  <h3 className="text-xl md:text-3xl font-black leading-[1.1] tracking-tight group-hover:text-nova-accent transition-colors italic">
                     {s.title}
                   </h3>
                   <p className="text-sm text-gray-200 line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -95,78 +95,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. NAJCZĘŚCIEJ WYBIERANE *
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-black text-nova-dark uppercase tracking-tight mb-12 italic underline decoration-nova-blue decoration-4 underline-offset-8">Najczęściej wybierane</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                {/* Przykład kafelka zabiegu */}
-                
-                {/*  WAZEKTOMIA *
-
-                <div className="relative group overflow-hidden rounded-[4rem] aspect-[4/5] shadow-2xl">
-                    <Image 
-                        src="/images/serduszko.jpg" 
-                        fill 
-                        alt="Wazektomia" 
-                        className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-nova-dark via-nova-dark/50 to-transparent opacity-90"></div>
-                    <div className="absolute bottom-12 left-12 right-12 flex flex-col justify-between min-h-[140px]">
-                        <div>
-                            <h4 className="text-white text-3xl font-black italic leading-[1.1] tracking-tight">
-                                Wazektomia
-                            </h4>
-                        </div>
-
-                        <div className="mt-4">
-                            <Link 
-                                href="/wazektomia" 
-                                className="inline-block bg-white text-nova-dark py-3 px-8 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-nova-blue hover:text-white transition-all shadow-lg"
-                            >
-                                Sprawdź zabieg
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-
-                {/*  PLASTYKA WAŁÓW *
-
-                <div className="relative group overflow-hidden rounded-[4rem] aspect-[4/5] shadow-2xl">
-                    <Image 
-                        src="/images/serduszko.jpg" 
-                        fill 
-                        alt="Wazektomia" 
-                        className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-nova-dark via-nova-dark/50 to-transparent opacity-90"></div>
-                    <div className="absolute bottom-12 left-12 right-12 flex flex-col justify-between min-h-[140px]">
-                        <div>
-                            <h4 className="text-white text-3xl font-black italic leading-[1.1] tracking-tight">
-                                Plastyka wałów paznokciowych
-                            </h4>
-                        </div>
-
-                        <div className="mt-4">
-                            <Link 
-                                href="/podochirurgia" 
-                                className="inline-block bg-white text-nova-dark py-3 px-8 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-nova-blue hover:text-white transition-all shadow-lg"
-                            >
-                                Sprawdź zabieg
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-
-                {/* ... kolejne kafelki ... *
-            </div>
-        </div>
-      </section>*/}
-
       {/* 3. NAJCZĘŚCIEJ WYBIERANE */}
 <section className="py-24 bg-white">
   <div className="max-w-7xl mx-auto px-4 text-center">
-    <h2 className="text-3xl font-black text-nova-dark uppercase tracking-tight mb-12 italic underline decoration-black decoration-4 underline-offset-8">
+    <h2 className="text-3xl font-black text-nova-dark uppercase tracking-tight mb-12 italic decoration-black decoration-4 underline underline-offset-8">
       Najczęściej wybierane
     </h2>
     
@@ -181,19 +113,19 @@ export default async function HomePage() {
         alt={proc.title} 
         className="hidden md:block object-cover transition-transform duration-700 group-hover:scale-110" 
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-[#050505]/80 to-transparent opacity-95"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#020202]/80 via-[#050505]/10 to-transparent opacity-90 group-hover:opacity-75 transition-opacity"></div>
       
       <div className="absolute inset-0 p-6 md:p-12 flex flex-col justify-between z-10">
         <div></div>
         <div className="flex flex-col sm:flex-row md:flex-col justify-between items-start sm:items-center md:items-start gap-4 w-full">
-          <h4 className="text-white text-xl md:text-3xl font-black italic leading-[1.1] tracking-tight max-w-[250px]">
+          <h4 className="text-white text-xl md:text-3xl font-black italic leading-[1.1] tracking-tight max-w-[250px] group-hover:text-nova-accent transition-colors">
             {proc.title}
           </h4>
           
           {/* POPRAWKA: Link prowadzi teraz do /zabiegi/[slug] */}
           <Link 
             href={`/zabiegi/${proc.slug}`} 
-            className="inline-block bg-white text-nova-dark py-2.5 md:py-3 px-6 md:px-8 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shrink-0"
+            className="inline-block bg-white text-nova-dark py-2.5 md:py-3 px-6 md:px-8 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-nova-blue hover:text-white transition-all shadow-lg shrink-0"
           >
             Sprawdź zabieg
           </Link>

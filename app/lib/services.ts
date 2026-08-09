@@ -225,7 +225,7 @@ export const servicesData: Record<string, Service> = {
       "Redukcja blizn i przebarwień za pomocą resurfacingu laserowego CO2",
       "Wysokiej jakości epilacja laserowa przy użyciu lasera diodowego o dużej mocy i chłodzeniu kontaktowym",
       "Wieloletnie doświadczenie w pracy z laserami medycznymi i estetycznymi",
-      "Wszystkie zabiegi wykonywane są przez wykwalifikowanego lekarza lub doświadczoną pielęgniarkę medyczną"
+      "Wszystkie zabiegi wykonywane są przez lekarza lub wykwalifikowaną pielęgniarkę"
     ],
     treatments: [
       {
@@ -249,10 +249,9 @@ export const servicesData: Record<string, Service> = {
     clinicalStandards: [
       "Kompleksowa terapia ran o różnej etiologii: owrzodzeń żylnych i tętniczych, zespołu stopy cukrzycowej, odleżyn, oparzeń oraz powikłanych ran pooperacyjnych",
       "Nowoczesne opatrunki specjalistyczne: indywidualny dobór opatrunków aktywnych (srebrowych, alginianowych, hydrożelowych, piankowych) dopasowanych do aktualnej fazy gojenia rany",
-      "Leczenie przyczynowe, a nie tylko objawowe: ścisła współpraca ze specjalistami w celu wyeliminowania podłoża choroby",
       "Profesjonalne oczyszczanie ran: bezbolesne, chirurgiczne lub enzymatyczne usuwanie tkanek martwiczych oraz skuteczna likwidacja biofilmu bakteryjnego",
-      "Zaawansowane metody wspomagające: możliwość zastosowania terapii podciśnieniowej (NPWT) oraz preparatów autologicznych (osocze bogatopłytkowe PRP) przyspieszających regenerację tkanek",
-      "Skuteczna redukcja dolegliwości bólowych: wdrażanie nowoczesnych standardów leczenia bólu towarzyszącego ranom przewlekłym",
+      "Zaawansowane metody wspomagające: terapia podciśnieniowa (NPWT), preparaty autologiczne, przyspieszające regenerację tkanek",
+      "Skuteczna redukcja dolegliwości bólowych towarzyszących ranom przewlekłym",
       "Wsparcie i edukacja: szczegółowy instruktaż dla pacjenta oraz jego opiekunów w zakresie prawidłowej pielęgnacji i higieny rany w warunkach domowych"
     ],
     treatments: [

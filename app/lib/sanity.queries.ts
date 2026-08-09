@@ -2,6 +2,39 @@
 import { createClient } from 'next-sanity';
 import { createImageUrlBuilder } from '@sanity/image-url';
 
+interface SanityImageSource {
+  asset?: {
+    _ref?: string;
+    _type?: string;
+  };
+}
+
+interface PricingVariant {
+  variantName?: string;
+  price?: string;
+}
+
+interface PricingItem {
+  name?: string;
+  price?: string;
+  variants?: PricingVariant[];
+}
+
+interface TreatmentPackage {
+  _id: string;
+  name?: string;
+  slug?: string;
+  description?: string;
+  price?: string;
+  currency?: string;
+  priceText?: string;
+  features?: string[];
+  isPromoted?: boolean;
+  tags?: string[];
+  paymentProductId?: string;
+  paymentPriceId?: string;
+}
+
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
@@ -11,7 +44,7 @@ export const client = createClient({
 
 const builder = createImageUrlBuilder(client);
 
-export function urlFor(source: any) {
+export function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
@@ -52,12 +85,35 @@ export async function getPricing() {
       items[] {
         name,
         price,
-        description
+        description,
+        variants[] {
+          variantName,
+          price
+        }
       }
     }`,
     {},
     { next: { revalidate: 3600 } }
   );
+}
+
+export async function getTreatmentPackagesByTag(tag: string): Promise<TreatmentPackage[]> {
+  const query = `*[_type == "treatmentPackage" && ($tag in tags) && (active == true || !defined(active))] | order(order asc) {
+    _id,
+    name,
+    slug,
+    description,
+    price,
+    currency,
+    priceText,
+    features,
+    isPromoted,
+    tags,
+    paymentProductId,
+    paymentPriceId
+  }` as const;
+
+  return await (client.fetch(query, { tag }) as Promise<TreatmentPackage[]>);
 }
 
 // --- FAQ ---
@@ -117,13 +173,24 @@ export async function getProcedureBySlug(slug: string) {
       teaser,
       content,
       "imageUrl": image.asset->url,
-      
-      // LOGIKA POBIERANIA CENY DLA WARIANTÓW:
-      // Definiujemy unikalny punkt szukany: jeśli wpisano specificPricingName, używamy go.
-      // W przeciwnym wypadku domyślnie szukamy po tytule procedury.
-      "price": coalesce(
-        pricingCategoryRef->items[name == ^.specificPricingName][0].price,
-        pricingCategoryRef->items[name == ^.title][0].price
+      "pricingCategoryName": pricingCategoryRef->categoryName,
+      "pricingItem": coalesce(
+        pricingCategoryRef->items[name == ^.specificPricingName][0]{
+          name,
+          price,
+          variants[] {
+            variantName,
+            price
+          }
+        },
+        pricingCategoryRef->items[name == ^.title][0]{
+          name,
+          price,
+          variants[] {
+            variantName,
+            price
+          }
+        }
       )
     }`,
     { slug },

@@ -1,4 +1,5 @@
 // app/zabiegi/[slug]/page.tsx
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProcedureBySlug, getAllProcedureSlugs } from "@/app/lib/sanity.queries";
 import CustomPortableText from "@/components/CustomPortableText";
@@ -6,6 +7,51 @@ import FloatingBackButton from "@/components/FloatingBackButton";
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+interface ProcedurePricingVariant {
+  variantName?: string;
+  price?: string;
+}
+
+interface ProcedurePricingItem {
+  name?: string;
+  price?: string;
+  variants?: ProcedurePricingVariant[];
+}
+
+function slugify(value?: string) {
+  return (value || "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+function getDisplayedPrice(pricingItem?: ProcedurePricingItem) {
+  const variants = pricingItem?.variants ?? [];
+  const variantPrices = variants
+    .map((variant) => variant.price)
+    .filter((value): value is string => Boolean(value))
+    .filter((value) => !value.trim().startsWith("+"));
+
+  if (variantPrices.length > 0) {
+    const numericValues = variantPrices
+      .map((value) => value.match(/(\d{1,3}(?:\s*\d{3})*(?:[.,]\d+)?|\d+(?:[.,]\d+)?)/))
+      .filter((match): match is RegExpMatchArray => Boolean(match))
+      .map((match) => Number(match[0].replace(/\s/g, "").replace(",", ".")));
+
+    const smallestValue = numericValues.length > 0 ? Math.min(...numericValues) : null;
+    return smallestValue !== null ? `od ${smallestValue} zł` : null;
+  }
+
+  const basePrice = pricingItem?.price?.trim();
+  if (!basePrice || basePrice.startsWith("+")) {
+    return null;
+  }
+
+  return `${basePrice} zł`;
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -33,6 +79,10 @@ export default async function ProcedurePage({ params }: Props) {
   if (!procedure) {
     notFound();
   }
+
+  const displayedPrice = getDisplayedPrice(procedure.pricingItem);
+  const pricingCategoryKey = slugify(procedure.pricingCategoryName || procedure.category);
+  const pricingHref = pricingCategoryKey ? `/cennik#${pricingCategoryKey}` : "/cennik";
 
   return (
     <main className="min-h-screen bg-slate-50 pt-32 pb-20">
@@ -66,9 +116,13 @@ export default async function ProcedurePage({ params }: Props) {
             {/* PO PRAWEJ: Cena pobierana z Sanity (z fallbackiem, jeśli nie podano) */}
             <div className="text-right truncate max-w-[50%]">
             <span className="text-gray-400 font-medium">Cena: </span>
-            <span className="text-nova-blue">
-                {procedure.price ? `od ${procedure.price}` : 'Sprawdź cennik'}
-            </span>
+            {displayedPrice ? (
+              <span className="text-nova-blue">{displayedPrice}</span>
+            ) : (
+              <Link href={pricingHref} className="text-nova-blue underline-offset-4 hover:underline">
+                Sprawdź cennik
+              </Link>
+            )}
             </div>
         </div>
         </div>

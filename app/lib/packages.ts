@@ -2,13 +2,17 @@ export interface Package {
     id: string;
     name: string;
     price: string;
+    currency?: string;
+    priceText?: string;
     features: string[];
     isPromoted?: boolean;
     tags: string[]; // np. ['wazektomia', 'cennik-glowny']
+    paymentProductId?: string;
+    paymentPriceId?: string;
 }
 
 export const allPackages: Package[] = [
-    {
+   /*{
         id: 'waz-std',
         name: "Pakiet Standard",
         price: "2700 zł",
@@ -22,7 +26,7 @@ export const allPackages: Package[] = [
         isPromoted: true,
         tags: ['wazektomia'],
         features: ["Konsultacja wstępna", "Panel badań krwi przed zabiegiem", "Zabieg wazektomii", "Kontrola po zabiegu"]
-    },
+    },*/
     {
         id: 'pod-base',
         name: "Zabieg podstawowy",

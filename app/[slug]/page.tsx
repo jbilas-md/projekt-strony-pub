@@ -6,9 +6,12 @@ import FAQAccordion from '@/components/FAQAccordion';
 import BlogCard from '@/components/BlogCard';
 
 import { servicesData } from '../lib/services';
-import { allPackages } from '../lib/packages';
-// Zmiana: Importujemy nową funkcję pobierania zabiegów z Sanity
-import { getPosts, getProceduresByCategory } from '../lib/sanity.queries';
+import PackagePaymentButton from '@/components/PackagePaymentButton';
+// Zmiana: Importujemy nową funkcję pobierania zabiegów i pakietów z Sanity
+import { getPosts, getProceduresByCategory, getTreatmentPackagesByTag } from '../lib/sanity.queries';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 // Słownik mapujący slugi z adresu URL na wartości kategorii zdefiniowane w Sanity
 const slugToCategoryMap: Record<string, string> = {
@@ -40,8 +43,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     ? await getProceduresByCategory(sanityCategoryName)
     : [];
 
-  // Filtrowanie zasobów lokalnych
-  const servicePackages = allPackages.filter(p => p.tags.includes(slug));
+  const servicePackages = await getTreatmentPackagesByTag(slug);
 
   // Pobranie świeżych artykułów ze Sanity CMS
   const allPosts = await getPosts();
@@ -78,7 +80,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               </nav>
               <h1 className="text-4xl lg:text-6xl font-black text-nova-dark mb-8 tracking-tight leading-[1.1]">{service.h1}</h1>
               <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-xl">{service.intro}</p>
-              <a href="https://www.znanylekarz.pl/..." target="_blank" rel="noopener noreferrer" className="bg-nova-blue text-white px-10 py-5 rounded-full font-extrabold shadow-md hover:bg-nova-dark transition-all inline-block">Rejestracja wizyt online</a>
+              <a href="https://www.znanylekarz.pl/jaroslaw-bilas/chirurg-lekarze-wykonujacy-zabiegi-medycyny-estetycznej/szczecin" target="_blank" rel="noopener noreferrer" className="bg-nova-blue text-white px-10 py-5 rounded-full font-extrabold shadow-md hover:bg-nova-dark transition-all inline-block">Rejestracja wizyt online</a>
             </div>
             <div className="relative h-[450px] lg:h-[550px] rounded-[3rem] overflow-hidden shadow-sm border-4 border-nova-bg">
               <Image src={service.image} alt={service.title} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 600px" />
@@ -154,13 +156,14 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <section className="max-w-7xl mx-auto px-4 py-24 border-t border-gray-50">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">Pakiety zabiegowe</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto items-stretch">
-              {servicePackages.map((pkg, i) => (
+              {servicePackages.map((pkg: any, i: number) => (
                 <div
                   key={i}
-                  className={`flex flex-col bg-white p-10 rounded-[2.5rem] border transition-all duration-500 relative ${pkg.isPromoted
-                    ? 'border-nova-blue/20 scale-105 z-10 shadow-[20px_20px_40px_rgba(8,112,184,0.08)]'
-                    : 'border-gray-100 shadow-sm'
-                    }`}
+                  className={`flex flex-col bg-white p-10 rounded-[2.5rem] border transition-all duration-500 relative ${
+                    pkg.isPromoted
+                      ? 'border-nova-blue/20 scale-105 z-10 shadow-[20px_20px_40px_rgba(8,112,184,0.08)]'
+                      : 'border-gray-100 shadow-sm'
+                  }`}
                 >
                   {pkg.isPromoted && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-nova-blue text-white text-[9px] font-black px-5 py-1.5 rounded-full tracking-wider uppercase">
@@ -168,18 +171,29 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                     </div>
                   )}
                   <h3 className="text-xl font-black mb-2 text-nova-dark">{pkg.name}</h3>
-                  <div className="text-3xl font-black text-nova-blue mb-8">{pkg.price}</div>
+                  <div className="text-3xl font-black text-nova-blue mb-8">
+                    {pkg.priceText ?? (typeof pkg.price === 'number' ? `${pkg.price} ${pkg.currency ?? 'PLN'}` : pkg.price)}
+                  </div>
                   <ul className="space-y-4 mb-10 flex-1">
-                    {pkg.features.map((f, j) => (
+                    {pkg.features.map((f: string, j: number) => (
                       <li key={j} className="flex items-start gap-3 text-slate-500 font-medium text-xs md:text-sm">
                         <div className="w-1.5 h-1.5 bg-nova-blue rounded-full mt-2 shrink-0" />
                         <span>{f}</span>
                       </li>
                     ))}
                   </ul>
-                  <button className={`w-full py-4 font-black rounded-xl text-sm transition-all ${pkg.isPromoted ? 'bg-nova-blue text-white shadow-md' : 'bg-nova-dark text-white hover:bg-nova-blue'}`}>
-                    Wybierz pakiet
-                  </button>
+
+                  {/* PRZYCISK ZAMÓWIENIA PAKIETU - WYŁĄCZONY DOPÓKI NIE ZOSTANIE WPROWADZONA FUNKCJONALNOŚĆ PŁATNOŚCI*/} 
+
+                  {/*<PackagePaymentButton
+                    packageId={pkg.id ?? pkg.slug ?? pkg.name}
+                    packageName={pkg.name}
+                    priceLabel={pkg.priceText ?? (typeof pkg.price === 'number' ? `${pkg.price} ${pkg.currency ?? 'PLN'}` : pkg.price)}
+                    currency={pkg.currency ?? 'PLN'}
+                    serviceSlug={slug}
+                    paymentProductId={(pkg as any).paymentProductId}
+                    paymentPriceId={(pkg as any).paymentPriceId}
+                  />*/}
                 </div>
               ))}
             </div>
