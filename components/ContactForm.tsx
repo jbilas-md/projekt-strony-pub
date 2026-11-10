@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 interface ContactFormProps {
     compact?: boolean;
 }
@@ -136,7 +137,7 @@ export default function ContactForm({ compact = false }: ContactFormProps) {
                             className="mt-1 w-4 h-4 rounded border-gray-300 text-nova-blue focus:ring-nova-blue"
                         />
                         <label htmlFor="rodo" className="text-[9px] leading-tight text-slate-400 font-medium">
-                            Zapoznałem się z <a href="/polityka-prywatnosci" className="underline hover:text-nova-blue">Polityką Prywatności</a> i wyrażam zgodę na przetwarzanie moich danych osobowych w celu obsługi zapytania. Administratorem danych jest Novamedic Szczecin. *
+                            Zapoznałem się z <Link href="/polityka-prywatnosci" className="underline hover:text-nova-blue">Polityką Prywatności</Link> i wyrażam zgodę na przetwarzanie moich danych osobowych w celu obsługi zapytania. Administratorem danych jest Novamedic Szczecin. *
                         </label>
                     </div>
                 </div>

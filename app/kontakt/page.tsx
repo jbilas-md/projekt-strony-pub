@@ -126,7 +126,7 @@ export default function KontaktPage() {
                                         <div>
                                             <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Godziny przyjęć</p>
                                             <p className="text-lg font-bold text-nova-dark leading-tight">
-                                                Poniedziałek – Piątek<br />09:00 – 18:00
+                                                Poniedziałek, Wtorek<br />15:00 – 20:00<br /><br />Piątek<br />09:00 - 15:00
                                             </p>
                                         </div>
                                     </div>
