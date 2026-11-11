@@ -1,4 +1,6 @@
-export default {
+import { defineType } from 'sanity';
+
+export default defineType({
   name: 'review',
   title: 'Opinia pacjenta',
   type: 'document',
@@ -7,13 +9,13 @@ export default {
       name: 'author',
       title: 'Autor opinii',
       type: 'string',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'rating',
       title: 'Ocena',
       type: 'number',
-      validation: (Rule: any) => Rule.required().min(1).max(5),
+      validation: (Rule) => Rule.required().min(1).max(5),
     },
     {
       name: 'source',
@@ -27,20 +29,20 @@ export default {
         ],
         layout: 'dropdown',
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'comment',
       title: 'Komentarz',
       type: 'text',
       rows: 5,
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'date',
       title: 'Data opinii',
       type: 'date',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'isVisible',
@@ -56,7 +58,7 @@ export default {
       subtitle: 'source',
       date: 'date',
     },
-    prepare(selection: any) {
+    prepare(selection) {
       const { title, subtitle, date } = selection;
       return {
         title,
@@ -66,4 +68,4 @@ export default {
       };
     },
   },
-};
+});

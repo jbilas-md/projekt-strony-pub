@@ -56,26 +56,6 @@ export const defaultSEO: Metadata = {
     },
 };
 
-// Specyficzne SEO dla strony głównej Bloga
-export const blogSEO: Metadata = {
-    title: "Blog Medyczny i Baza Wiedzy",
-    description: "Eksperckie artykuły medyczne. Dowiedz się więcej o wazektomii, podochirurgii i nowoczesnych metodach leczenia ran od specjalistów Novamedic.",
-    alternates: {
-        canonical: "/blog",
-    },
-    openGraph: {
-        url: `${SITE_URL}/blog`,
-        images: [
-            {
-                url: "/images/og-blog.jpg", // Warto stworzyć osobny obrazek dla bloga
-                width: 1200,
-                height: 630,
-                alt: "Blog Medyczny Novamedic Szczecin",
-            },
-        ],
-    },
-};
-
 /**
  * Funkcja pomocnicza do generowania SEO dla konkretnych wpisów na blogu
  */

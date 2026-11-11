@@ -88,7 +88,7 @@ export default function Home() {
         </p>
           <div className="bg-slate-50 p-8 rounded-[3rem] border border-slate-100">
           <h3 className="font-bold text-xs uppercase tracking-[0.2em] text-blue-600 mb-4">Napisz do nas</h3>
-          <ContactForm compact={true} /></div>
+          <ContactForm /></div>
         </div>
       </div>
 

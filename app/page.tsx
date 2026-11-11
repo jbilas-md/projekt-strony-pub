@@ -1,7 +1,6 @@
 // NOWA STRONA GŁÓWNA
 
 import ReviewsSection from '@/components/ReviewsSection'; 
-import type { Metadata } from "next";
 import Image from 'next/image';
 import Link from 'next/link';
 import { getFeaturedProcedures, getReviews } from '@/app/lib/sanity.queries';
@@ -12,7 +11,6 @@ export default async function HomePage() {
   
   const allServices = [
     { title: "Chirurgia", desc: "Zabiegi w trybie ambulatoryjnym, usuwanie zmian skórnych, biopsje.", link: "/chirurgia", image: "/images/chirurgia.jpg" },
-    // { title: "Ortopedia", desc: "Diagnostyka USG, iniekcje dostawowe, leczenie urazów.", link: "/ortopedia", image: "/images/ortopedia.jpg" },
     { title: "Podologia", desc: "Specjalistyczna pielęgnacja stóp, usuwanie modzeli.", link: "/podologia", image: "/images/podologia.jpg" },
     { title: "Podochirurgia", desc: "Chirurgiczne leczenie wrastających paznokci.", link: "/podochirurgia", image: "/images/podochirurgia.jpg" },
     { title: "Laseroterapia", desc: "Zamykanie naczynek, usuwanie przebarwień.", link: "/laseroterapia", image: "/images/laseroterapia.jpg" },
@@ -61,9 +59,7 @@ export default async function HomePage() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>
               <h2 className="text-4xl font-black text-black uppercase tracking-tight italic">Nasze specjalności</h2>
-              {/*<p className="text-slate-500 font-medium mt-2">Kompleksowa opieka w ramach naszych głównych dziedzin terapii.</p>*/}
             </div>
-            {/*<Link href="/oferta" className="text-nova-blue font-black uppercase tracking-widest text-sm hover:underline">Pełna oferta usług</Link>*/}
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
@@ -103,16 +99,18 @@ export default async function HomePage() {
     </h2>
     
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-  {featuredProcedures?.map((proc: any) => (
+  {featuredProcedures.map((proc) => (
     <div key={proc._id} className="relative group overflow-hidden rounded-[2.5rem] md:rounded-[4rem] h-44 md:h-auto md:aspect-square bg-black shadow-2xl flex flex-col justify-end">
       
       {/* Obrazek ukryty na telefonie */}
-      <Image 
-        src={proc.imageUrl} 
-        fill 
-        alt={proc.title} 
-        className="hidden md:block object-cover transition-transform duration-700 group-hover:scale-110" 
-      />
+      {proc.imageUrl && (
+        <Image
+          src={proc.imageUrl}
+          fill
+          alt={proc.title}
+          className="hidden md:block object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-t from-[#020202]/80 via-[#050505]/10 to-transparent opacity-90 group-hover:opacity-75 transition-opacity"></div>
       
       <div className="absolute inset-0 p-6 md:p-12 flex flex-col justify-between z-10">

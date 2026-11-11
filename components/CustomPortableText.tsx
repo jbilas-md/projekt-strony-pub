@@ -1,6 +1,49 @@
-import { PortableText, PortableTextComponents } from '@portabletext/react';
+import { PortableText } from '@portabletext/react';
+import type { PortableTextComponents } from '@portabletext/react';
+import type { ArbitraryTypedObject } from '@portabletext/types';
 import Image from 'next/image';
-import { urlFor } from '@/app/lib/sanity.queries'; // Zaraz dodamy tę funkcję pomocniczą
+import { urlFor } from '@/app/lib/sanity.queries';
+import type { PortableTextValue, SanityImageSource } from '@/app/lib/sanity.queries';
+
+interface TableRow {
+  _key?: string;
+  cells: string[];
+}
+
+interface TableBlock extends ArbitraryTypedObject {
+  _type: 'table';
+  rows: TableRow[];
+}
+
+function getImageSource(value: ArbitraryTypedObject): SanityImageSource | null {
+  const asset = value.asset;
+  if (
+    typeof asset !== 'object' ||
+    asset === null ||
+    !('_ref' in asset) ||
+    typeof asset._ref !== 'string'
+  ) {
+    return null;
+  }
+
+  return { asset: { _ref: asset._ref, _type: 'reference' } };
+}
+
+function isTableBlock(value: ArbitraryTypedObject): value is TableBlock {
+  const rows: unknown = value.rows;
+  if (value._type !== 'table' || !Array.isArray(rows)) {
+    return false;
+  }
+
+  return value.rows.every(
+    (row: unknown): row is TableRow =>
+      typeof row === 'object' &&
+      row !== null &&
+      'cells' in row &&
+      Array.isArray(row.cells) &&
+      row.cells.every((cell: unknown) => typeof cell === 'string')
+  );
+}
 
 const components: PortableTextComponents = {
   block: {
@@ -17,40 +60,44 @@ const components: PortableTextComponents = {
     bullet: ({ children }) => <ul className="list-disc pl-6 mb-6 space-y-2 text-gray-700">{children}</ul>,
   },
   types: {
-    image: ({ value }) => (
-      <div className="relative w-full h-[400px] my-10 rounded-2xl overflow-hidden">
-        <Image
-          src={urlFor(value).url()}
-          alt="Zdjęcie w artykule"
-          fill
-          className="object-cover"
-        />
-      </div>
-    ),
+    image: ({ value }) => {
+      const source = getImageSource(value);
+      if (!source) return null;
+
+      return (
+        <div className="relative w-full h-[400px] my-10 rounded-2xl overflow-hidden">
+          <Image
+            src={urlFor(source).url()}
+            alt="Zdjęcie w artykule"
+            fill
+            className="object-cover"
+          />
+        </div>
+      );
+    },
     // Table renderer for @sanity/table plugin
     table: ({ value }) => {
-      const rows = value?.rows || [];
-      if (!rows || rows.length === 0) return null;
+      if (!isTableBlock(value) || value.rows.length === 0) return null;
 
-      const headerCells = rows[0]?.cells || [];
+      const [header, ...bodyRows] = value.rows;
 
       return (
         <div className="my-8 overflow-x-auto">
           <table className="min-w-full table-auto border-collapse">
             <thead className="bg-nova-bg">
               <tr>
-                {headerCells.map((cell: any, i: number) => (
-                  <th key={i} className="text-left font-semibold text-sm md:text-base px-4 py-3 border-b border-gray-100">
+                {header.cells.map((cell, index) => (
+                  <th key={index} className="text-left font-semibold text-sm md:text-base px-4 py-3 border-b border-gray-100">
                     {cell}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {rows.slice(1).map((row: any) => (
-                <tr key={row._key} className="odd:bg-white even:bg-gray-50">
-                  {row.cells.map((cell: any, j: number) => (
-                    <td key={j} className="py-3 px-4 align-top text-sm text-gray-700 border-b border-gray-100">
+              {bodyRows.map((row, rowIndex) => (
+                <tr key={row._key ?? rowIndex} className="odd:bg-white even:bg-gray-50">
+                  {row.cells.map((cell, cellIndex) => (
+                    <td key={cellIndex} className="py-3 px-4 align-top text-sm text-gray-700 border-b border-gray-100">
                       {cell}
                     </td>
                   ))}
@@ -64,6 +111,6 @@ const components: PortableTextComponents = {
   },
 };
 
-export default function CustomPortableText({ value }: { value: any }) {
+export default function CustomPortableText({ value }: { value: PortableTextValue }) {
   return <PortableText value={value} components={components} />;
 }

@@ -1,4 +1,5 @@
 // sanity/schemaTypes/procedure.ts
+import { defineType } from 'sanity';
 
 const categoryOptions = [
   { title: "Chirurgia", value: "Chirurgia" },
@@ -11,7 +12,7 @@ const categoryOptions = [
   { title: "Leczenie ran", value: "Leczenie ran" },
 ];
 
-export default {
+export default defineType({
   name: 'procedure',
   title: 'Zabiegi i Usługi',
   type: 'document',
@@ -20,7 +21,7 @@ export default {
       name: 'title',
       title: 'Nazwa zabiegu',
       type: 'string',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'slug',
@@ -30,7 +31,7 @@ export default {
         source: 'title',
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'category',
@@ -41,7 +42,7 @@ export default {
         list: categoryOptions,
         layout: 'dropdown',
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'image',
@@ -89,7 +90,7 @@ export default {
       type: 'reference',
       to: [{ type: 'pricingCategory' }],
       description: 'Wskaż kategorię z cennika (np. Medycyna Estetyczna lub Podochirurgia).',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'specificPricingName',
@@ -98,4 +99,4 @@ export default {
       description: 'Jeśli w cenniku nazwa różni się od tytułu strony (np. strona to "Botox", a w cenniku masz "Botox - 1 okolica"), wpisz tutaj DOKŁADNĄ nazwę z cennika, aby pobrać właściwą cenę startową.',
     }
   ],
-};
+});

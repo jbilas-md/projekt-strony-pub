@@ -1,6 +1,8 @@
 // sanity/schemaTypes/pricingCategory.ts
 
-export default {
+import { defineType } from 'sanity';
+
+export default defineType({
   name: 'pricingCategory',
   title: 'Cennik - Kategorie',
   type: 'document',
@@ -10,14 +12,14 @@ export default {
       title: 'Nazwa Kategorii',
       type: 'string',
       description: 'Np. Chirurgia Ogólna, Laseroterapia Medyczna',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'order',
       title: 'Kolejność wyświetlania',
       type: 'number',
       description: 'Liczba określająca pozycję (np. 1 wyświetli się na samej górze, potem 2, 3...)',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'items',
@@ -33,7 +35,7 @@ export default {
               name: 'name',
               title: 'Nazwa zabiegu / konsultacji',
               type: 'string',
-              validation: (Rule: any) => Rule.required(),
+              validation: (Rule) => Rule.required(),
             },
             {
               name: 'price',
@@ -47,7 +49,6 @@ export default {
               type: 'string',
               description: 'Dodatkowe wyjaśnienie, np. "Cena zależy od wielkości zmiany".',
             },
-            /* NOWE POLE: Warianty cenowe */
             {
               name: 'variants',
               title: 'Warianty cenowe (opcjonalnie)',
@@ -64,14 +65,14 @@ export default {
                       title: 'Nazwa wariantu',
                       type: 'string',
                       description: 'Np. "do 10 sztuk", "10–20 sztuk", "powyżej 20 sztuk"',
-                      validation: (Rule: any) => Rule.required(),
+                      validation: (Rule) => Rule.required(),
                     },
                     {
                       name: 'price',
                       title: 'Cena wariantu',
                       type: 'string',
                       description: 'Np. "600 zł", "800 zł", "od 1000 zł"',
-                      validation: (Rule: any) => Rule.required(),
+                      validation: (Rule) => Rule.required(),
                     },
                   ],
                 },
@@ -89,4 +90,4 @@ export default {
       by: [{ field: 'order', direction: 'asc' }],
     },
   ],
-};
+});

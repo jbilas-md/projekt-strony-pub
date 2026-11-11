@@ -1,8 +1,6 @@
 import "@/app/globals.css";
 import type { Metadata } from "next";
 import { defaultSEO } from "./lib/seo";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
 import { AccessibilityProvider } from "@/components/AccessibilityProvider";
 

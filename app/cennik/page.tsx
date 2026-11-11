@@ -2,17 +2,6 @@
 import { getPricing } from '@/app/lib/sanity.queries';
 import PricingAccordion from '@/components/PricingAccordion';
 
-interface PricingItem {
-  name: string;
-  price: string;
-  description?: string;
-}
-
-interface PricingCategory {
-  categoryName: string;
-  items: PricingItem[];
-}
-
 export const metadata = {
   title: "Cennik Zabiegów i Konsultacji - Novamedic Szczecin",
   description: "Aktualny cennik usług medycznych w gabinecie Novamedic Szczecin. Sprawdź ceny i umów wizytę.",
@@ -20,7 +9,7 @@ export const metadata = {
 
 export default async function PricingPage() {
   // Wywołanie funkcji zapytań ze Sanity CMS
-  const pricingCategories: PricingCategory[] = await getPricing();
+  const pricingCategories = await getPricing();
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-nova-dark antialiased">

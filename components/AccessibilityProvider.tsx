@@ -1,7 +1,6 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useSyncExternalStore } from "react";
 
-// Definiujemy, jakie dane będziemy przechowywać
 type AccessibilityContextType = {
     highContrast: boolean;
     toggleHighContrast: () => void;
@@ -11,60 +10,51 @@ type AccessibilityContextType = {
     toggleHighlightLinks: () => void;
 };
 
-// Tworzymy kontekst
 const AccessibilityContext = createContext<AccessibilityContextType | undefined>(undefined);
+const preferenceEvent = "novamedic:accessibility-preference-change";
+
+function subscribeToPreferences(onChange: () => void) {
+    window.addEventListener("storage", onChange);
+    window.addEventListener(preferenceEvent, onChange);
+
+    return () => {
+        window.removeEventListener("storage", onChange);
+        window.removeEventListener(preferenceEvent, onChange);
+    };
+}
+
+function readPreference(key: string) {
+    return localStorage.getItem(key) === "true";
+}
+
+function writePreference(key: string, value: boolean) {
+    localStorage.setItem(key, String(value));
+    window.dispatchEvent(new Event(preferenceEvent));
+}
+
+function usePreference(key: string) {
+    return useSyncExternalStore(
+        subscribeToPreferences,
+        () => readPreference(key),
+        () => false,
+    );
+}
 
 export function AccessibilityProvider({ children }: { children: React.ReactNode }) {
-    const [highContrast, setHighContrast] = useState(false);
-    const [largeText, setLargeText] = useState(false);
-    const [highlightLinks, setHighlightLinks] = useState(false);
+    const highContrast = usePreference("wcag-highContrast");
+    const largeText = usePreference("wcag-largeText");
+    const highlightLinks = usePreference("wcag-highlightLinks");
 
-    // Krok A: Pobieranie zapisanych ustawień przy ładowaniu strony
+    const toggleHighContrast = () => writePreference("wcag-highContrast", !highContrast);
+    const toggleLargeText = () => writePreference("wcag-largeText", !largeText);
+    const toggleHighlightLinks = () => writePreference("wcag-highlightLinks", !highlightLinks);
+
     useEffect(() => {
-        setHighContrast(localStorage.getItem("wcag-highContrast") === "true");
-        setLargeText(localStorage.getItem("wcag-largeText") === "true");
-        setHighlightLinks(localStorage.getItem("wcag-highlightLinks") === "true");
-    }, []);
-
-    // Krok B: Funkcje przełączające opcje i zapisujące je w pamięci przeglądarki
-    const toggleHighContrast = () => {
-        setHighContrast((prev) => {
-            const newVal = !prev;
-            localStorage.setItem("wcag-highContrast", String(newVal));
-            return newVal;
-        });
-    };
-
-    const toggleLargeText = () => {
-        setLargeText((prev) => {
-            const newVal = !prev;
-            localStorage.setItem("wcag-largeText", String(newVal));
-            return newVal;
-        });
-    };
-
-    const toggleHighlightLinks = () => {
-        setHighlightLinks((prev) => {
-            const newVal = !prev;
-            localStorage.setItem("wcag-highlightLinks", String(newVal));
-            return newVal;
-        });
-    };
-
-    // Krok C: Dodawanie klas do znacznika <html> dla pełnej kompatybilności z Safari
-useEffect(() => {
-    // Pobieramy element <html> zamiast <body>
-    const rootElement = document.documentElement;
-
-    if (highContrast) rootElement.classList.add("wcag-high-contrast");
-    else rootElement.classList.remove("wcag-high-contrast");
-
-    if (largeText) rootElement.classList.add("wcag-large-text");
-    else rootElement.classList.remove("wcag-large-text");
-
-    if (highlightLinks) rootElement.classList.add("wcag-highlight-links");
-    else rootElement.classList.remove("wcag-highlight-links");
-}, [highContrast, largeText, highlightLinks]);
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle("wcag-high-contrast", highContrast);
+        rootElement.classList.toggle("wcag-large-text", largeText);
+        rootElement.classList.toggle("wcag-highlight-links", highlightLinks);
+    }, [highContrast, largeText, highlightLinks]);
 
     return (
         <AccessibilityContext.Provider value={{ 
@@ -77,7 +67,6 @@ useEffect(() => {
     );
 }
 
-// Własny Hook dla łatwiejszego użycia w innych komponentach
 export function useAccessibility() {
     const context = useContext(AccessibilityContext);
     if (context === undefined) {

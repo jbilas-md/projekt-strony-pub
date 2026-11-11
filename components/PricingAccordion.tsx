@@ -4,25 +4,7 @@
 
 import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-
-// Interfejs dla pojedynczego wariantu
-interface PricingVariant {
-  variantName: string;
-  price: string;
-}
-
-// Interfejs dla pozycji cennika
-interface PricingItem {
-  name: string;
-  price?: string;
-  description?: string;
-  variants?: PricingVariant[];
-}
-
-interface PricingCategory {
-  categoryName: string;
-  items: PricingItem[];
-}
+import type { PricingCategory } from '@/app/lib/sanity.queries';
 
 function slugify(value: string) {
   return value
@@ -135,7 +117,7 @@ export default function PricingAccordion({ categories }: { categories: PricingCa
                               <span className="text-slate-600 font-medium">
                                 {variant.variantName}
                               </span>
-                              <span className="ftext-base md:text-lg font-black text-nova-blue shrink-0 font-mono">
+                              <span className="text-base md:text-lg font-black text-nova-blue shrink-0 font-mono">
                                 {variant.price} zł
                               </span>
                             </div>

@@ -22,7 +22,7 @@ export default async function FAQPage() {
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": faqItems.map((item: any) => ({
+        "mainEntity": faqItems.map((item) => ({
             "@type": "Question",
             "name": item.question,
             "acceptedAnswer": {

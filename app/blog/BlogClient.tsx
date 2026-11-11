@@ -3,9 +3,10 @@
 import { useState } from "react";
 import BlogCard from "@/components/BlogCard";
 import { ChevronDown } from 'lucide-react';
+import type { BlogPostSummary } from "@/app/lib/sanity.queries";
 
 interface BlogClientProps {
-    initialPosts: any[];
+    initialPosts: BlogPostSummary[];
 }
 
 const CATEGORIES = [
@@ -80,7 +81,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                 {/* NAPRAWIONA SIATKA */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start justify-items-center">
                     {filteredPosts.map((post) => (
-                        <BlogCard key={post.slug?.current || post.slug} post={post} />
+                        <BlogCard key={post.slug} post={post} />
                     ))}
                 </div>
 

@@ -1,7 +1,9 @@
 // app/zabiegi/[slug]/page.tsx
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getProcedureBySlug, getAllProcedureSlugs } from "@/app/lib/sanity.queries";
+import type { PricingItem } from "@/app/lib/sanity.queries";
 import CustomPortableText from "@/components/CustomPortableText";
 import FloatingBackButton from "@/components/FloatingBackButton";
 
@@ -9,18 +11,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-interface ProcedurePricingVariant {
-  variantName?: string;
-  price?: string;
-}
-
-interface ProcedurePricingItem {
-  name?: string;
-  price?: string;
-  variants?: ProcedurePricingVariant[];
-}
-
-function slugify(value?: string) {
+function slugify(value?: string | null) {
   return (value || "")
     .toLowerCase()
     .normalize("NFKD")
@@ -29,7 +20,7 @@ function slugify(value?: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-function getDisplayedPrice(pricingItem?: ProcedurePricingItem) {
+function getDisplayedPrice(pricingItem?: PricingItem | null) {
   const variants = pricingItem?.variants ?? [];
   const variantPrices = variants
     .map((variant) => variant.price)
@@ -92,10 +83,12 @@ export default async function ProcedurePage({ params }: Props) {
         {/* OBRAZEK GŁÓWNY (Identyczny styl jak na blogu) */}
         {procedure.imageUrl && (
           <div className="relative w-full h-[300px] md:h-[500px] rounded-3xl overflow-hidden mb-10 shadow-xl">
-            <img 
-              src={procedure.imageUrl} 
-              alt={procedure.title} 
-              className="w-full h-full object-cover" 
+            <Image
+              src={procedure.imageUrl}
+              alt={procedure.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="object-cover"
             />
           </div>
         )}
@@ -136,7 +129,7 @@ export default async function ProcedurePage({ params }: Props) {
           )}
           
           <div className="text-slate-700 leading-relaxed font-medium prose-headings:text-nova-dark prose-headings:font-black prose-headings:uppercase prose-strong:text-nova-dark prose-strong:font-black prose-ul:list-disc">
-            <CustomPortableText value={procedure.content} />
+            <CustomPortableText value={procedure.content ?? []} />
           </div>
         </div>
       </article>

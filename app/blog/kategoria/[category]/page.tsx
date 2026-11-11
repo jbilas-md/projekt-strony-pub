@@ -2,12 +2,13 @@ import { BLOG_POSTS, CATEGORIES } from "@/app/lib/blog-data";
 import { constructMetadata } from "@/app/lib/seo";
 import Link from "next/link";
 
-export async function generateMetadata({ params }: { params: { category: string } }) {
-    const category = CATEGORIES.find(c => c.slug === params.category);
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
+    const { category: categorySlug } = await params;
+    const category = CATEGORIES.find(c => c.slug === categorySlug);
     return constructMetadata({
         title: `${category?.name || 'Kategoria'} - Blog Medyczny`,
         description: `Eksperckie artykuły z zakresu: ${category?.name}. Dowiedz się więcej o zabiegach w Novamedic Szczecin.`,
-        slug: `blog/kategoria/${params.category}`,
+        slug: `kategoria/${categorySlug}`,
     });
 }
 

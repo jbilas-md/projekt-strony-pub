@@ -1,5 +1,6 @@
 import { getPostBySlug, urlFor } from "@/app/lib/sanity.queries";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import CustomPortableText from "@/components/CustomPortableText";
 import FloatingBackButton from "@/components/FloatingBackButton";
 
@@ -12,9 +13,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     // Wyciągamy bezpieczny link
     const mainImageUrl = post.mainImage ? urlFor(post.mainImage).width(1200).url() : null;
     const authorImageUrl = post.author?.image ? urlFor(post.author.image).width(80).height(80).fit('crop').url() : null;
-    const displayCategory = Array.isArray(post.categories) && post.categories[0]
-        ? (typeof post.categories[0] === 'object' ? post.categories[0].title : post.categories[0])
-        : (post.category ? (typeof post.category === 'object' ? post.category.title : post.category) : 'Medycyna');
+    const displayCategory = post.categories?.[0] ?? 'Medycyna';
 
     return (
         <main className="min-h-screen bg-slate-50 pt-32 pb-20">
@@ -23,7 +22,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 {/* OBRAZEK GŁÓWNY */}
                 {mainImageUrl && (
                     <div className="relative w-full h-[300px] md:h-[500px] rounded-3xl overflow-hidden mb-10 shadow-xl">
-                        <img src={mainImageUrl} alt={post.title} className="w-full h-full object-cover" />
+                        <Image
+                            src={mainImageUrl}
+                            alt={post.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 896px"
+                            className="object-cover"
+                        />
                     </div>
                 )}
 
@@ -50,7 +55,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     <div className="flex items-center gap-4 py-6 border-y border-gray-200">
                         <div className="w-20 h-20 rounded-full bg-nova-blue/10 overflow-hidden flex-shrink-0">
                             {authorImageUrl ? (
-                                <img src={authorImageUrl} alt={post.author.name} className="w-full h-full object-cover" />
+                                <Image
+                                    src={authorImageUrl}
+                                    alt={post.author?.name ?? ''}
+                                    fill
+                                    sizes="80px"
+                                    className="object-cover"
+                                />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center font-bold text-nova-blue">NM</div>
                             )}

@@ -17,7 +17,6 @@ export default function Header() {
 
   const services = [
     { name: "Chirurgia", href: "/chirurgia" },
-    // { name: "Ortopedia", href: "/ortopedia" },
     { name: "Wazektomia", href: "/wazektomia" },
     { name: "Podologia", href: "/podologia" },
     { name: "Podochirurgia", href: "/podochirurgia" },
@@ -95,8 +94,14 @@ export default function Header() {
               onClick={() => setIsLangOpen(!isLangOpen)}
               className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-nova-bg rounded-full text-[10px] sm:text-xs font-black text-nova-dark border border-gray-200 hover:border-nova-blue transition-all"
             >
-              <span className="w-3 h-3 sm:w-4 sm:h-4 rounded-full overflow-hidden flex-shrink-0 border border-gray-300">
-                <img src="https://flagcdn.com/pl.svg" alt="PL" className="object-cover w-full h-full" />
+              <span className="relative w-3 h-3 sm:w-4 sm:h-4 rounded-full overflow-hidden flex-shrink-0 border border-gray-300">
+                <Image
+                  src="https://flagcdn.com/pl.svg"
+                  alt="Polski"
+                  fill
+                  sizes="16px"
+                  className="object-cover"
+                />
               </span>
               PL
             </button>

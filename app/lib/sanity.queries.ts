@@ -1,44 +1,107 @@
 // app/lib/sanity.queries.ts
 import { createClient } from 'next-sanity';
 import { createImageUrlBuilder } from '@sanity/image-url';
+import type { ArbitraryTypedObject, PortableTextBlock } from '@portabletext/types';
+import { apiVersion, dataset, projectId } from '@/sanity/env';
+import type { Review } from './reviews';
 
-interface SanityImageSource {
+export interface SanityImageSource {
   asset?: {
     _ref?: string;
     _type?: string;
   };
 }
 
-interface PricingVariant {
+export type PortableTextValue = Array<PortableTextBlock | ArbitraryTypedObject>;
+
+export interface BlogAuthor {
+  name?: string | null;
+  role?: string | null;
+  image?: SanityImageSource | null;
+}
+
+export interface BlogPostSummary {
+  title: string;
+  slug: string;
+  publishedAt?: string | null;
+  excerpt?: string | null;
+  mainImage?: SanityImageSource | null;
+  author?: BlogAuthor | null;
+  categories?: string[] | null;
+}
+
+export interface BlogPost extends BlogPostSummary {
+  body: PortableTextValue;
+}
+
+export interface PricingVariant {
   variantName?: string;
   price?: string;
 }
 
-interface PricingItem {
-  name?: string;
+export interface PricingItem {
+  name: string;
   price?: string;
+  description?: string;
   variants?: PricingVariant[];
 }
 
-interface TreatmentPackage {
+export interface PricingCategory {
+  categoryName: string;
+  items: PricingItem[];
+}
+
+export interface TreatmentPackage {
   _id: string;
   name?: string;
-  slug?: string;
   description?: string;
-  price?: string;
+  price?: number | string;
   currency?: string;
   priceText?: string;
   features?: string[];
   isPromoted?: boolean;
   tags?: string[];
-  paymentProductId?: string;
-  paymentPriceId?: string;
+}
+
+export interface FAQCategory {
+  slug: string;
+  name: string;
+}
+
+export interface FAQItem {
+  _id: string;
+  question: string;
+  answer: PortableTextValue;
+  plainAnswer: string;
+  categorySlug?: string | null;
+}
+
+export interface FeaturedProcedure {
+  _id: string;
+  title: string;
+  slug: string;
+  imageUrl?: string | null;
+}
+
+export interface ProcedureSummary {
+  _id: string;
+  title: string;
+  teaser?: string | null;
+  content?: PortableTextValue | null;
+  slug?: { current?: string } | null;
+}
+
+export interface ProcedureDetails extends ProcedureSummary {
+  category?: string | null;
+  imageUrl?: string | null;
+  pricingCategoryName?: string | null;
+  pricingItem?: PricingItem | null;
 }
 
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion: '2024-05-12',
+  projectId,
+  dataset,
+  apiVersion,
   useCdn: false,
 });
 
@@ -50,7 +113,7 @@ export function urlFor(source: SanityImageSource) {
 
 // --- BLOG ---
 export async function getPosts() {
-  return await client.fetch(`*[_type == "post"] | order(publishedAt desc) {
+  return client.fetch<BlogPostSummary[]>(`*[_type == "post"] | order(publishedAt desc) {
     title,
     "slug": slug.current,
     publishedAt,
@@ -62,7 +125,7 @@ export async function getPosts() {
 }
 
 export async function getPostBySlug(slug: string) {
-  return await client.fetch(
+  return client.fetch<BlogPost | null>(
     `*[_type == "post" && slug.current == $slug][0]{
       title,
       "slug": slug.current,
@@ -79,7 +142,7 @@ export async function getPostBySlug(slug: string) {
 
 // --- CENNIK ---
 export async function getPricing() {
-  return await client.fetch(
+  return client.fetch<PricingCategory[]>(
     `*[_type == "pricingCategory"] | order(order asc) {
       categoryName,
       items[] {
@@ -98,34 +161,32 @@ export async function getPricing() {
 }
 
 export async function getTreatmentPackagesByTag(tag: string): Promise<TreatmentPackage[]> {
-  const query = `*[_type == "treatmentPackage" && ($tag in tags) && (active == true || !defined(active))] | order(order asc) {
+  const tagLiteral = JSON.stringify(tag);
+  const query: string = `*[_type == "treatmentPackage" && (${tagLiteral} in tags) && (active == true || !defined(active))] | order(order asc) {
     _id,
     name,
-    slug,
     description,
     price,
     currency,
     priceText,
     features,
     isPromoted,
-    tags,
-    paymentProductId,
-    paymentPriceId
-  }` as const;
+    tags
+  }`;
 
-  return await (client.fetch(query, { tag }) as Promise<TreatmentPackage[]>);
+  return client.fetch<TreatmentPackage[]>(query);
 }
 
 // --- FAQ ---
 export async function getFaqCategories() {
-  return await client.fetch(`*[_type == "faqCategory"] {
+  return client.fetch<FAQCategory[]>(`*[_type == "faqCategory"] {
     "slug": slug.current,
     name
   }`);
 }
 
 export async function getFaqItems() {
-  return await client.fetch(`*[_type == "faqItem"] | order(order asc, _createdAt desc) {
+  return client.fetch<FAQItem[]>(`*[_type == "faqItem"] | order(order asc, _createdAt desc) {
     "_id": _id,
     question,
     answer,
@@ -135,7 +196,7 @@ export async function getFaqItems() {
 }
 
 export async function getFeaturedProcedures() {
-  return await client.fetch(
+  return client.fetch<FeaturedProcedure[]>(
     `*[_type == "procedure" && isFeatured == true] | order(_createdAt desc) {
       _id,
       title,
@@ -148,7 +209,7 @@ export async function getFeaturedProcedures() {
 }
 
 export async function getReviews(limit: number = 3) {
-  return await client.fetch(
+  return client.fetch<Review[]>(
     `*[_type == "review" && isVisible == true] | order(date desc)[0...$limit] {
       "id": _id,
       author,
@@ -162,10 +223,8 @@ export async function getReviews(limit: number = 3) {
   );
 }
 
-// app/lib/sanity.queries.ts
-
 export async function getProcedureBySlug(slug: string) {
-  return await client.fetch(
+  return client.fetch<ProcedureDetails | null>(
     `*[_type == "procedure" && slug.current == $slug][0] {
       _id,
       title,
@@ -199,11 +258,11 @@ export async function getProcedureBySlug(slug: string) {
 }
 
 export async function getAllProcedureSlugs() {
-  return await client.fetch(`*[_type == "procedure" && defined(slug.current)][].slug.current`);
+  return client.fetch<string[]>(`*[_type == "procedure" && defined(slug.current)][].slug.current`);
 }
 
 export async function getProceduresByCategory(categoryName: string) {
-  return await client.fetch(
+  return client.fetch<ProcedureSummary[]>(
     `*[_type == "procedure" && category == $categoryName] | order(title asc) {
       _id,
       title,

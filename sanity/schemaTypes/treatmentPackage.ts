@@ -1,4 +1,6 @@
-export default {
+import { defineType } from 'sanity';
+
+export default defineType({
   name: 'treatmentPackage',
   title: 'Pakiety zabiegowe',
   type: 'document',
@@ -7,17 +9,7 @@ export default {
       name: 'name',
       title: 'Nazwa pakietu',
       type: 'string',
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
-      name: 'slug',
-      title: 'Slug pakietu',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96,
-      },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'description',
@@ -30,8 +22,8 @@ export default {
       name: 'price',
       title: 'Cena bazowa',
       type: 'number',
-      description: 'Kwota przechowywana jako liczba, używana w przyszłej integracji z bramką płatności.',
-      validation: (Rule: any) => Rule.required().min(0),
+      description: 'Cena pakietu wyświetlana na stronie.',
+      validation: (Rule) => Rule.required().min(0),
     },
     {
       name: 'currency',
@@ -46,7 +38,7 @@ export default {
         ],
         layout: 'dropdown',
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'priceText',
@@ -92,7 +84,7 @@ export default {
       title: 'Kolejność wyświetlania',
       type: 'number',
       description: 'Mniejsza liczba pokazuje pakiet wyżej na liście.',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'active',
@@ -100,18 +92,6 @@ export default {
       type: 'boolean',
       initialValue: true,
       description: 'Wyłączony pakiet nie będzie wyświetlany klientom.',
-    },
-    {
-      name: 'paymentProductId',
-      title: 'ID produktu płatności',
-      type: 'string',
-      description: 'Opcjonalny identyfikator produktu w bramce płatności (np. Stripe, PayU).',
-    },
-    {
-      name: 'paymentPriceId',
-      title: 'ID ceny płatności',
-      type: 'string',
-      description: 'Opcjonalny identyfikator ceny w bramce płatności.',
     },
   ],
   orderings: [
@@ -121,4 +101,4 @@ export default {
       by: [{ field: 'order', direction: 'asc' }],
     },
   ],
-};
+});

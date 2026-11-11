@@ -1,4 +1,6 @@
-export default {
+import { defineType } from 'sanity';
+
+export default defineType({
   name: 'faqItem',
   title: 'FAQ - Pytania i Odpowiedzi',
   type: 'document',
@@ -7,7 +9,7 @@ export default {
       name: 'question',
       title: 'Pytanie (H3/H4 dla SEO)',
       type: 'string',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'answer',
@@ -29,14 +31,14 @@ export default {
           }
         }
       ],
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'category',
       title: 'Kategoria FAQ',
       type: 'reference',
       to: [{ type: 'faqCategory' }],
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'order',
@@ -46,4 +48,4 @@ export default {
       initialValue: 0
     }
   ],
-};
+});

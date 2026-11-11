@@ -1,29 +1,36 @@
 // app/components/BlogCard.tsx
 import Link from 'next/link';
+import Image from 'next/image';
 import { urlFor } from '@/app/lib/sanity.queries';
+import type { BlogPostSummary } from '@/app/lib/sanity.queries';
 
-export default function BlogCard({ post }: { post: any }) {
+export default function BlogCard({ post }: { post: BlogPostSummary }) {
     const author = post.author;
 
-    // Generujemy URL z zachowaniem wysokiej jakości
-    const mainImageUrl = post.mainImage ? urlFor(post.mainImage).width(800).height(450).fit('crop').url() : '/images/placeholder.jpg';
+    const mainImageUrl = post.mainImage ? urlFor(post.mainImage).width(800).height(450).fit('crop').url() : null;
     const authorImageUrl = author?.image ? urlFor(author.image).width(100).height(100).fit('crop').url() : null;
 
-    const getInitials = (name: string) => {
-        if (!name || typeof name !== 'string') return "NM";
+    const getInitials = (name?: string | null) => {
+        if (!name) return "NM";
         return name.split(' ').map(n => n[0]).join('').toUpperCase();
     };
 
-    // Bezpieczne wyciąganie nazwy pierwszej kategorii z Sanity
-    const displayCategory = Array.isArray(post.categories) && post.categories[0]
-        ? (typeof post.categories[0] === 'object' ? post.categories[0].title : post.categories[0])
-        : (post.category ? (typeof post.category === 'object' ? post.category.title : post.category) : 'Medycyna');
+    const displayCategory = post.categories?.[0] ?? 'Medycyna';
 
     return (
         <article className="flex flex-col w-full max-w-md h-[600px] group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-            {/* Odnośnik obrazka głównego */}
-            <Link href={`/blog/${post.slug?.current || post.slug}`} className="relative h-[220px] w-full overflow-hidden block shrink-0">
-                <img src={mainImageUrl} alt={post.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <Link href={`/blog/${post.slug}`} className="relative h-[220px] w-full overflow-hidden block shrink-0">
+                {mainImageUrl ? (
+                    <Image
+                        src={mainImageUrl}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 400px"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                ) : (
+                    <div className="h-full w-full bg-slate-100" />
+                )}
             </Link>
 
             {/* KONTENER TREŚCI */}
@@ -50,7 +57,7 @@ export default function BlogCard({ post }: { post: any }) {
 
                     {/* Tytuł artykułu */}
                     <div className="h-[75px] mb-3 overflow-hidden text-xl font-black leading-tight text-nova-dark">
-                        <Link href={`/blog/${post.slug?.current || post.slug}`} className="line-clamp-3 hover:text-nova-blue transition-colors">
+                        <Link href={`/blog/${post.slug}`} className="line-clamp-3 hover:text-nova-blue transition-colors">
                             {post.title}
                         </Link>
                     </div>
@@ -67,10 +74,12 @@ export default function BlogCard({ post }: { post: any }) {
                         {/* AWATAR */}
                         <div className="w-14 h-14 rounded-full bg-nova-blue/10 overflow-hidden shrink-0 flex-none border border-gray-50">
                             {authorImageUrl ? (
-                                <img 
-                                    src={authorImageUrl} 
-                                    alt="" 
-                                    className="w-full h-full object-cover block" 
+                                <Image
+                                    src={authorImageUrl}
+                                    alt=""
+                                    fill
+                                    sizes="56px"
+                                    className="object-cover block"
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center font-bold text-nova-blue text-xs">

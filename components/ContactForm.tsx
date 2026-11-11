@@ -1,10 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-interface ContactFormProps {
-    compact?: boolean;
-}
-export default function ContactForm({ compact = false }: ContactFormProps) {
+export default function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,6 +37,7 @@ export default function ContactForm({ compact = false }: ContactFormProps) {
                 setStatus('error');
             }
         } catch (error) {
+            console.error('Contact form request failed', error);
             setStatus('error');
         }
     };
@@ -59,10 +57,10 @@ export default function ContactForm({ compact = false }: ContactFormProps) {
 
     if (status === 'error') {
         return (
-            <div className="bg-red-50 p-12 rounded-[3rem] tewxt-center border border-red-100 h-full flex flex-col justify-center items-center animate-in fade-in zoom-in duration-300">
-                <div className="w-16 h-16 bg-red-500 text-white rouded-full flex items-center justify-center text-3xl mb-6">/</div>
-                <h3 className="text-2xl front-black text-red-900 mb-2 italic">Coś poszło nie tak...</h3>
-                <p className="text-red-700 front-medium italic">Spróbuj ponownie lub zadzwoń do nas.</p>
+            <div className="bg-red-50 p-12 rounded-[3rem] text-center border border-red-100 h-full flex flex-col justify-center items-center animate-in fade-in zoom-in duration-300">
+                <div className="w-16 h-16 bg-red-500 text-white rounded-full flex items-center justify-center text-3xl mb-6">/</div>
+                <h3 className="text-2xl font-black text-red-900 mb-2 italic">Coś poszło nie tak...</h3>
+                <p className="text-red-700 font-medium italic">Spróbuj ponownie lub zadzwoń do nas.</p>
                 <button onClick={() => setStatus('idle')} className="mt-8 text-sm font-black text-red-900 uppercase tracking-widest hover:underline">
                     Wyślij jeszcze raz
                 </button>

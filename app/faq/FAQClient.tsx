@@ -4,18 +4,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import CustomPortableText from "@/components/CustomPortableText";
-
-interface FAQCategory {
-    slug: string;
-    name: string;
-}
-
-interface FAQItem {
-    _id: string;
-    question: string;
-    answer: any; // Format Portable Text z Sanity
-    categorySlug: string;
-}
+import type { FAQCategory, FAQItem } from "@/app/lib/sanity.queries";
 
 export default function FAQClient({ items, categories }: { items: FAQItem[], categories: FAQCategory[] }) {
     const [activeCategory, setActiveCategory] = useState("wszystkie");

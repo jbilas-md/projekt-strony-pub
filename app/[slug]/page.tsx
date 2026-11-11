@@ -2,13 +2,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import FAQAccordion from '@/components/FAQAccordion';
 import BlogCard from '@/components/BlogCard';
 
 import { servicesData } from '../lib/services';
-import PackagePaymentButton from '@/components/PackagePaymentButton';
-// Zmiana: Importujemy nową funkcję pobierania zabiegów i pakietów z Sanity
-import { getPosts, getProceduresByCategory, getTreatmentPackagesByTag } from '../lib/sanity.queries';
+import {
+  getPosts,
+  getProceduresByCategory,
+  getTreatmentPackagesByTag,
+} from '../lib/sanity.queries';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -24,6 +25,15 @@ const slugToCategoryMap: Record<string, string> = {
   'wazektomia': 'Wazektomia',
   'leczenie-ran': 'Leczenie ran',
 };
+
+function slugifyCategory(category: string) {
+  return category
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -49,21 +59,9 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const allPosts = await getPosts();
 
   // Filtrowanie artykułów pod kątem dopasowania do sluga bieżącej usługi
-  const servicePosts = allPosts.filter((post: any) => {
-    if (Array.isArray(post.categories)) {
-      return post.categories.some((cat: any) => {
-        const catSlug = typeof cat === 'object' ? cat?.slug?.current || cat?.current || cat?._ref : cat;
-        return typeof catSlug === 'string' && catSlug.toLowerCase() === slug.toLowerCase();
-      });
-    }
-
-    const categoryRaw = post.category;
-    const postCategory = categoryRaw && typeof categoryRaw === 'object' && 'current' in categoryRaw
-      ? categoryRaw.current
-      : categoryRaw;
-
-    return typeof postCategory === 'string' && postCategory.toLowerCase() === slug.toLowerCase();
-  });
+  const servicePosts = allPosts.filter((post) =>
+    post.categories?.some((category) => slugifyCategory(category) === slug)
+  );
 
   return (
     <div className="min-h-screen bg-white font-sans text-nova-dark antialiased">
@@ -116,7 +114,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               Wykonywane <span className="text-nova-blue">procedury zabiegowe</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {sanityProcedures.map((procedure: any) => {
+              {sanityProcedures.map((procedure) => {
                 const hasContent = procedure.content && procedure.content.length > 0;
                 const cardClasses = 'block bg-white border border-gray-100 p-8 rounded-3xl shadow-sm transition-all ' + (hasContent ? 'hover:border-nova-blue/30 hover:shadow-md group' : 'opacity-90 cursor-not-allowed');
 
@@ -156,9 +154,9 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <section className="max-w-7xl mx-auto px-4 py-24 border-t border-gray-50">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-tight text-nova-dark">Pakiety zabiegowe</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto items-stretch">
-              {servicePackages.map((pkg: any, i: number) => (
+              {servicePackages.map((pkg) => (
                 <div
-                  key={i}
+                  key={pkg._id}
                   className={`flex flex-col bg-white p-10 rounded-[2.5rem] border transition-all duration-500 relative ${
                     pkg.isPromoted
                       ? 'border-nova-blue/20 scale-105 z-10 shadow-[20px_20px_40px_rgba(8,112,184,0.08)]'
@@ -175,25 +173,13 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                     {pkg.priceText ?? (typeof pkg.price === 'number' ? `${pkg.price} ${pkg.currency ?? 'PLN'}` : pkg.price)}
                   </div>
                   <ul className="space-y-4 mb-10 flex-1">
-                    {pkg.features.map((f: string, j: number) => (
-                      <li key={j} className="flex items-start gap-3 text-slate-500 font-medium text-xs md:text-sm">
+                    {pkg.features?.map((feature, index) => (
+                      <li key={`${pkg._id}-${index}`} className="flex items-start gap-3 text-slate-500 font-medium text-xs md:text-sm">
                         <div className="w-1.5 h-1.5 bg-nova-blue rounded-full mt-2 shrink-0" />
-                        <span>{f}</span>
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
-
-                  {/* PRZYCISK ZAMÓWIENIA PAKIETU - WYŁĄCZONY DOPÓKI NIE ZOSTANIE WPROWADZONA FUNKCJONALNOŚĆ PŁATNOŚCI*/} 
-
-                  {/*<PackagePaymentButton
-                    packageId={pkg.id ?? pkg.slug ?? pkg.name}
-                    packageName={pkg.name}
-                    priceLabel={pkg.priceText ?? (typeof pkg.price === 'number' ? `${pkg.price} ${pkg.currency ?? 'PLN'}` : pkg.price)}
-                    currency={pkg.currency ?? 'PLN'}
-                    serviceSlug={slug}
-                    paymentProductId={(pkg as any).paymentProductId}
-                    paymentPriceId={(pkg as any).paymentPriceId}
-                  />*/}
                 </div>
               ))}
             </div>
@@ -208,7 +194,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-              {servicePosts.slice(0, 3).map((post: any) => (
+              {servicePosts.slice(0, 3).map((post) => (
                 <BlogCard key={post.slug} post={post} />
               ))}
             </div>
