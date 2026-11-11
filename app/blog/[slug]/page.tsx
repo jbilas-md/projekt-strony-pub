@@ -53,7 +53,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         </div>
                     </div>
                     <div className="flex items-center gap-4 py-6 border-y border-gray-200">
-                        <div className="w-20 h-20 rounded-full bg-nova-blue/10 overflow-hidden flex-shrink-0">
+                        <div className="relative w-20 h-20 rounded-full bg-nova-blue/10 overflow-hidden flex-shrink-0">
                             {authorImageUrl ? (
                                 <Image
                                     src={authorImageUrl}
