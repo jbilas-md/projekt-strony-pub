@@ -72,7 +72,7 @@ export default function BlogCard({ post }: { post: BlogPostSummary }) {
                 <div className="mt-auto pt-4 border-t border-gray-100 flex items-center shrink-0" style={{ height: '67px' }}>
                     <div className="flex items-center gap-3 min-w-0 w-full">
                         {/* AWATAR */}
-                        <div className="w-14 h-14 rounded-full bg-nova-blue/10 overflow-hidden shrink-0 flex-none border border-gray-50">
+                        <div className="relative w-14 h-14 rounded-full bg-nova-blue/10 overflow-hidden shrink-0 flex-none border border-gray-50">
                             {authorImageUrl ? (
                                 <Image
                                     src={authorImageUrl}
