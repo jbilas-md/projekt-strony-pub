@@ -81,7 +81,7 @@ export default function AboutUsPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
                         <div className="lg:col-span-4 relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border-2 border-slate-50">
                             <Image
-                                src="/images/jarek-profil.jpg"
+                                src="/images/jarek-profil.JPG"
                                 alt="Jarosław Biłas - Chirurg Szczecin"
                                 fill
                                 sizes="400px"
@@ -133,7 +133,7 @@ export default function AboutUsPage() {
 
                         <div className="lg:col-span-4 order-1 lg:order-2 relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border-2 border-slate-50">
                             <Image
-                                src="/images/ania-profil.jpg"
+                                src="/images/ania-profil.JPG"
                                 alt="Ania Biłas - Podolog Szczecin"
                                 fill
                                 sizes="400px"

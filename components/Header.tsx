@@ -52,6 +52,7 @@ export default function Header() {
                     src="/images/Logo.png"
                     alt="Novamedic Logo"
                     fill
+                    sizes="(max-width: 639px) 112px, (max-width: 767px) 224px, 224px"
                     className="object-contain object-center"
                     priority
                 />
@@ -144,7 +145,7 @@ export default function Header() {
       <div className={`fixed inset-0 bg-white z-[200] transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} xl:hidden`}>
         <div className="p-5 h-full flex flex-col">
           <div className="flex justify-between items-center mb-6 border-b pb-4">
-            <Image src="/images/Logo.png" alt="Logo" width={120} height={35} className="object-contain" />
+            <Image src="/images/Logo.png" alt="Logo" width={120} height={83} className="object-contain" />
             <button onClick={() => setIsMenuOpen(false)} className="text-nova-dark text-3xl p-2">&times;</button>
           </div>
           

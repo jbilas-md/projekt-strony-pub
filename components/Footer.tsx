@@ -17,7 +17,7 @@ export default function Footer() {
                 src="/images/Logo.png"
                 alt="Novamedic Logo"
                 width={200}
-                height={60}
+                height={138}
                 className="brightness-0 invert"
               />
             </Link>

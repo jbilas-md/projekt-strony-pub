@@ -70,6 +70,7 @@ const components: PortableTextComponents = {
             src={urlFor(source).url()}
             alt="Zdjęcie w artykule"
             fill
+            sizes="(max-width: 896px) calc(100vw - 2rem), 864px"
             className="object-cover"
           />
         </div>

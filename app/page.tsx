@@ -30,6 +30,7 @@ export default async function HomePage() {
             src="/images/hero-glowna.jpg" 
             alt="Novamedic Team" 
             fill 
+            sizes="100vw"
             className="object-cover object-right scale-105"
             priority
           />
@@ -107,6 +108,7 @@ export default async function HomePage() {
         <Image
           src={proc.imageUrl}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
           alt={proc.title}
           className="hidden md:block object-cover transition-transform duration-700 group-hover:scale-110"
         />
